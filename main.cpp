@@ -1,14 +1,11 @@
-#include "mainwindow.h"
-
-#include <QtGui/QApplication>
+#include "stdafx.h"
+#include "Hargoile.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    Hargoile hargoile(argc, argv);
 
-    MainWindow mainWindow;
-    mainWindow.setOrientation(MainWindow::ScreenOrientationAuto);
-    mainWindow.showExpanded();
 
-    return app.exec();
+
+    return hargoile.exec();
 }

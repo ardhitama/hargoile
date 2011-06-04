@@ -1,28 +1,44 @@
-# Add files and directories to ship with the application 
-# by adapting the examples below.
-# file1.source = myfile
-# dir1.source = mydir
 DEPLOYMENTFOLDERS = # file1 dir1
 
-symbian:TARGET.UID3 = 0xE57332A1
+VERSION = 0.0.1
+CONFIG += silent
+symbian: {
+        #TARGET.EPOCSTACKSIZE = 0x5000 // 20kb
+        #TARGET.EPOCHEAPSIZE = 0x20000 0x1000000 // Min 128kb, Max 16Mb
+        #TARGET.EPOCALLOWDLLDATA = 1
+        TARGET.UID3 = 0xE57332A1
+        TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
+        TARGET = Hargoile_s60v5_v001
 
-# Allow network access on Symbian
-symbian:TARGET.CAPABILITY += NetworkServices
+        TEMPLATE = app
+        CONFIG += mobility
+        MOBILITY += location
+}
 
-# If your application uses the Qt Mobility libraries, uncomment
-# the following lines and add the respective components to the 
-# MOBILITY variable. 
-# CONFIG += mobility
-# MOBILITY +=
+QT += core gui network multimedia xml
 
-SOURCES += main.cpp mainwindow.cpp \
+PRECOMPILED_HEADER = stdafx.h
+
+DEFINES += VER
+
+SOURCES += main.cpp \
     Hargoile.cpp \
-    AccountLinkDlg.cpp
-HEADERS += mainwindow.h \
+    AccountLinkDlg.cpp \
+    Storage.cpp \
+    Route.cpp \
+    Network.cpp \
+    Authentication.cpp \
+    Utility.cpp
+HEADERS += \
     Hargoile.h \
     AccountLinkDlg.h \
+    Storage.h \
+    Route.h \
+    Network.h \
+    Authentication.h \
+    Utility.h \
     stdafx.h
-FORMS += mainwindow.ui \
+FORMS += \
     AccountLinkDlg.ui
 
 # Please do not modify the following two lines. Required for deployment.

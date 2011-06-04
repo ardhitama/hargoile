@@ -6,15 +6,18 @@
 
 class Hargoile : public QApplication
 {
-private:
-    enum { LinkedState, NoConnectionState, RecordingRouteState, InvalidState };
-    int accountState, connectionState, gpsState, recorderState;
-    const QString configFilename;
 public:
     Hargoile(int &argc, char **argv);
+    virtual ~Hargoile();
+
     void loadConfig();
     void saveConfig();
     bool isAccountLinked();
+
+private:
+    enum HargoileState { LinkedState, NoConnectionState, RecordingRouteState, InvalidState };
+    int accountState, connectionState, gpsState, recorderState;
+    const QString configFilename;
 };
 
 #endif // HARGOILE_H

@@ -1,11 +1,11 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-// Qt Core
 #include <QtCore>
-#include <QString>
+#include <QtGui>
+#include <QtNetwork>
 
-//Qt GUI
-#include <QtGui/QApplication>
+const QString serverUrlString = "127.0.0.1/hargoile/";
+const QString clientVersionString = "Hargoile_s60v5_v001";
 
-#endif // STDAFDX_H
+#endif // STDAFX_H

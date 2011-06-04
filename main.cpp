@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Hargoile.h"
 
 int main(int argc, char *argv[])

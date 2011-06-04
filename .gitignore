@@ -1,0 +1,13 @@
+
+/moc
+/tmp
+/obj
+/ui
+*.rss
+*.pkg
+*.mmp
+*.cache
+*.loc
+*.user
+Makefile
+*.mk

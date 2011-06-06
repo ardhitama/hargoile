@@ -5,9 +5,9 @@ Network::Network()
     //
 }
 
-int Network::requestTokenValidity(QString &clientTokentring)
+void Network::reqTokenValidity()
 {
-    QNetworkAccessManager qnetmgr;
+    QNetworkAccessManager qnetmgr(this);
     QNetworkRequest qnetreq;
 
     QUrl qurl;
@@ -18,14 +18,8 @@ int Network::requestTokenValidity(QString &clientTokentring)
     qnetreq.setUrl(qurl);
     qnetreq.setRawHeader("User-Agent", clientVersionString);
 
-    QPointer<QNetworkReply> qnetrep;
-    qnetrep = qnetmgr.get(qnetreq);
-    connect(qnet, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyToken(QNetworkReply*)));
-
-    qnet->get(req);
-    qnet-
-
-    return 1;
+    qnetmgr.get(qnetreq);
+    connect(qnetmgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyToken(QNetworkReply*)));
 }
 
 void Network::replyToken(QNetworkReply *rep)
@@ -34,7 +28,18 @@ void Network::replyToken(QNetworkReply *rep)
 
 void Network::replyTokenValidity(QNetworkReply *rep)
 {
-    rep->
+    int status = -1;
+    QString respStr = "";
+    if(rep->error() == QNetworkReply::NoError)
+    {
+        respStr = rep->readAll();
+        status = 1;
+    }
+    else
+    {
+        status = -1;
+    }
+    emit respTokenValidity(respStr, status);
 }
 
 void Network::replyTokenRevocation(QNetworkReply *rep)
@@ -47,4 +52,3 @@ Network Network::getInstance()
         network = new Network();
     return network;
 }
-

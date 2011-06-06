@@ -11,9 +11,9 @@ class Network : public QObject
 public:
     Network getInstance();
 
-    int requestToken(QString &tokenRequestString); // forge SSK request here, always on secure connection
-    int requestTokenValidity(QString &clientTokentring); // also forge token request
-    int requestTokenRevocation(QString &clientTokentring);
+    int reqToken(QString &tokenRequestString); // forge SSK request here, always on secure connection
+    int reqTokenValidity(QString &clientTokentring); // also forge token request
+    int reqTokenRevocation(QString &clientTokentring);
 
     QString downloadRoute(QString routeId);
 
@@ -21,11 +21,12 @@ public:
 
 private:
     Network();
+    bool isValidHeader(QString headerStr);
     QPointer<Network> network;
 
 signals:
 //    int receivedToken(QString &clientTokentring); // need a qstring placeholder
-//    int receivedTokenValidity(); // -1 fail, 0 not valid, 1 valid
+      void respTokenValidity(QString &respStr, int status); // -1 conn error, 0 header not valid, 1 success
 //    int reveivedTokenRevocation(); // -1 fail, 0 cant revoke, 1 revoked
 
 public slots:

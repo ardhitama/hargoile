@@ -12,27 +12,29 @@ void Network::reqTokenValidity()
 
     QUrl qurl;
 
-    qurl.setUrl(serverUrlString);
+    qurl.setUrl(serverUrlString.append("asktokenvalidity"));
     qurl.setPort(80);
 
     qnetreq.setUrl(qurl);
     qnetreq.setRawHeader("User-Agent", clientVersionString);
 
     qnetmgr.get(qnetreq);
-    connect(qnetmgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyToken(QNetworkReply*)));
+    connect(qnetmgr, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyTokenValidity(QNetworkReply*)));
 }
 
 void Network::replyToken(QNetworkReply *rep)
 {
 }
 
-void Network::replyTokenValidity(QNetworkReply *rep)
+void Network::replyTokenValidity(QNetworkReply &rep)
 {
     int status = -1;
-    QString respStr = "";
-    if(rep->error() == QNetworkReply::NoError)
+    string respStr = "";
+    QList<string> repStack = respStr.split('\n');
+    if(rep.error() == QNetworkReply::NoError)
     {
-        respStr = rep->readAll();
+        respStr = rep.readAll();
+        qDebug << respStr;
         status = 1;
     }
     else
@@ -46,9 +48,8 @@ void Network::replyTokenRevocation(QNetworkReply *rep)
 {
 }
 
-Network Network::getInstance()
+Network& Network::getInstance()
 {
-    if(network.isNull())
-        network = new Network();
-    return network;
+    static Network network;
+    return &network;
 }

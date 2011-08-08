@@ -1,68 +1,99 @@
 #include "Storage.h"
 #include "Network.h"
+#include "MutexLocker.h"
 
+using namespace std;
 Storage::Storage()
 {
 }
 
 /*
-  int Storage::loadToken(QString &tokenString);
+  int Storage::loadToken(string &tokenString);
   return:
   -1 : fs fail
   0  : token not available
   1  : token loaded
 */
-int Storage::loadToken(QString &tokenString)
+int Storage::loadToken(string &tokenString)
 {
-    QScopedPointer<QFile> file = new QFile("tkn.hgl");
+    sync;
+    fstream file("tkn.hgl", fstream::in);
 
-    if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.is_open())
+    {
+        TRACE("tkn.hgl is not found");
         return -1;
+    }
 
-    QByteArray tokenLine = file.readLine(); //
-    file->close();
-    if(tokenLine.size() < 40)
+    string strToken;
+    file.getline((char*)strToken.data(), 2048);
+    file.close();
+    if(strToken.size() < 40)
+    {
+        TRACE("Token file is empty");
         return 0;
+    }
 
-    tokenString.clear();
-    tokenString.append(tokenLine);
+    tokenString.assign(strToken.data());
 
     return 1;
 }
 
-int Storage::saveToken(QString &tokenString)
+int Storage::saveToken(string &tokenString)
 {
-    QMutexLocker(&saveTokenMutex);
+    sync;
 
     if(tokenString.size() < 40)
         return 0;
 
-    QScopedPointer<QFile> file = new QFile("tkn.hgl");
+    fstream file("tkn.hgl", fstream::out);
 
-    if (!file->open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
+    if (!file.is_open())
+    {
+        TRACE("Unable to write tkn.hgl");
         return -1;
+    }
 
-    file->write(tokenString);
-    file->close();
+    file.write(tokenString.data(), tokenString.size());
+    file.close();
 
     return 1;
 }
 
-bool Storage::saveRoute(QString name)
+bool Storage::saveRoute(string &name, Route &route)
 {
+    sync;
+
+    if(tokenString.size() < 40)
+        return 0;
+
+    fstream file("tkn.hgl", fstream::out);
+
+    if (!file.is_open())
+    {
+        TRACE("Unable to write tkn.hgl");
+        return -1;
+    }
+
+    file.write(tokenString.data(), tokenString.size());
+    file.close();
+
+    return true;
 }
 
-bool Storage::loadRoute(QString name)
+bool Storage::loadRoute(string &name, Route &route)
 {
+    return false;
 }
 
-QList Storage::listAllRoutes()
+bool Storage::listAvailableRoutes(list<string> &lstName)
 {
+    return true;
 }
 
-Storage Storage::getInstance()
+Storage& Storage::getInstance()
 {
-    if(storage.isNull())
-        storage = new Storage();
-    return storage;
+    //sync;
+    //static Storage storage;
+    //return &storage;
 }

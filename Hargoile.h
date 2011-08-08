@@ -1,23 +1,44 @@
 #ifndef HARGOILE_H
 #define HARGOILE_H
 
-#include "stdafx.h"
 #include "AccountLinkDlg.h"
 
-class Hargoile : public QApplication
+#include "StateManager.h"
+#include "Storage.h"
+#include "Config.h"
+#include "stdafx.h"
+
+class Hargoile
 {
 public:
-    Hargoile(int &argc, char **argv);
+    Hargoile();
     virtual ~Hargoile();
 
-    void loadConfig();
-    void saveConfig();
-    bool isAccountLinked();
+    void initialize();
 
-private:
-    enum HargoileState { LinkedState, NoConnectionState, RecordingRouteState, InvalidState };
-    int accountState, connectionState, gpsState, recorderState;
-    const QString configFilename;
+    int startRouteRecording();
+    int pauseRouteRecording();
+    int stopRouteRecording();
+
+    int loadRoute(int routeId);
+    int saveRoute(); //returns route id, zero if failed
+
+    int downloadRoute(); //returns route id, zero if failed
+    int uploadRoute(int routeId);
+
+    int linkAccount();
+    int unlinkAccount();
+
+    void showAccountDialog();
+    void showRecorderDialog();
+    void showManagerDialog();
+    void showRouteDialog();
+
+    void closeAllDialog();
+
+    void restartAllThread();
+    void pauseAllThread();
+    void stopAllThread();
 };
 
 #endif // HARGOILE_H

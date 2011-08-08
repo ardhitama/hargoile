@@ -13,33 +13,68 @@ symbian: {
         TEMPLATE = app
         CONFIG += mobility
         MOBILITY += location
+
+        DEFINES += RELEASE
+}
+
+simulator: {
+        TARGET.UID3 = 0xE57332A1
+        TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
+        TARGET = Hargoile_s60v5_v001
+
+        TEMPLATE = app
+        CONFIG += mobility
+        MOBILITY += location
+
+        DEFINES += DEBUG
 }
 
 QT += core gui network multimedia xml
 
 PRECOMPILED_HEADER = stdafx.h
 
-DEFINES += VER
+DEFINES += QT_MOBILITY QT_APP SQLITE_THREADSAFE
 
-SOURCES += main.cpp \
+SOURCES += \
     Hargoile.cpp \
-    AccountLinkDlg.cpp \
+    dialogs/AccountLinkDlg.cpp \
     Storage.cpp \
     Route.cpp \
     Network.cpp \
     Authentication.cpp \
-    Utility.cpp
+    Utility.cpp \
+    Recorder.cpp \
+    dialogs/RecorderDlg.cpp \
+    dialogs/RouteDlg.cpp \
+    dialogs/ManagerDlg.cpp \
+    Config.cpp \
+    QtMain.cpp \
+    StateManager.cpp \
+    libs/sqllite3/sqlite3.c
 HEADERS += \
     Hargoile.h \
-    AccountLinkDlg.h \
+    dialogs/AccountLinkDlg.h \
     Storage.h \
     Route.h \
     Network.h \
     Authentication.h \
     Utility.h \
-    stdafx.h
+    stdafx.h \
+    Recorder.h \
+    dialogs/RecorderDlg.h \
+    dialogs/RouteDlg.h \
+    dialogs/ManagerDlg.h \
+    Thread.h \
+    Config.h \
+    MutexLocker.h \
+    StateManager.h \
+    Assert.h \
+    libs/sqllite3/sqlite3ext.h \
+    libs/sqllite3/sqlite3.h
 FORMS += \
-    AccountLinkDlg.ui
+    dialogs/RecorderDlg.ui \
+    dialogs/RouteDlg.ui \
+    dialogs/ManagerDlg.ui
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)

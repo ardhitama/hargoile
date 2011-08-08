@@ -8,7 +8,7 @@ class Utility : public QObject
 public:
     Utility();
     virtual ~Utility();
-    void forgeSSKRequest(QString clientSSK, QString *SSKRequest);
+    void forgeSSKRequest(string clientSSK, string *SSKRequest);
 };
 
 #endif // UTILITY_H

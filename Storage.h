@@ -3,24 +3,24 @@
 
 #include "stdafx.h"
 #include "Route.h"
+#include "list"
 
-class Storage : public QObject
+class Storage
 {
 public:
-    int saveToken(QString &tokenString);
-    int loadToken(QString &tokenString);
+    int saveToken(string &tokenString);
+    int loadToken(string &tokenString);
 
-    bool saveRoute(QString name);
-    Route loadRoute(QString name);
-    QList listAllRoutes();
+    bool saveRoute(string &name, Route &route);
+    bool loadRoute(string &name, Route &route);
+    list<int> listSavedRouteId();
+    bool listAvailableRoutes(list<string> &lstName);
 
-    Storage getInstance();
+    static Storage& getInstance();
     virtual ~Storage();
 
 private:
     Storage();
-    QMutex saveTokenMutex;
-    QPointer<Storage> storage;
 };
 
 #endif // STORAGE_H

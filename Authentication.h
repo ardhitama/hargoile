@@ -8,7 +8,7 @@ class Authentication : public QObject
 public:
     Authentication getInstance();
     int authenticateToken();
-    int createToken(QString username, QString password);
+    int createToken(string username, string password);
     int revokeToken();
 private:
     Authentication();

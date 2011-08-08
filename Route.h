@@ -3,11 +3,11 @@
 
 #include "stdafx.h"
 
-class Route : public QObject
+class Route
 {
 public:
     Route();
-
+    bool Serialize();
     virtual ~Route();
 };
 

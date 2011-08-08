@@ -1,15 +1,73 @@
 #include "Hargoile.h"
 
-Hargoile::Hargoile(int &argc, char **argv) : QApplication(argc, argv)
+Hargoile::Hargoile()
 {
-    accountState = InvalidState;
-    connectionState = InvalidState;
-    gpsState = InvalidState;
-    recorderState = InvalidState;
+    initialize();
+}
 
-    const QString configFilename = QString("config.hgl");
+void Hargoile::initialize()
+{
+    StateManager::getInstance().switchState(StateManager::Init);
 
-    AccountLinkDlg aclDlg;
-    aclDlg.showMaximized();
-    aclDlg.exec();
+    if(Config::getInstance().getToken() == "") // account token is empty
+    {
+        StateManager::getInstance().switchState(StateManager::LingkingAccount);
+        showAccountDialog();
+    }
+}
+
+int Hargoile::startRouteRecording()
+{
+}
+
+int Hargoile::pauseRouteRecording()
+{
+}
+
+int Hargoile::stopRouteRecording()
+{
+}
+
+int Hargoile::loadRoute(int routeId)
+{
+}
+
+int Hargoile::saveRoute()
+{
+}
+
+int Hargoile::downloadRoute()
+{
+}
+
+int Hargoile::uploadRoute(int routeId)
+{
+}
+
+int Hargoile::linkAccount()
+{
+}
+
+int Hargoile::unlinkAccount()
+{
+}
+
+void Hargoile::showAccountDialog()
+{
+}
+
+void Hargoile::showRecorderDialog()
+{
+}
+
+void Hargoile::showManagerDialog()
+{
+}
+
+void Hargoile::showRouteDialog()
+{
+}
+
+void Hargoile::closeAllDialog()
+{
 }

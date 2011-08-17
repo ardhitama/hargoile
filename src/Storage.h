@@ -5,7 +5,7 @@
 #include "Route.h"
 #include "list"
 
-#include "libs/sqllite3/sqlite3.h"
+#include "sqllite3/sqlite3.h"
 
 class Storage
 {
@@ -26,6 +26,11 @@ private:
     sqlite3 *sqliDB;
     int sqliStatus;
     Storage();
+};
+
+class StorageException : std::exception
+{
+    //
 };
 
 #endif // STORAGE_H

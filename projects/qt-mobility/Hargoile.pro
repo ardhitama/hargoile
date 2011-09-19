@@ -44,15 +44,16 @@ SOURCES += \
     ../../src/Network.cpp \
     ../../src/Authentication.cpp \
     ../../src/Utility.cpp \
-    ../../src/Recorder.cpp \
     ../../dialogs/RecorderDlg.cpp \
     ../../dialogs/RouteDlg.cpp \
     ../../dialogs/ManagerDlg.cpp \
     ../../src/Config.cpp \
     ../../src/QtMain.cpp \
     ../../src/StateManager.cpp \
-    ../../src/ErrorReporting.cpp \
-    ../../src/Logger.cpp
+    ../../src/Exception/ErrorReporting.cpp \
+    ../../src/Logger.cpp \
+    ../../src/Location/qt-mobility/PositionRecorderImpl.cpp \
+    ../../src/Exception/Exception.cpp
 HEADERS += \
     ../../src/Hargoile.h \
     ../../dialogs/AccountLinkDlg.h \
@@ -62,7 +63,6 @@ HEADERS += \
     ../../src/Authentication.h \
     ../../src/Utility.h \
     ../../src/stdafx.h \
-    ../../src/Recorder.h \
     ../../dialogs/RecorderDlg.h \
     ../../dialogs/RouteDlg.h \
     ../../dialogs/ManagerDlg.h \
@@ -70,9 +70,13 @@ HEADERS += \
     ../../src/Config.h \
     ../../src/MutexLocker.h \
     ../../src/StateManager.h \
-    ../../src/Assert.h \
-    ../../src/ErrorReporting.h \
-    ../../src/Logger.h
+    ../../src/Exception/Assert.h \
+    ../../src/Exception/ErrorReporting.h \
+    ../../src/Logger.h \
+    ../../src/Exception/Exception.h \
+    ../../src/Location/PositionRecorder.h \
+    ../../src/Location/qt-mobility/PositionRecorderImpl.h \
+    ../../src/Pattern/Singleton.h
 FORMS += \
     ../../dialogs/RecorderDlg.ui \
     ../../dialogs/RouteDlg.ui \
@@ -82,4 +86,23 @@ FORMS += \
 include(deployment.pri)
 qtcAddDeployment()
 
-OTHER_FILES +=
+OTHER_FILES += \
+    ../../Project.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

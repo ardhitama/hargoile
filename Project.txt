@@ -1,0 +1,6 @@
+Project Description:
+Name    : Hargoile Mobile
+Purpose : Mobile client position tracker
+Future  :
+ - Implement NFC
+ - Platform ports

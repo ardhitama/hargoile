@@ -3,30 +3,31 @@ DEPLOYMENTFOLDERS = # file1 dir1
 VERSION = 0.0.1
 CONFIG += silent
 symbian: {
-        #TARGET.EPOCSTACKSIZE = 0x5000 // 20kb
-        #TARGET.EPOCHEAPSIZE = 0x20000 0x1000000 // Min 128kb, Max 16Mb
-        #TARGET.EPOCALLOWDLLDATA = 1
-        TARGET.UID3 = 0xE57332A1
-        TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
-        TARGET = Hargoile_s60v5_v001
+    #TARGET.EPOCSTACKSIZE = 0x5000 // 20kb
+    #TARGET.EPOCHEAPSIZE = 0x20000 0x1000000 // Min 128kb, Max 16Mb
+    #TARGET.EPOCALLOWDLLDATA = 1
+    TARGET.UID3 = 0xE57332A1
+    TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
+    TARGET = Hargoile_s60v5_v001
 
-        TEMPLATE = app
-        CONFIG += mobility
-        MOBILITY += location
+    TEMPLATE = app
+    CONFIG += mobility
+    MOBILITY += location
 
-        DEFINES += RELEASE
+    DEFINES += RELEASE
 }
 
 simulator: {
-        TARGET.UID3 = 0xE57332A1
-        TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
-        TARGET = Hargoile_s60v5_v001
+    QT -= GUI
+    TARGET.UID3 = 0xE57332A1
+    TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
+    TARGET = Hargoile_s60v5_v001
 
-        TEMPLATE = app
-        CONFIG += mobility
-        MOBILITY += location
+    TEMPLATE = app
+    CONFIG += mobility console
+    MOBILITY += location
 
-        DEFINES += DEBUG
+    DEFINES += DEBUG
 }
 
 QT += core gui network multimedia xml
@@ -50,10 +51,9 @@ SOURCES += \
     ../../src/Config.cpp \
     ../../src/QtMain.cpp \
     ../../src/StateManager.cpp \
-    ../../src/Exception/ErrorReporting.cpp \
     ../../src/Logger.cpp \
     ../../src/Location/qt-mobility/PositionRecorderImpl.cpp \
-    ../../src/Exception/Exception.cpp
+    ../../libs/sqllite3/sqlite3.c
 HEADERS += \
     ../../src/Hargoile.h \
     ../../dialogs/AccountLinkDlg.h \
@@ -70,13 +70,17 @@ HEADERS += \
     ../../src/Config.h \
     ../../src/MutexLocker.h \
     ../../src/StateManager.h \
-    ../../src/Exception/Assert.h \
-    ../../src/Exception/ErrorReporting.h \
     ../../src/Logger.h \
     ../../src/Exception/Exception.h \
     ../../src/Location/PositionRecorder.h \
     ../../src/Location/qt-mobility/PositionRecorderImpl.h \
-    ../../src/Pattern/Singleton.h
+    ../../src/Technique/Singleton.h \
+    ../../src/Exception/Assert.h \
+    ../../src/Exception/DebugLog.h \
+    ../../src/Exception/DebugInfo.h \
+    ../../src/Utility/String.h \
+    ../../libs/sqllite3/sqlite3ext.h \
+    ../../libs/sqllite3/sqlite3.h
 FORMS += \
     ../../dialogs/RecorderDlg.ui \
     ../../dialogs/RouteDlg.ui \
@@ -88,6 +92,24 @@ qtcAddDeployment()
 
 OTHER_FILES += \
     ../../Project.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

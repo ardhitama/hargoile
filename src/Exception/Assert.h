@@ -3,14 +3,14 @@
 
 #ifdef DEBUG
 
-#undef ASSERT
-#undef TRACE
-
-#define ASSERT(cond) (cond) ? "Assertion(\"" ## cond ## "\", \"" ## __FILE__ ## "\", " ##  __LINE__ ## ")" : ""
-#define TRACE "Trace(\""__FILE__ ## "\", " ## #__LINE__ ## ")"
+#define TOSTRING(info) #info
+#define ASSERT(cond) "Assert(\"" TOSTRING(cond) "\", \"" __FILE__ "\", " TOSTRING(__LINE__) ")"
+#define FUNCNM "\"" __FUNCSIG__ "\""
+#define TRACE "Trace(\"" __FILE__ "\", " TOSTRING(__LINE__) ")"
 
 #else
 #define ASSERT(cond) ""
+#define FUNCNM ""
 #define TRACE ""
 #endif // DEBUG
 

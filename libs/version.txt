@@ -1,2 +1,2 @@
 boost_1_47_0
-sqlite-amalgamation-3070701
+sqlite-amalgamation-3.7.8

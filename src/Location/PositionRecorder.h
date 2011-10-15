@@ -1,18 +1,18 @@
 #ifndef POSITIONRECORDER_H
 #define POSITIONRECORDER_H
 
-#include "stdafx.h"
+#include "../Exception/Exception.h"
 
 class PositionRecorder
 {
 public:
-    virtual void start() throw Exception = 0;
-    virtual void stop() throw Exception = 0;
-    virtual void pause() throw Exception = 0;
+    virtual void start() = 0;
+    virtual void stop() = 0;
+    virtual void pause() = 0;
     // interval is in msec
-    virtual void setUpdateInterval(int interval) throw Exception;
-    virtual void forceUpdate() throw Exception;
-    virtual void onUpdate() throw Exception = 0;
+    virtual void setUpdateInterval(int interval) = 0;
+    virtual void forceUpdate() = 0;
+    virtual void onUpdate() = 0;
 };
 
 #endif // POSITIONRECORDER_H

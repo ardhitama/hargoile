@@ -7,34 +7,38 @@
 class DebugInfo
 {
 public:
-    enum {Log = 0, Notice, Warning, Error};
-    DebugInfo();
-    DebugInfo(char *strInfo, int infoPriority, int infoSignature);
-    DebugInfo(String &strInfo, int infoPriority, int infoSignature);
+	enum {Log = 0, Notice, Warning, Error};
+
+	DebugInfo()
+	{
+		DebugInfo::strInfo = String("");
+		DebugInfo::infoPriority = DebugInfo::Log;
+		DebugInfo::infoSignature = -1;
+	}
+
+	DebugInfo(char const *strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
+	{
+		DebugInfo::strInfo = String(strInfo);
+		DebugInfo::infoPriority = infoPriority;
+		DebugInfo::infoSignature = infoSignature;
+	}
+
+	DebugInfo(const String &strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
+	{
+		DebugInfo::strInfo = strInfo;
+		DebugInfo::infoPriority = infoPriority;
+		DebugInfo::infoSignature = infoSignature;
+	}
+
+	String getStrInfo()
+	{
+		return strInfo;
+	}
+
 private:
-    String strInfo;
-    int infoSignature;
-    int infoPriority;
+	String strInfo;
+	int infoSignature;
+	int infoPriority;
 };
-
-DebugInfo::DebugInfo()
-{
-    DebugInfo::infoPriority = DebugInfo::Log;
-    DebugInfo::infoSignature = -1;
-}
-
-DebugInfo::DebugInfo(char *strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
-{
-    DebugInfo::strInfo = String(strInfo);
-    DebugInfo::infoPriority = infoPriority;
-    DebugInfo::infoSignature = infoSignature;
-}
-
-DebugInfo::DebugInfo(String &strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
-{
-    DebugInfo::strInfo = strInfo;
-    DebugInfo::infoPriority = infoPriority;
-    DebugInfo::infoSignature = infoSignature;
-}
 
 #endif // DEBUGINFO_H

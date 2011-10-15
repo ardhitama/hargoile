@@ -3,78 +3,82 @@
 
 #include <list>
 #include <exception>
-#include "Assert.h"
 #include "DebugInfo.h"
 #include "../Utility/String.h"
 
 class Exception : virtual public std::exception
 {
 public:
-    Exception();
-    Exception(char *strInfo);
-    Exception(String strInfo);
-    Exception(DebugInfo dbgInfo);
-    Exception(String strInfo, DebugInfo dbgInfo);
 
-    virtual ~Exception() throw();
+	Exception()
+	{
+		Exception::strInfo = String();
+	}
 
-    void getInfo(String &strInfoOut);
-    void getDebugInfo(DebugInfo &dbgInfoOut);
+	Exception(const String &strInfo)
+	{
+		Exception::strInfo = strInfo;
+	}
 
-    friend Exception operator << (Exception ex, String strInfo);
-    friend Exception operator << (Exception ex, char *strInfo);
-    friend Exception operator << (Exception ex, DebugInfo dbgInfo);
+	Exception(const char *strInfo)
+	{
+		Exception::strInfo = String(strInfo);
+	}
+
+	Exception(const DebugInfo &dbgInfo)
+	{
+		Exception::dbgInfo = dbgInfo;
+		DebugLog::getInstance().add(dbgInfo);
+	}
+
+	Exception(const String &strInfo, const DebugInfo &dbgInfo)
+	{
+		Exception::strInfo = strInfo;
+		Exception::dbgInfo = dbgInfo;
+		DebugLog::getInstance().add(dbgInfo);
+	}
+
+	virtual ~Exception()
+	{
+		//
+	}
+
+	String getInfo()
+	{
+		return strInfo;
+	}
+
+	DebugInfo getDebugInfo()
+	{
+		return dbgInfo;
+	}
+
+	friend Exception& operator << (Exception &ex, const String &strInfo);
+	friend Exception& operator << (Exception &ex, const char *strInfo);
+	friend Exception& operator << (Exception &ex, const DebugInfo &dbgInfo);
 
 private:
-    String strInfo; // user friendly message
-    DebugInfo dbgInfo; // info for debugging purpose
+	String strInfo; // user friendly message
+	DebugInfo dbgInfo; // info for debugging purpose
 };
 
-inline Exception operator << (Exception ex, String strInfo)
+inline Exception& operator << (Exception &ex, const String &strInfo)
 {
-    ex.strInfo.append(strInfo);
-    return ex;
+	ex.strInfo.append(strInfo);
+	return ex;
 }
 
-inline Exception operator << (Exception ex, char *strInfo)
+inline Exception& operator << (Exception &ex, const char *strInfo)
 {
-    ex.strInfo.append(String(strInfo));
-    return ex;
+	ex.strInfo.append(String(strInfo));
+	return ex;
 }
 
-inline Exception operator << (Exception ex, DebugInfo dbgInfo)
+inline Exception& operator << (Exception &ex, const DebugInfo &dbgInfo)
 {
-    ex.dbgInfo = dbgInfo;
-    DebugLog::getInstance()->add(dbgInfo);
-    return ex;
-}
-
-Exception::Exception()
-{
-    Exception::strInfo = String();
-}
-
-Exception::Exception(String strInfo)
-{
-    Exception::strInfo = strInfo;
-}
-
-Exception::Exception(char *strInfo)
-{
-    Exception::strInfo = String(strInfo);
-}
-
-Exception::Exception(DebugInfo dbgInfo)
-{
-    Exception::dbgInfo = dbgInfo;
-    DebugLog::getInstance()->add(dbgInfo);
-}
-
-Exception::Exception(String strInfo, DebugInfo dbgInfo)
-{
-    Exception::strInfo = strInfo;
-    Exception::dbgInfo = dbgInfo;
-    DebugLog::getInstance()->add(dbgInfo);
+	ex.dbgInfo = dbgInfo;
+	DebugLog::getInstance().add(dbgInfo);
+	return ex;
 }
 
 #endif // EXCEPTION_H

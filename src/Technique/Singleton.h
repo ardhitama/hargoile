@@ -10,19 +10,20 @@
   Note: don't make virtual base class from this class
 */
 
-template<class T> class Singleton
+template<typename T> class Singleton
 {
 public:
-    static T* getInstance();
+    static T& getInstance();
     explicit Singleton();
     virtual ~Singleton();
+	
 private:
     static boost::shared_ptr<T> instance;
 };
 
 // thread safe Singleton
 template<class T>
-T* Singleton<T>::getInstance()
+T& Singleton<T>::getInstance()
 {
     static int refCount = 0;
     static bool isInstantiated = false;
@@ -37,7 +38,7 @@ T* Singleton<T>::getInstance()
                 instance = boost::shared_ptr<T>(new T());
                 isInstantiated = true;
                 refCount = 0;
-                return instance.get();
+				return *instance;
             } catch(...)
             {
                 // rethrow any exceptions
@@ -50,7 +51,23 @@ T* Singleton<T>::getInstance()
         }
     }
     --refCount;
-    return instance.get();
+    return *instance;
 }
+
+template<class T>
+Singleton<T>::Singleton()
+{
+	//
+}
+
+template<class T>
+Singleton<T>::~Singleton()
+{
+	//delete instance;
+	//instance = 0;
+}
+
+template<class T>
+boost::shared_ptr<T> Singleton<T>::instance;
 
 #endif // SINGLETON_H

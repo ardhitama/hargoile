@@ -3,7 +3,9 @@
 
 #ifdef DEBUG
 
-#define TOSTRING(info) #info
+#define TOSTRING(info) TOSTRING2(info)
+#define TOSTRING2(info) #info
+
 #define ASSERT(cond) "Assert(\"" TOSTRING(cond) "\", \"" __FILE__ "\", " TOSTRING(__LINE__) ")"
 #define FUNCNM "\"" __FUNCSIG__ "\""
 #define TRACE "Trace(\"" __FILE__ "\", " TOSTRING(__LINE__) ")"

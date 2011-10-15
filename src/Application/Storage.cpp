@@ -2,18 +2,9 @@
 #include "Network.h"
 #include "MutexLocker.h"
 
-using namespace std;
-
 Storage::Storage()
 {
-    sqliStatus = sqlite3_open_v2("storage.hgl", &sqliDB,  SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, "");
-    if(sqliStatus == SQLITE_ERROR)
-    {
-        TRACE("sqlite3 error: " << sqlite3_errmsg(sqliDB));
-        sqlite3_close(sqliDB);
-        throw
-    }
-    sqlite3
+
 }
 
 Storage::~Storage()
@@ -34,9 +25,9 @@ Storage& Storage::getInstance()
   0  : token not available
   1  : token loaded
 */
-int Storage::loadToken(string &strToken)
+int Storage::loadToken(String &strToken)
 {
-    sqlite3_get_table()
+    sqlite3_get_table();
     /*
     sync;
     fstream file("tkn.hgl", fstream::in);
@@ -62,7 +53,7 @@ int Storage::loadToken(string &strToken)
     */
 }
 
-int Storage::saveToken(string &tokenString)
+int Storage::saveToken(String &tokenString)
 {
     sync;
 
@@ -73,7 +64,7 @@ int Storage::saveToken(string &tokenString)
 
     if (!file.is_open())
     {
-        TRACE("Unable to write tkn.hgl");
+        throw Exception("Unable to write tkn.hgl");
         return -1;
     }
 
@@ -83,18 +74,18 @@ int Storage::saveToken(string &tokenString)
     return 1;
 }
 
-bool Storage::saveRoute(string &name, Route &route)
+bool Storage::saveRoute(String &name, Route &route)
 {
     sync;
     return true;
 }
 
-bool Storage::loadRoute(string &name, Route &route)
+bool Storage::loadRoute(String &name, Route &route)
 {
     return false;
 }
 
-bool Storage::listAvailableRoutes(list<string> &lstName)
+bool Storage::listAvailableRoutes(list<String> &lstName)
 {
     return true;
 }

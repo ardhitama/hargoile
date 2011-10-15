@@ -7,11 +7,11 @@ class Config
 {
 public:
     static Config& getInstance();
-    void setConfig(Config configType, string value);
-    string getToken();
+    void setConfig(Config configType, String value);
+    String& getToken();
 private:
     Config();
-    string strToken;
+    String strToken;
 };
 
 #endif // CONFIG_H

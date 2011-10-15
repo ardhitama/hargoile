@@ -11,3 +11,9 @@
 *.user
 Makefile
 *.mk
+/projects/vs2010/~trash
+/projects/vs2010/ipch
+*.sdf
+*.opensdf
+*.suo
+*.filters

@@ -1,9 +1,11 @@
 #ifndef GEOPOINT_H
 #define GEOPOINT_H
 
+#include "Point.h"
 #include "Number.h"
 
-class GeoPoint
+
+class GeoPoint : public Point
 {
 public:
 	int id;
@@ -32,6 +34,7 @@ public:
 			DebugInfo("Latitude of point 1 out of bounds (-90 <= latitude <=90)", DebugInfo::Warning);
 		}
 		GeoPoint::latitude = latitude;
+		GeoPoint::x = latitudeToX();
 	}
 
 	void setLongitude(double longitude)
@@ -41,6 +44,7 @@ public:
 		while (longitude < -180) 
 			longitude += 360;
 		GeoPoint::longitude = longitude;
+		GeoPoint::y = longitudeToY();
 	}
 
 	void setAltitude(double altitude)
@@ -51,6 +55,7 @@ public:
 			altitude = -6340000;
 		}
 		GeoPoint::altitude = altitude;
+		GeoPoint::z = altitudeToZ();
 	}
 
 	void setSpeed(double speed)
@@ -128,7 +133,7 @@ public:
 
 	friend double geodeticDistance(const GeoPoint &g1, const GeoPoint &g2);
 
-private:
+protected:
 	double latitude, longitude, altitude, speed;
 	long long time;	// in seconds
 };

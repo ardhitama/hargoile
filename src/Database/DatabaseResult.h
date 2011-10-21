@@ -4,49 +4,130 @@
 #include <vector>
 #include "../Utility/String.h"
 
+#include "DatabaseAll.h"
+
 class DatabaseColumn
 {
+	friend class Database;
+	friend class DatabaseImpl;
 public:
+	bool getNullData()
+	{
+		return isNullData;
+	}
+
+	int getIntData()
+	{
+		return intData;
+	}
+
+	long long getInt64Data()
+	{
+		return int64Data;
+	}
+
+	String& getStrData()
+	{
+		return strData;
+	}
+
+	double getDoubleData()
+	{
+		return doubleData;
+	}
+
+	std::vector<unsigned char>& getBinData()
+	{
+		return binData;
+	}
+
+	int getColType()
+	{
+		return colType;
+	}
+
+	enum {TYPE_INTEGER, TYPE_BIGINTEGER, TYPE_TEXT, TYPE_BLOB, TYPE_FLOAT, TYPE_NULL};
+
+private:
+	int intData, colNum, colType;
+	long long int64Data;
+	double doubleData;
+	bool isNullData;
+	String strData;
+
+	std::vector<unsigned char> binData;
+
+	DatabaseColumn()
+	{
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		doubleData = ~0;
+		setNullData();
+	}
 
 	DatabaseColumn(const int intData)
 	{
 		setIntData(intData);
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		doubleData = ~0;
+		isNullData = false;
 	}
 
 	DatabaseColumn(const long long int64Data)
 	{
 		setInt64Data(int64Data);
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		doubleData = ~0;
+		isNullData = false;
 	}
 
 	DatabaseColumn(const double doubleData)
 	{
 		setDoubleData(doubleData);
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		isNullData = false;
 	}
 
 	DatabaseColumn(const String &strData)
 	{
 		setStrData(strData);
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		doubleData = ~0;
+		isNullData = false;
 	}
 
 	DatabaseColumn(const unsigned char *binData)
 	{
 		setBinData(binData);
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		doubleData = ~0;
+		isNullData = false;
 	}
 
 	DatabaseColumn(const unsigned char &&binData)
 	{
 		setBinData(&binData);
-	}
-
-	DatabaseColumn(const bool isNull)
-	{
-		if(isNull)
-			setNullData();
-	}
-
-	DatabaseColumn()
-	{
-		//
+		intData = ~0;
+		colNum = 0;
+		colType = -1;
+		int64Data = ~0;
+		doubleData = ~0;
+		isNullData = false;
 	}
 
 	void setIntData(const int intData)
@@ -96,87 +177,69 @@ public:
 		DatabaseColumn::isNullData = true;
 		DatabaseColumn::colType = TYPE_NULL;
 	}
-
-	bool getNullData()
-	{
-		return isNullData;
-	}
-
-	int getIntData()
-	{
-		return intData;
-	}
-
-	long long getInt64Data()
-	{
-		return int64Data;
-	}
-
-	String getStrData()
-	{
-		return strData;
-	}
-
-	double getDoubleData()
-	{
-		return doubleData;
-	}
-
-	std::vector<unsigned char> getBinData()
-	{
-		return binData;
-	}
-
-	int getColType()
-	{
-		return colType;
-	}
-
-	enum {TYPE_INTEGER, TYPE_BIGINTEGER, TYPE_TEXT, TYPE_BLOB, TYPE_FLOAT, TYPE_NULL};
-
-private:
-	int intData, colNum, colType;
-	long long int64Data;
-	double doubleData;
-	bool isNullData;
-	String strData;
-	std::vector<unsigned char> binData;
 };
 
 class DatabaseRow
 {
+	friend class Database;
+	friend class DatabaseImpl;
 public:
-	void addColumn(const DatabaseColumn &column)
+	std::vector<DatabaseColumn>& getColumnData()
 	{
-		DatabaseRow::column.push_back(column);
-	}
-
-	std::vector<DatabaseColumn>& getColumn()
-	{
-		return column;
+		return colData;
 	}
 private:
-	std::vector<DatabaseColumn> column;
-	int colCount, rowNum;
+	std::vector<DatabaseColumn> colData;
+
+	void addColumn(const DatabaseColumn &column)
+	{
+		DatabaseRow::colData.push_back(column);
+	}
 };
 
 class DatabaseResult
 {
+	friend class Database;
+	friend class DatabaseImpl;
 public:
-
-	void addRowData(DatabaseRow rowData)
-	{
-		DatabaseResult::rowData.push_back(rowData);
-	}
-
 	std::vector<DatabaseRow>& getRowData()
 	{
 		return rowData;
 	}
 
+	int getRowCount()
+	{
+		return rowData.size();
+	}
+
+	int getColCount()
+	{
+		return rowData[0].getColumnData().size();
+	}
+
+	int getRowChanged()
+	{
+		return rowChanged;
+	}
+
+	DatabaseResult()
+	{
+		rowChanged = 0;
+	}
+
 private:
 	std::vector<DatabaseRow> rowData;
-	int rowCount;
+	int rowChanged;
+
+	void addRowData(DatabaseRow row)
+	{
+		DatabaseResult::rowData.push_back(row);
+	}
+
+	void setRowChanged(int nChg)
+	{
+		rowChanged = nChg;
+	}
 };
 
 

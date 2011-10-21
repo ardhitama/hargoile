@@ -8,9 +8,7 @@
 
 #include "../../libs/sqllite3/sqlite3.h"
 #include "../../Utility/String.h"
-#include "../Database.h"
-#include "../DatabaseResult.h"
-#include "../DatabaseException.h"
+#include "../DatabaseAll.h"
 
 class DatabaseImpl : virtual public Database
 {
@@ -69,7 +67,7 @@ public:
                        "UNION ALL "
                        "SELECT name FROM sqlite_temp_master "
                        "WHERE type IN ('table','view') )");
-            tableCount = res.getRowData().at(0).getColumn().at(0).getIntData();
+            tableCount = res.getRowData().at(0).getColumnData().at(0).getIntData();
 
         } catch (...)
         {
@@ -81,21 +79,27 @@ public:
 
     DatabaseResult exec(const String sqlStmt)
     {
+		DatabaseColumn dbCol;
+        DatabaseRow dbRow;
+        DatabaseResult dbRes;
+
         if(sqliteStatus != SQLITE_OK)
             throw DatabaseNotOpenException() << DebugInfo(TRACE, DebugInfo::Error);
 
 		sqliteStatus = sqlite3_prepare_v2(db, sqlStmt.data(),
                                           -1, &dbStmt, NULL);
         if(sqliteStatus != SQLITE_OK)
-            throw DatabaseStatementInvalidException() << " " << sqlite3_errmsg(db) << DebugInfo(TRACE, DebugInfo::Error);
+            throw DatabaseStatementInvalidException() << " in " << sqlStmt << " (" << sqlite3_errmsg(db) << ")" << DebugInfo(TRACE, DebugInfo::Error);
 
         int iCol = 0, colType = -1;
         int colCount = sqlite3_column_count(dbStmt);
         int stepRet = sqlite3_step(dbStmt);
+		bool isNoResult = true;
 
-        DatabaseColumn dbCol;
-        DatabaseRow dbRow;
-        DatabaseResult dbRes;
+        
+
+		if(stepRet == SQLITE_ROW)
+			isNoResult = false;
 
         while(stepRet == SQLITE_ROW)
         {
@@ -105,6 +109,7 @@ public:
                 if(colType == SQLITE_INTEGER)
                 {
                     dbCol = DatabaseColumn(sqlite3_column_int(dbStmt, iCol));
+					dbCol.setInt64Data(sqlite3_column_int64(dbStmt, iCol));
                 }
                 else if(colType == SQLITE_FLOAT)
                 {
@@ -133,9 +138,17 @@ public:
 
         if(stepRet != SQLITE_DONE)
             throw DatabaseResultNotDoneException() << " " << sqlite3_errmsg(db) << DebugInfo(TRACE, DebugInfo::Error);
+		
+		if(isNoResult == true)
+			dbRes.setRowChanged(sqlite3_changes(db));		
 
         return dbRes;
     }
+
+	inline DatabaseResult operator << (const String sqlStmt)
+	{
+		return exec(sqlStmt);
+	}
 
     enum { DBOk, DBNotOpen, DBNotReady };
 

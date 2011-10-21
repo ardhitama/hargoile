@@ -2,8 +2,8 @@
 #define DOUGLASPUECKER_H
 
 #include <vector>
-#include "../../Utility/Number.h"
 #include "../../Utility/Point.h"
+#include "../../Utility/Number.h"
 
 /*
 	T must be Point or the derived class of Point
@@ -44,7 +44,7 @@ void dpReduceRecursive(std::vector<T> &vLineIn, std::vector<T> &vLineOut, const 
 
 // tolerance is in meters
 template <typename T>
-std::vector<GeoPoint> dpSimplify(std::vector<T> &vLineIn, double tolerance)
+std::vector<T> dpSimplify(std::vector<T> &vLineIn, double tolerance)
 {
 	std::vector<T> vLineOut;
 

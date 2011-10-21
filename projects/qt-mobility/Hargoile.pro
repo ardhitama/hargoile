@@ -14,7 +14,7 @@ symbian: {
     CONFIG += mobility
     MOBILITY += location
 
-    DEFINES += RELEASE
+    DEFINES += RELEASE USE_SQLITEDB
 }
 
 simulator: {
@@ -27,13 +27,13 @@ simulator: {
     CONFIG += mobility console
     MOBILITY += location
 
-    DEFINES += DEBUG
+    DEFINES += DEBUG USE_SQLITEDB
 }
 
 QT += core gui network multimedia xml
 
 PRECOMPILED_HEADER = stdafx.h
-INCLUDEPATH += ../../libs/
+INCLUDEPATH += ../../libs/ ../../src/
 
 DEFINES += QT_MOBILITY QT_APP SQLITE_THREADSAFE=1
 
@@ -53,12 +53,13 @@ SOURCES += \
     ../../src/StateManager.cpp \
     ../../src/Logger.cpp \
     ../../src/Location/qt-mobility/PositionRecorderImpl.cpp \
-    ../../libs/sqllite3/sqlite3.c
+    ../../src/System/Storage.cpp \
+    ../../src/Application/Storage.cpp \
+    ../../src/Application/Storage.cpp \
+    ../../src/Application/Route.cpp
 HEADERS += \
     ../../src/Hargoile.h \
     ../../dialogs/AccountLinkDlg.h \
-    ../../src/Storage.h \
-    ../../src/Route.h \
     ../../src/Network.h \
     ../../src/Authentication.h \
     ../../src/Utility.h \
@@ -73,14 +74,34 @@ HEADERS += \
     ../../src/Logger.h \
     ../../src/Exception/Exception.h \
     ../../src/Location/PositionRecorder.h \
-    ../../src/Location/qt-mobility/PositionRecorderImpl.h \
     ../../src/Technique/Singleton.h \
     ../../src/Exception/Assert.h \
     ../../src/Exception/DebugLog.h \
     ../../src/Exception/DebugInfo.h \
     ../../src/Utility/String.h \
     ../../libs/sqllite3/sqlite3ext.h \
-    ../../libs/sqllite3/sqlite3.h
+    ../../libs/sqllite3/sqlite3.h \
+    ../../src/Utility/Storage.h \
+    ../../src/Utility/MutexLocker.h \
+    ../../src/Application/Storage.h \
+    ../../src/Application/Storage.h \
+    ../../src/Application/Route.h \
+    ../../src/Application/config.h \
+    ../../src/Utility/Database.h \
+    ../../src/Utility/Database/Database.h \
+    ../../src/Utility/Database/Database.h \
+    ../../src/Location/qt-mobility/QtmPositionRecorderImpl.h \
+    ../../src/Utility/qt/QtMutexLockerImpl.h \
+    ../../src/Utility/Database/sqlite/DatabaseImpl.h \
+    ../../src/Utility/Database/DatabaseAll.h \
+    ../../src/Utility/Database/DatabaseException.h \
+    ../../src/Exception/ExceptionAll.h \
+    ../../src/Utility/Database/DatabaseResult.h \
+    ../../src/Database/DatabaseResult.h \
+    ../../src/Database/DatabaseException.h \
+    ../../src/Database/DatabaseAll.h \
+    ../../src/Database/Database.h \
+    ../../src/Database/sqlite/DatabaseImpl.h
 FORMS += \
     ../../dialogs/RecorderDlg.ui \
     ../../dialogs/RouteDlg.ui \
@@ -92,6 +113,48 @@ qtcAddDeployment()
 
 OTHER_FILES += \
     ../../Project.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

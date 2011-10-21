@@ -16,15 +16,25 @@ public:
 		GeoPoint::altitude = 0;
 		GeoPoint::speed = 0;
 		GeoPoint::time = 0;
+		GeoPoint::accuracy = 0;
+
+		GeoPoint::x = latitudeToX();
+		GeoPoint::y = longitudeToY();
+		GeoPoint::z = altitudeToZ();
 	}
 
-	GeoPoint::GeoPoint(double latitude, double longitude, double altitude, double speed, long long time = 0)
+	GeoPoint::GeoPoint(double latitude, double longitude, double altitude, double speed, long long time, double accuracy)
 	{
 		GeoPoint::latitude = latitude;
 		GeoPoint::longitude = longitude;
 		GeoPoint::altitude = altitude;
 		GeoPoint::speed = speed;
 		GeoPoint::time = time;
+		GeoPoint::accuracy = accuracy;
+
+		GeoPoint::x = latitudeToX();
+		GeoPoint::y = longitudeToY();
+		GeoPoint::z = altitudeToZ();
 	}
 
 	void setLatitude(double latitude)
@@ -77,6 +87,11 @@ public:
 		GeoPoint::time = time;
 	}
 
+	void setAccuracy(double accuracy)
+	{
+		GeoPoint::accuracy = accuracy;
+	}
+
 	inline double getLatitude()
 	{
 		return latitude;
@@ -100,6 +115,11 @@ public:
 	inline long long getTime()
 	{
 		return time;
+	}
+
+	inline double getAccuracy()
+	{
+		return GeoPoint::accuracy;
 	}
 
 	// convert from geodetic coordinates to spherical coordinates in meters
@@ -134,7 +154,7 @@ public:
 	friend double geodeticDistance(const GeoPoint &g1, const GeoPoint &g2);
 
 protected:
-	double latitude, longitude, altitude, speed;
+	double latitude, longitude, altitude, speed, accuracy;
 	long long time;	// in seconds
 };
 

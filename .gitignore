@@ -17,3 +17,6 @@ Makefile
 *.opensdf
 *.suo
 *.filters
+*.ilk
+*.pdb
+*.exe

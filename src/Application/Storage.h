@@ -27,6 +27,7 @@ public:
 
 			db.exec("CREATE TABLE IF NOT EXISTS route_points ( "
 				"route_uuid char(36), "
+				"point_order int not null, "
 				"latitude double default 0, "
 				"longitude double default 0, "
 				"altitude double default 0, "
@@ -76,9 +77,15 @@ public:
 		{
 			db.exec("INSERT INTO routes VALUES('" << route.getUUID() << "', '" << route.getName() << "');");
 
+			int point_order = 0;
+			
 			std::for_each(std::begin(route.getData()), std::end(route.getData()), [&](GeoPoint gp) {
-				db.exec("INSERT INTO route_points VALUES('" << route.getUUID() << "', " << gp.getLatitude() << ", " << gp.getLongitude() << ", " << gp.getAltitude() << ", " << gp.getSpeed() << ", " << gp.getTime() << ", " << gp.getAccuracy() << ");");
+				String insertSql;
+				insertSql << ("INSERT INTO route_points VALUES ('" << route.getUUID() << "', " << point_order << ", " << gp.getLatitude() << ", " << gp.getLongitude() << ", " << gp.getAltitude() << ", " << gp.getSpeed() << ", " << gp.getTime() << ", " << gp.getAccuracy() << "); ");
+				db.exec(insertSql);
+				++point_order;
 			});
+			
 
 		} catch (Exception &e)
 		{
@@ -88,14 +95,15 @@ public:
 
 	Route getRoute(String& routeUUID)
 	{
+		Route route;
 		try
 		{
-			Route route;
+			
 			DatabaseResult res;
 			res = db.exec("SELECT name FROM routes WHERE uuid = '" << routeUUID << "';");
 			route.setName(res.getRowData().at(0).getColumnData().at(0).getStrData());
 
-			res = db.exec("SELECT latitude, longitude, altitude, speed, time, accuracy FROM route_points WHERE uuid = '" << routeUUID << "';");
+			res = db.exec("SELECT latitude, longitude, altitude, speed, time, accuracy FROM route_points WHERE route_uuid = '" << routeUUID << "' ORDER BY point_order ASC;");
 
 			std::for_each(res.getRowData().begin(), res.getRowData().end(), [&](DatabaseRow row) {
 				std::vector<DatabaseColumn> colData = row.getColumnData();
@@ -111,10 +119,12 @@ public:
 
 				route.addPoint(gp);
 			});
+
 		} catch (Exception &e)
 		{
 			ErrorNotificationImpl::textOut(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
 		}
+		return route;
 	}
 
 	void deleteRoute(String& routeUUID)
@@ -133,7 +143,7 @@ public:
 	{
 		std::map<String, String> rtMap;
 		DatabaseResult res;
-		res = db.exec("SELECT uuid, name FROM routes;");
+		res = db.exec("SELECT uuid, name FROM routes ORDER BY name ASC;");
 		std::for_each(res.getRowData().begin(), res.getRowData().end(), [&](DatabaseRow row) {
 			std::vector<DatabaseColumn> colData = row.getColumnData();
 			rtMap.insert(std::pair<String, String>(colData[0].getStrData(), colData[1].getStrData()));

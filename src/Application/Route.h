@@ -35,7 +35,7 @@ public:
 		route = dpSimplify<GeoPoint>(route, tolerance);
 	}
 
-	String& toString()
+	String toString()
 	{
 		String strRet;
 		std::for_each(route.begin(), route.end(),

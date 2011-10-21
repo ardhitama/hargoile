@@ -94,40 +94,56 @@ int main(int argc, char** argv)
 	srand(timeNow);
 
 	Route genRoute;
-	genRoute = simulateMovement("auto gen", 1, 1, 2.78);
+	genRoute = simulateMovement("auto gen", 1, 200, 2.78);
 	cout<< "uuid: " << genRoute.getUUID() << endl;
 
 	GeoPoint g0 = genRoute.getData()[0];
 
 	cout<< "Route name: " << genRoute.getName() << endl;
 	for_each(genRoute.getData().begin(), genRoute.getData().end(),
-	[&](GeoPoint g) -> void {
-	cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
-	g0 = g;
+		[&](GeoPoint g) -> void {
+			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
 	} );
 	cout << "size = " << genRoute.getData().size() << endl;
 	cout << "-------" << endl;
 
-	vector<GeoPoint> lineOut = dpSimplify<GeoPoint>(genRoute.getData(), 1);
+	//vector<GeoPoint> lineOut = dpSimplify<GeoPoint>(genRoute.getData(), 1);
+
+	genRoute.simplify(1);
+	vector<GeoPoint> lineOut = genRoute.getData();
 
 	for_each(lineOut.begin(), lineOut.end(),
-	[&](GeoPoint g) -> void {
-	cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
-	g0 = g;
+		[&](GeoPoint g) -> void {
+			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
 	} );
-
-	Storage::getInstance().addRoute(genRoute);
-	map<String, String> rtMap = Storage::getInstance().listAllRoutes();
-
-	for_each(rtMap.begin(), rtMap.end(), [](pair<String, String> rtPair) {
-			cout << rtPair.first << " - " << rtPair.second << endl;
-		});
-
-	//Storage::getInstance().getRoute();
-
 
 	cout << "size = " << lineOut.size() << endl;
 	cout << "-------" << endl;
+
+	Storage::getInstance().addRoute(genRoute);
+
+	map<String, String> rtMap = Storage::getInstance().listAllRoutes();
+
+	for_each(rtMap.begin(), rtMap.end(), [](pair<String, String> rtPair) {
+		cout << rtPair.first << " - " << rtPair.second << endl;
+	});
+
+	Route retRoute;
+	retRoute = Storage::getInstance().getRoute(genRoute.getUUID());
+
+	cout<< "Route name: " << retRoute.getName() << endl;
+	for_each(retRoute.getData().begin(), retRoute.getData().end(),
+		[&](GeoPoint g) -> void {
+			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
+	} );
+	cout << "size = " << retRoute.getData().size() << endl;
+	cout << "-------" << endl;
+
+
+
 	system("pause");
 	return 0;
 }

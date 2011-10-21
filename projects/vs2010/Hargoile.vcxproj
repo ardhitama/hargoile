@@ -112,7 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\libs\sqllite3\sqlite3.c" />
-    <ClCompile Include="..\..\src\Application\Storage.cpp" />
     <ClCompile Include="..\..\src\Application\win\ErrorNotificationImpl.cpp" />
     <ClCompile Include="..\..\src\WinMain.cpp" />
   </ItemGroup>

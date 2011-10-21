@@ -2,6 +2,8 @@
 #define DATABASERESULT_H
 
 #include <vector>
+#include <memory>
+#include <algorithm>
 #include "../Utility/String.h"
 
 #include "DatabaseAll.h"
@@ -108,9 +110,9 @@ private:
 		isNullData = false;
 	}
 
-	DatabaseColumn(const unsigned char *binData)
+	DatabaseColumn(const unsigned char *binData, const int length)
 	{
-		setBinData(binData);
+		setBinData(binData, length);
 		intData = ~0;
 		colNum = 0;
 		colType = -1;
@@ -119,6 +121,7 @@ private:
 		isNullData = false;
 	}
 
+	/*
 	DatabaseColumn(const unsigned char &&binData)
 	{
 		setBinData(&binData);
@@ -129,6 +132,7 @@ private:
 		doubleData = ~0;
 		isNullData = false;
 	}
+	*/
 
 	void setIntData(const int intData)
 	{
@@ -154,15 +158,16 @@ private:
 		DatabaseColumn::colType = TYPE_TEXT;
 	}
 
-	void setBinData(const unsigned char *binData)
+	void setBinData(const unsigned char *binData, const int length)
 	{
-		int dtLen = sizeof(binData);
 		DatabaseColumn::binData.clear();
-		DatabaseColumn::binData.resize(dtLen);
-		std::copy(binData, binData + dtLen, &DatabaseColumn::binData[0]);
+		DatabaseColumn::binData.resize(length);
+		if(binData != 0)
+			std::copy(binData, binData + length, &DatabaseColumn::binData[0]);
 		DatabaseColumn::colType = TYPE_BLOB;
 	}
 
+	/*
 	void setBinData(const unsigned char &&binData)
 	{
 		int dtLen = sizeof(binData);
@@ -171,6 +176,7 @@ private:
 		DatabaseColumn::binData.at(0) = std::move(binData);
 		DatabaseColumn::colType = TYPE_BLOB;
 	}
+	*/
 
 	void setNullData()
 	{

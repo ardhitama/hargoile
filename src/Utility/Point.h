@@ -4,14 +4,14 @@
 class Point
 {
 public:
-	Point::Point()
+	Point()
 	{
 		x = 0;
 		y = 0;
 		z = 0;
 	}
 
-	Point::Point(double x, double y, double z)
+	Point(double x, double y, double z)
 	{
 		Point::x = x;
 		Point::y = y;

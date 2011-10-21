@@ -1,14 +1,7 @@
 #ifndef HARGOILE_H
 #define HARGOILE_H
 
-#include "stdafx.h"
-#include "StateManager.h"
-#include "Storage.h"
-#include "Config.h"
-#include "Location/PositionRecorder.h"
-#ifdef QT_MOBILITY
-#include "Location/qt-mobility/PositionRecorderImpl.h"
-#endif // QT_MOBILITY
+#include "../stdafx.h"
 
 class Hargoile
 {
@@ -42,7 +35,7 @@ public:
     void pauseAllThread();
     void stopAllThread();
 private:
-    boost::shared_ptr<PositionRecorder> posRecorder;
+	LocationRecorderImpl locRecorder;
 };
 
 #endif // HARGOILE_H

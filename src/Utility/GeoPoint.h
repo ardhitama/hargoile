@@ -9,7 +9,7 @@ class GeoPoint : public Point
 {
 public:
 	int id;
-	GeoPoint::GeoPoint()
+	GeoPoint()
 	{
 		GeoPoint::latitude = 0;
 		GeoPoint::longitude = 0;
@@ -23,7 +23,7 @@ public:
 		GeoPoint::z = altitudeToZ();
 	}
 
-	GeoPoint::GeoPoint(double latitude, double longitude, double altitude, double speed, long long time, double accuracy)
+	GeoPoint(double latitude, double longitude, double altitude, double speed, long long time, double accuracy)
 	{
 		GeoPoint::latitude = latitude;
 		GeoPoint::longitude = longitude;
@@ -123,7 +123,7 @@ public:
 	}
 
 	// convert from geodetic coordinates to spherical coordinates in meters
-	inline double GeoPoint::latitudeToX()
+	inline double latitudeToX()
 	{
 		double lat = Number::degToRad(GeoPoint::latitude);
 		double lon = Number::degToRad(GeoPoint::longitude);
@@ -131,14 +131,14 @@ public:
 		return (N + GeoPoint::altitude) * std::cos(lat) * std::cos(lon);
 	}
 
-	inline double GeoPoint::longitudeToY()
+	inline double longitudeToY()
 	{
 		double lat = Number::degToRad(GeoPoint::latitude);
 		double lon = Number::degToRad(GeoPoint::longitude);
 		double N =  6378137.0f / std::sqrt(1 -  6.69437999014e-3 * std::pow(std::sin(lat), 2));
 		return (N + GeoPoint::altitude) * std::cos(lat) * std::sin(lon);
 	}
-	inline double GeoPoint::altitudeToZ()
+	inline double altitudeToZ()
 	{
 		double lat = Number::degToRad(GeoPoint::latitude);
 		double N =  6378137.0f / sqrt(1 -  6.69437999014e-3 * std::pow(std::sin(lat), 2));

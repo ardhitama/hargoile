@@ -6,14 +6,14 @@
   Sqlite Database Implementation
 */
 
-#include "../../libs/sqllite3/sqlite3.h"
+#include "../../../libs/sqllite3/sqlite3.h"
 #include "../../Utility/String.h"
 #include "../DatabaseAll.h"
 
 class DatabaseImpl : virtual public Database
 {
 public:
-    DatabaseImpl(const char *filePath) throw(...)
+	DatabaseImpl(const char *filePath) throw()
     {
         dbStatus = DBNotOpen;
         sqliteStatus = SQLITE_ERROR;
@@ -38,7 +38,7 @@ public:
         return dbStatus;
     }
 
-    bool openDB(const char *filePath) throw(...)
+	bool openDB(const char *filePath) throw()
     {
         sqliteStatus = sqlite3_open_v2(filePath, &db,  SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, 0);
         if(sqliteStatus == SQLITE_ERROR)
@@ -51,7 +51,7 @@ public:
         return true;
     }
 
-    int coutTables() throw(...)
+	int coutTables() throw()
     {
         if(dbStatus != SQLITE_OK)
             throw DatabaseNotOpenException() << DebugInfo(TRACE, DebugInfo::Error);

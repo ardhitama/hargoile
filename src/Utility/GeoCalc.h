@@ -171,7 +171,7 @@ private:
 		lon2 = degToRad(lon2);
 
 		double a = pow(sin((lat2-lat1))/2.0f, 2) + cos(lat1) * cos(lat2) * pow(sin((lon2-lon1)/2.0f), 2);
-		return 6378137.0f * 2 * asin(min<double>(1.0f, sqrt(a)));
+		return 6378137.0f * 2 * asin(std::min<double>(1.0f, sqrt(a)));
 	}
 }
 

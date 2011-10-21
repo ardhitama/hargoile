@@ -14,6 +14,7 @@
 #include "Application\Route.h"
 #include "Application\MovementSimulator.h"
 #include "Application\Storage.h"
+#include "Application\Hargoile.h"
 
 using namespace std;
 
@@ -45,6 +46,13 @@ void print(DatabaseResult rs)
 }
 
 int main(int argc, char** argv)
+{
+	Hargoile hargoileApp;
+	system("pause");
+	return 0;
+}
+
+int main2(int argc, char** argv)
 {
 	try
 	{

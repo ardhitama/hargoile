@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef STDAFX_H
 #define STDAFX_H
 
@@ -15,7 +13,7 @@
 
 // must use qt mobility namespace
 QTM_USE_NAMESPACE // must the latest after any qt mobility headers
-#endif
+#endif // QT_MOBILITY
 
 // Stds
 #include <iostream>
@@ -27,18 +25,19 @@ QTM_USE_NAMESPACE // must the latest after any qt mobility headers
 #include <typeinfo>
 
 // Boost
-#include "boost/exception/all.hpp"
-#include "boost/current_function.hpp"
-#include "boost/smart_ptr.hpp"
+#include "../libs/boost/exception/all.hpp"
+#include "../libs/boost/current_function.hpp"
+#include "../libs/boost/smart_ptr.hpp"
 
-// built-in
-#include "Assert.h"
-#include "Exception/Exception.h"
-#include "Pattern/Singleton.h"
-#include "Utility/String.h"
+#ifdef USE_SQLITEDB
+#include "../libs/sqllite3/sqlite3.h"
+#endif USE_SQLITEDB
 
-#define serverUrl = "127.0.0.1/hargoile/";
-#define clientName = "Hargoile_S3_v001";
-#define configFilename = "hargoile.cfg";
+// internals
+#include "Exception/ExceptionAll.h"
+#include "Technique/TechniqueAll.h"
+#include "Utility/UtilityAll.h"
+#include "Database/DatabaseAll.h"
+#include "Location/LocationAll.h"
 
 #endif // STDAFX_H

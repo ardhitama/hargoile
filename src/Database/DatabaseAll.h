@@ -5,6 +5,8 @@
 #include "Database.h"
 #include "DatabaseResult.h"
 
+#ifdef USE_SQLITEDB
 #include "sqlite/DatabaseImpl.h"
+#endif
 
 #endif // DATABASEALL_H

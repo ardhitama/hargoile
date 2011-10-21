@@ -3,6 +3,7 @@
 
 #include <list>
 #include <exception>
+#include "DebugLog.h"
 #include "DebugInfo.h"
 #include "../Utility/String.h"
 
@@ -38,7 +39,7 @@ public:
 		DebugLog::getInstance().add(dbgInfo);
 	}
 
-	virtual ~Exception()
+	virtual ~Exception() throw()
 	{
 		//
 	}

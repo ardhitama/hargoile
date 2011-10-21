@@ -79,16 +79,16 @@ public:
 
 			int point_order = 0;
 			
+			db.exec("BEGIN;");
 			std::for_each(std::begin(route.getData()), std::end(route.getData()), [&](GeoPoint gp) {
-				String insertSql;
-				insertSql << ("INSERT INTO route_points VALUES ('" << route.getUUID() << "', " << point_order << ", " << gp.getLatitude() << ", " << gp.getLongitude() << ", " << gp.getAltitude() << ", " << gp.getSpeed() << ", " << gp.getTime() << ", " << gp.getAccuracy() << "); ");
-				db.exec(insertSql);
+				db.exec("INSERT INTO route_points VALUES ('" << route.getUUID() << "', " << point_order << ", " << gp.getLatitude() << ", " << gp.getLongitude() << ", " << gp.getAltitude() << ", " << gp.getSpeed() << ", " << gp.getTime() << ", " << gp.getAccuracy() << "); ");
 				++point_order;
 			});
-			
+			db.exec("COMMIT;");
 
 		} catch (Exception &e)
 		{
+			db.exec("ROLLBACK;");
 			ErrorNotificationImpl::textOut(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
 		}
 	}

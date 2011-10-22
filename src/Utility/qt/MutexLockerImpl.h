@@ -4,24 +4,21 @@
 #include "../MutexLocker.h"
 #include <QMutex>
 
-#ifdef QT_APP
-
-class QtMutexLockerImpl : public MutexLocker
+class MutexLockerImpl : public MutexLocker
 {
 public:
-    inline QtMutexLockerImpl()
+	inline MutexLockerImpl()
     {
         qmutex.lock();
     }
 
-    inline ~QtMutexLockerImpl()
+	inline ~MutexLockerImpl()
     {
         qmutex.unlock();
     }
     QMutex qmutex;
 };
 
-#define sync QtMutexLockerImpl qtMutexLockerImpl;
+#define sync MutexLockerImpl mutexLockerImpl;
 
-#endif // QT_APP
 #endif // MUTEXLOCKERIMPL_H

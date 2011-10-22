@@ -83,16 +83,16 @@ private:
 	// basic theorem: http://mathworld.wolfram.com/SphericalCoordinates.html
 	double vectorDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
 	{
-		lat1 = degToRad(lat1);
-		lon1 = degToRad(lon1);
-		lat2 = degToRad(lat2);
-		lon2 = degToRad(lon2);
+		lat1 = Number::degToRad(lat1);
+		lon1 = Number::degToRad(lon1);
+		lat2 = Number::degToRad(lat2);
+		lon2 = Number::degToRad(lon2);
 
 		// ellipsoid defining parameters according WGS84
 		double a = 6378137.0f; // earth equatorial radius in meters (± 2m) -> semimajor axis
-		double f = 1.0f / 298.257223563f; // flattening parameter, f = (a-b)/a
+		// double f = 1.0f / 298.257223563f; // flattening parameter, f = (a-b)/a
 		// derived WGS84 geometric constants
-		double b = 6356752.3142; // semiminor axis (pole to pole),  b = a * (1-f) ˜ 6356752.3142 m
+		// double b = 6356752.3142; // semiminor axis (pole to pole),  b = a * (1-f) ˜ 6356752.3142 m
 		double e2 = 6.69437999014e-3; // First Eccentricity Squared. e2 = 1-b^2/a^2 = 2f-f^2
 
 		// http://en.wikipedia.org/wiki/Geodetic_system -> From geodetic to ECEF
@@ -165,14 +165,14 @@ private:
 		the cosines of any distances smaller than about one minute of arc.
 		*/
 
-		lat1 = degToRad(lat1);
-		lon1 = degToRad(lon1);
-		lat2 = degToRad(lat2);
-		lon2 = degToRad(lon2);
+		lat1 = Number::degToRad(lat1);
+		lon1 = Number::degToRad(lon1);
+		lat2 = Number::degToRad(lat2);
+		lon2 = Number::degToRad(lon2);
 
 		double a = pow(sin((lat2-lat1))/2.0f, 2) + cos(lat1) * cos(lat2) * pow(sin((lon2-lon1)/2.0f), 2);
 		return 6378137.0f * 2 * asin(std::min<double>(1.0f, sqrt(a)));
 	}
-}
+};
 
 #endif // GEOCALC_H

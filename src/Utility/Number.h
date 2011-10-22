@@ -7,7 +7,7 @@
 
 namespace Number 
 {
-	const double M_PI = 3.14159265358979323846f;
+	// const double M_PI = 3.14159265358979323846f;
 
 	inline double degToRad(double degree)
 	{
@@ -59,9 +59,9 @@ namespace Number
 
 		// ellipsoid defining parameters according WGS84
 		double a = 6378137.0f; // earth equatorial radius in meters (± 2m) -> semimajor axis
-		double f = 1.0f / 298.257223563f; // flattening parameter, f = (a-b)/a
+		// double f = 1.0f / 298.257223563f; // flattening parameter, f = (a-b)/a
 		// derived WGS84 geometric constants
-		double b = 6356752.3142; // semiminor axis (pole to pole),  b = a * (1-f) ˜ 6356752.3142 m
+		// double b = 6356752.3142; // semiminor axis (pole to pole),  b = a * (1-f) ˜ 6356752.3142 m
 		double e2 = 6.69437999014e-3; // First Eccentricity Squared. e2 = 1-b^2/a^2 = 2f-f^2
 
 		// http://en.wikipedia.org/wiki/Geodetic_system -> From geodetic to ECEF
@@ -207,6 +207,6 @@ namespace Number
 		return vectorDistance(lat1, lon1, alt1, lat2, lon2, alt2);
 	}
 
-};
+}
 
 #endif // NUMBER_H

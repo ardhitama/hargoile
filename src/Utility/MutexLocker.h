@@ -1,12 +1,11 @@
 #ifndef MUTEXLOCKER_H
 #define MUTEXLOCKER_H
 
-
 class MutexLocker
 {
-private:
-    explicit MutexLocker() = 0;
-    explicit virtual ~MutexLocker() = 0;
+public:
+	MutexLocker(){}
+	virtual ~MutexLocker(){}
 };
 
 #endif // MUTEXLOCKER_H

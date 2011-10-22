@@ -4,7 +4,6 @@
 #include "Point.h"
 #include "Number.h"
 
-
 class GeoPoint : public Point
 {
 public:

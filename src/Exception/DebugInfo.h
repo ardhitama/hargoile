@@ -2,7 +2,6 @@
 #define DEBUGINFO_H
 
 #include "../Utility/String.h"
-#include "DebugLog.h"
 
 class DebugInfo
 {

@@ -7,8 +7,6 @@
 #include "../Utility/String.h"
 #include "../Technique/Singleton.h"
 
-class DebugInfo; // forward declare
-
 class DebugLog : public Singleton<DebugLog>
 {
 public:

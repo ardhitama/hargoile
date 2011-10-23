@@ -138,7 +138,7 @@ struct apply
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH() == 1
+#if BOOST_PP_ITERATION_DEPTH == 1
 
 #   define i_ BOOST_PP_FRAME_ITERATION(1)
 
@@ -225,5 +225,5 @@ struct apply_chooser<i_>
 
 #   undef i_
 
-#endif // BOOST_PP_ITERATION_DEPTH()
+#endif // BOOST_PP_ITERATION_DEPTH
 #endif // BOOST_PP_IS_ITERATING

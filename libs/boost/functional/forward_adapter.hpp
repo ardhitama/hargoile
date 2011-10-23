@@ -236,11 +236,11 @@ namespace boost
 
 #       define BOOST_FUNCTIONAL_FORWARD_ADAPTER_HPP_INCLUDED
 
-#   elif BOOST_PP_ITERATION_DEPTH() == 1 && limit2
+#   elif BOOST_PP_ITERATION_DEPTH == 1 && limit2
 #     define  BOOST_PP_FILENAME_2 <boost/functional/forward_adapter.hpp>
 #     define  BOOST_PP_ITERATION_LIMITS (0,limit2)
 #     include BOOST_PP_ITERATE()
-#   elif BOOST_PP_ITERATION_DEPTH() == 2 && limit3
+#   elif BOOST_PP_ITERATION_DEPTH == 2 && limit3
 #     define  BOOST_PP_FILENAME_3 <boost/functional/forward_adapter.hpp>
 #     define  BOOST_PP_ITERATION_LIMITS (0,limit3)
 #     include BOOST_PP_ITERATE()

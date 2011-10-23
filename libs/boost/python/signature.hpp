@@ -178,7 +178,7 @@ struct most_derived
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH() == 1 // defined(BOOST_PP_IS_ITERATING)
+#if BOOST_PP_ITERATION_DEPTH == 1 // defined(BOOST_PP_IS_ITERATING)
 
 # define N BOOST_PP_ITERATION()
 
@@ -248,5 +248,5 @@ get_signature(
 # undef Q
 # undef N
 
-#endif // BOOST_PP_ITERATION_DEPTH()
+#endif // BOOST_PP_ITERATION_DEPTH
 #endif // !defined(BOOST_PP_IS_ITERATING)

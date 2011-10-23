@@ -35,7 +35,7 @@
 # endif
 #
 # undef BOOST_PP_ITERATION_DEPTH
-# define BOOST_PP_ITERATION_DEPTH() 3
+# define BOOST_PP_ITERATION_DEPTH
 #
 # if (BOOST_PP_ITERATION_START_3) > (BOOST_PP_ITERATION_FINISH_3)
 #    include <boost/preprocessor/iteration/detail/iter/reverse3.hpp>
@@ -1328,7 +1328,7 @@
 # endif
 #
 # undef BOOST_PP_ITERATION_DEPTH
-# define BOOST_PP_ITERATION_DEPTH() 2
+# define BOOST_PP_ITERATION_DEPTH
 #
 # undef BOOST_PP_ITERATION_START_3
 # undef BOOST_PP_ITERATION_FINISH_3

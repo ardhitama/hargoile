@@ -364,7 +364,7 @@ BOOST_MPL_AUX_TEMPLATE_ARITY_SPEC(
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH() == 1
+#if BOOST_PP_ITERATION_DEPTH == 1
 
 #   define i_ BOOST_PP_FRAME_ITERATION(1)
 
@@ -531,7 +531,7 @@ struct bind_chooser<i_>
 
 ///// iteration, depth == 2
 
-#elif BOOST_PP_ITERATION_DEPTH() == 2
+#elif BOOST_PP_ITERATION_DEPTH == 2
 
 #   define j_ BOOST_PP_FRAME_ITERATION(2)
 #   if !defined(BOOST_MPL_CFG_NO_UNNAMED_PLACEHOLDER_SUPPORT)
@@ -547,5 +547,5 @@ struct bind_chooser<i_>
 #   endif
 #   undef j_
 
-#endif // BOOST_PP_ITERATION_DEPTH()
+#endif // BOOST_PP_ITERATION_DEPTH
 #endif // BOOST_PP_IS_ITERATING

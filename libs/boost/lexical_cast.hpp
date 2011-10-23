@@ -1682,8 +1682,8 @@ namespace boost
          {
             source_type orig_div_round = s / Rounder::nearbyint(s);
 
-            if ( (orig_div_round > 1 ? orig_div_round - 1 : 1 - orig_div_round) > std::numeric_limits<source_type>::epsilon() )
-               BOOST_THROW_EXCEPTION( precision_loss_error() );
+            //if ( (orig_div_round > 1 ? orig_div_round - 1 : 1 - orig_div_round) > std::numeric_limits<source_type>::epsilon() )
+               //BOOST_THROW_EXCEPTION( precision_loss_error() );
             return s ;
          }
 

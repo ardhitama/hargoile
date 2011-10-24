@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #ifdef DEBUG
 #include <vld.h>
 #endif
@@ -47,7 +49,7 @@ void print(DatabaseResult rs)
 
 int main(int argc, char** argv)
 {
-	Hargoile hargoileApp;
+	//Hargoile hargoileApp;
 	system("pause");
 	return 0;
 }

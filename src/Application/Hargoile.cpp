@@ -37,9 +37,9 @@ void Hargoile::initialize()
 
 void Hargoile::openWelcomeUI()
 {
-    WelcomeUI welcomeUI;
-    welcomeUI.showMaximized();
-    welcomeUI.exec();
+    //WelcomeUI welcomeUI;
+    //welcomeUI.showMaximized();
+    //welcomeUI.exec();
 }
 
 void Hargoile::errorNotification()

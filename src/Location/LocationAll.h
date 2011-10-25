@@ -7,7 +7,7 @@
 #include "qtm/LocationRecorder.h"
 #endif // QT_MOBILITY
 
-#ifdef TARGET_WIN32
+#ifdef TARGET_WIN
 #include "win/LocationRecorder.h"
 #endif // WIN32
 

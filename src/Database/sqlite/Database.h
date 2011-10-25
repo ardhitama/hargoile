@@ -89,7 +89,7 @@ public:
         sqliteStatus = sqlite3_prepare_v2(db, sqlStmt.data(),
                                           -1, &dbStmt, NULL);
         if(sqliteStatus != SQLITE_OK)
-            throw DatabaseStatementInvalidException() << DebugInfo(sqlStmt << " (" << sqlite3_errmsg(db) << ")" << TRACE(), DebugInfo::Error);
+            throw DatabaseStatementInvalidException() << DebugInfo(sqlStmt << "\n\"" << sqlite3_errmsg(db) << "\"\n" << TRACE(), DebugInfo::Error);
 
         int iCol = 0, colType = -1;
         int colCount = sqlite3_column_count(dbStmt);

@@ -12,4 +12,8 @@
 #include "qt/LogOut.h"
 #endif // TARGET_QTM
 
+#ifdef TARGET_WIN
+#include "win/LogOut.h"
+#endif // TARGET_WIN
+
 #endif // EXCEPTIONALL_H

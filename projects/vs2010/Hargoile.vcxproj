@@ -53,7 +53,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;USE_SQLITEDB;_DEBUG;DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;USE_SQLITEDB;TARGET_WIN;_DEBUG;DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -88,25 +88,26 @@
   <ItemGroup>
     <ClInclude Include="..\..\libs\sqllite3\sqlite3.h" />
     <ClInclude Include="..\..\src\Algorithm\LineSimplification\DouglasPeucker.h" />
-    <ClInclude Include="..\..\src\Application\ErrorNotification.h" />
+    <ClInclude Include="..\..\src\Application\config.h" />
     <ClInclude Include="..\..\src\Application\Hargoile.h" />
     <ClInclude Include="..\..\src\Application\MovementSimulator.h" />
     <ClInclude Include="..\..\src\Application\Route.h" />
     <ClInclude Include="..\..\src\Application\Storage.h" />
-    <ClInclude Include="..\..\src\Application\win\ErrorNotificationImpl.h" />
-    <ClInclude Include="..\..\src\Database\Database.h" />
+    <ClInclude Include="..\..\src\Database\DatabaseAbstract.h" />
     <ClInclude Include="..\..\src\Database\DatabaseAll.h" />
     <ClInclude Include="..\..\src\Database\DatabaseException.h" />
     <ClInclude Include="..\..\src\Database\DatabaseResult.h" />
-    <ClInclude Include="..\..\src\Database\sqlite\DatabaseImpl.h" />
+    <ClInclude Include="..\..\src\Database\sqlite\Database.h" />
     <ClInclude Include="..\..\src\Exception\Assert.h" />
     <ClInclude Include="..\..\src\Exception\DebugInfo.h" />
     <ClInclude Include="..\..\src\Exception\DebugLog.h" />
     <ClInclude Include="..\..\src\Exception\Exception.h" />
     <ClInclude Include="..\..\src\Exception\ExceptionAll.h" />
+    <ClInclude Include="..\..\src\Exception\LogOutAbstract.h" />
+    <ClInclude Include="..\..\src\Exception\win\LogOut.h" />
     <ClInclude Include="..\..\src\Location\LocationAll.h" />
-    <ClInclude Include="..\..\src\Location\LocationRecorder.h" />
-    <ClInclude Include="..\..\src\Location\win\LocationRecorderImpl.h" />
+    <ClInclude Include="..\..\src\Location\LocationRecorderAbstract.h" />
+    <ClInclude Include="..\..\src\Location\win\LocationRecorder.h" />
     <ClInclude Include="..\..\src\stdafx.h" />
     <ClInclude Include="..\..\src\Technique\Singleton.h" />
     <ClInclude Include="..\..\src\Technique\TechniqueAll.h" />
@@ -120,7 +121,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\libs\sqllite3\sqlite3.c" />
     <ClCompile Include="..\..\src\Application\Hargoile.cpp" />
-    <ClCompile Include="..\..\src\Application\win\ErrorNotificationImpl.cpp" />
+    <ClCompile Include="..\..\src\Application\Route.cpp" />
+    <ClCompile Include="..\..\src\Application\Storage.cpp" />
     <ClCompile Include="..\..\src\WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

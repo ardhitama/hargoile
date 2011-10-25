@@ -16,7 +16,7 @@
 #include "Application\Route.h"
 #include "Application\MovementSimulator.h"
 #include "Application\Storage.h"
-#include "Application\Hargoile.h"
+//#include "Application\Hargoile.h"
 
 using namespace std;
 
@@ -49,16 +49,68 @@ void print(DatabaseResult rs)
 
 int main(int argc, char** argv)
 {
-	//Hargoile hargoileApp;
+	Route genRoute;
+	genRoute = simulateMovement("auto gen", 1, 200, 2.78);
+	cout<< "uuid: " << genRoute.getUUID() << endl;
+
+	GeoPoint g0 = genRoute.getData()[0];
+
+	cout<< "Route name: " << genRoute.getName() << endl;
+	for_each(genRoute.getData().begin(), genRoute.getData().end(),
+		[&](GeoPoint g) -> void {
+			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
+	} );
+	cout << "size = " << genRoute.getData().size() << endl;
+	cout << "-------" << endl;
+
+
+	genRoute.simplify(2);
+
+	vector<GeoPoint> lineOut = genRoute.getData();
+	g0 = genRoute.getData()[0];
+
+	for_each(lineOut.begin(), lineOut.end(),
+		[&](GeoPoint g) -> void {
+			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
+	} );
+	cout << "size = " << lineOut.size() << endl;
+	cout << "-------" << endl;
+
+	Storage::getInstance().addRoute(genRoute);
+
+	cout << "Stored Route: " << endl;
+	map<String, String> rtMap = Storage::getInstance().listAllRoutes();
+	for_each(rtMap.begin(), rtMap.end(), [](pair<String, String> rtPair) {
+		cout << rtPair.first << " - " << rtPair.second << endl;
+	});
+
+	/*
+	Route retRoute;
+	retRoute = Storage::getInstance().getRoute(genRoute.getUUID());
+
+	cout<< "Route name: " << retRoute.getName() << endl;
+	for_each(retRoute.getData().begin(), retRoute.getData().end(),
+		[&](GeoPoint g) -> void {
+		cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			g0 = g;
+	} );
+
+	cout << "size = " << retRoute.getData().size() << endl;
+	cout << "-------" << endl;
+	*/
+
 	system("pause");
 	return 0;
 }
+
 
 int main2(int argc, char** argv)
 {
 	try
 	{
-		DatabaseImpl db("./storage.hgl");
+		Database db("./storage.hgl");
 		DatabaseResult rs;
 
 		db.exec("DROP TABLE IF EXISTS hargoile; DROP TABLE IF EXISTS hargoile2");

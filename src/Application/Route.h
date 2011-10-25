@@ -13,78 +13,46 @@
 class Route
 {
 public:
-    Route()
-    {
-        boost::uuids::random_generator randGen;
-        boost::uuids::uuid uuid =  randGen();
+	Route();
+	Route(String routeName);
 
-        Route::uuid = boost::uuids::to_string(uuid);
-    }
+	void simplify(double tolerance);
 
-    Route(String routeName)
-    {
-        boost::uuids::random_generator randGen;
-        boost::uuids::uuid uuid =  randGen();
+	String toString();
 
-        Route::name = name;
-        Route::uuid = boost::uuids::to_string(uuid);
-    }
+        inline std::vector<GeoPoint>& getData()
+	{
+		return route;
+	}
 
-    inline void simplify(double tolerance)
-    {
-        route = dpSimplify<GeoPoint>(route, tolerance);
-    }
+        inline void setUUID(String strUuid)
+	{
+		uuid = strUuid;
+	}
 
-    String toString()
-    {
-        String strRet;
-        /*
-          std::for_each(std::begin(route), std::end(route), [&](GeoPoint &g) {
-           strRet << g.getLatitude() << ", " << g.getLongitude() << ", " << g.getAltitude() << "\n";
-          } );
-          */
+        inline void addPoint(const GeoPoint& newPoint)
+	{
+		route.push_back(newPoint);
+	}
 
-        for(unsigned int i = 0; i<route.size(); ++i)
-        {
-            strRet << route[i].getLatitude() << ", " << route[i].getLongitude() << ", " << route[i].getAltitude() << "\n";
-        }
+        inline String& getUUID()
+	{
+		return uuid;
+	}
 
-        return strRet;
-    }
+        inline void setName(String name)
+	{
+		Route::name = name;
+	}
 
-    inline std::vector<GeoPoint>& getData()
-    {
-        return route;
-    }
-
-    inline void setUUID(String strUuid)
-    {
-        uuid = strUuid;
-    }
-
-    inline void addPoint(const GeoPoint& newPoint)
-    {
-        route.push_back(newPoint);
-    }
-
-    inline String& getUUID()
-    {
-        return uuid;
-    }
-
-    inline void setName(String name)
-    {
-        Route::name = name;
-    }
-
-    inline String& getName()
-    {
-        return name;
-    }
+        inline String& getName()
+	{
+		return name;
+	}
 
 private:
-    std::vector<GeoPoint> route;
-    String name, uuid;
+	std::vector<GeoPoint> route;
+	String name, uuid;
 };
 
 #endif // ROUTE_H

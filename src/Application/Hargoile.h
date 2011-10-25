@@ -3,7 +3,7 @@
 
 #include "../Exception/ExceptionAll.h"
 #include "../Location/LocationAll.h"
-#include "../../gui/qtm/WelcomeUI.h"
+#include "../../gui/UIAll.h"
 
 class Hargoile
 {

@@ -55,7 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;USE_SQLITEDB;_DEBUG;DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,13 +104,18 @@
     <ClInclude Include="..\..\src\Exception\DebugLog.h" />
     <ClInclude Include="..\..\src\Exception\Exception.h" />
     <ClInclude Include="..\..\src\Exception\ExceptionAll.h" />
+    <ClInclude Include="..\..\src\Location\LocationAll.h" />
+    <ClInclude Include="..\..\src\Location\LocationRecorder.h" />
+    <ClInclude Include="..\..\src\Location\win\LocationRecorderImpl.h" />
     <ClInclude Include="..\..\src\stdafx.h" />
     <ClInclude Include="..\..\src\Technique\Singleton.h" />
+    <ClInclude Include="..\..\src\Technique\TechniqueAll.h" />
     <ClInclude Include="..\..\src\Utility\GeoPoint.h" />
     <ClInclude Include="..\..\src\Utility\MutexLocker.h" />
     <ClInclude Include="..\..\src\Utility\Number.h" />
     <ClInclude Include="..\..\src\Utility\Point.h" />
     <ClInclude Include="..\..\src\Utility\String.h" />
+    <ClInclude Include="..\..\src\Utility\UtilityAll.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\libs\sqllite3\sqlite3.c" />

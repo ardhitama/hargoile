@@ -13,16 +13,16 @@ template<typename T> class Singleton
 {
 public:
     inline static T& getInstance()
-	{
-		return instance;
-	}
-	
+    {
+        return instance;
+    }
+
 private:
-    static T& instance;
+    static T instance;
 };
 
 template<class T>
-T& Singleton<T>::instance = T();
+T Singleton<T>::instance;
 
 
 #endif // SINGLETON_H

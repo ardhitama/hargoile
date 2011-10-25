@@ -2,10 +2,8 @@
 #define DEBUGLOG_H
 
 #include <list>
-#include "Assert.h"
-#include "DebugInfo.h"
-#include "../Utility/String.h"
 #include "../Technique/Singleton.h"
+#include "DebugInfo.h"
 
 class DebugLog : public Singleton<DebugLog>
 {
@@ -22,7 +20,6 @@ public:
 private:
 	std::list<DebugInfo> dbgLog;
 };
-
 
 
 #endif // DEBUGLOG_H

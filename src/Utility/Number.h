@@ -21,7 +21,7 @@ namespace Number
 		return rad * 57.295779513082320876846364344191f;
 	}
 
-	int mt_rand(unsigned int min, unsigned int max)
+	inline int rangedRand(unsigned int min, unsigned int max)
 	{
 		return (std::rand() % (max-min)+1) + min;
 	}
@@ -50,7 +50,7 @@ namespace Number
 	// data into earth-centered/earth-fixed (ECEF) data.
 	// will be optimal if used in near equator (altitude < 30 degrees)
 	// basic theorem: http://mathworld.wolfram.com/SphericalCoordinates.html
-	double vectorDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
+	inline double vectorDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
 	{
 		lat1 = degToRad(lat1);
 		lon1 = degToRad(lon1);
@@ -88,7 +88,7 @@ namespace Number
 	// returns: distance between two geodetic points in meters
 	// note: precision lose if the distance is relatively short
 	// http://mathworld.wolfram.com/GreatCircle.html
-	double greatCircleDistanceHaversine(double lat1, double lon1, double lat2, double lon2)
+	inline double greatCircleDistanceHaversine(double lat1, double lon1, double lat2, double lon2)
 	{
 		// ellipsoid defining parameters according WGS84
 		// R = 6378137.0f = earth equatorial radius in meters (± 2m) -> semimajor axis
@@ -147,7 +147,7 @@ namespace Number
 	// input is in degrees
 	// will not 100% accurate
 	// unit is in meters
-	double geodeticDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
+	inline double geodeticDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
 	{
 		bool isInputError = false;
 

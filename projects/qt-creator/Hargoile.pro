@@ -29,7 +29,6 @@ simulator: {
     MOBILITY += location
 
     DEFINES += DEBUG
-
 }
 
 QT += gui network multimedia
@@ -40,7 +39,7 @@ QT += gui network multimedia
 PRECOMPILED_HEADER = ../../src/stdafx.h
 INCLUDEPATH += ../../libs/
 
-DEFINES += QT_MOBILITY QT_APP USE_SQLITEDB
+DEFINES += USE_SQLITEDB TARGET_QTM
 # Fix for QT conflict
 # DEFINES += QT_NO_DEBUG_STREAM QT_NO_DATASTREAM
 
@@ -48,13 +47,12 @@ SOURCES += \
     ../../src/QtMain.cpp \
     ../../src/Application/Route.cpp \
     ../../src/Application/Hargoile.cpp \
-    ../../src/Application/qt/ErrorNotificationImpl.cpp \
-    ../../gui/qtm/WelcomeUI.cpp \
     ../../gui/qtm/WelcomeUI.cpp \
     ../../gui/qtm/RecorderUI.cpp \
-    ../../gui/qtm/WelcomeUI.cpp \
-    ../../gui/qtm/RecorderUI.cpp \
-    ../../gui/qtm/MenuUI.cpp
+    ../../gui/qtm/MenuUI.cpp \
+    ../../src/Application/Storage.cpp \
+    ../../gui/qtm/PopupUI.cpp \
+    ../../libs/sqllite3/sqlite3.c
 
 HEADERS += \
     ../../src/Algorithm/LineSimplification/DouglasPeucker.h \
@@ -62,14 +60,10 @@ HEADERS += \
     ../../src/Application/Route.h \
     ../../src/Application/MovementSimulator.h \
     ../../src/Application/Hargoile.h \
-    ../../src/Application/ErrorNotification.h \
     ../../src/Application/config.h \
-    ../../src/Application/qt/ErrorNotificationImpl.h \
     ../../src/Database/DatabaseResult.h \
     ../../src/Database/DatabaseException.h \
     ../../src/Database/DatabaseAll.h \
-    ../../src/Database/Database.h \
-    ../../src/Database/sqlite/DatabaseImpl.h \
     ../../src/Exception/ExceptionAll.h \
     ../../src/Exception/Exception.h \
     ../../src/Exception/DebugLog.h \
@@ -84,36 +78,56 @@ HEADERS += \
     ../../src/Utility/GeoCalc.h \
     ../../src/stdafx.h \
     ../../src/Location/LocationAll.h \
-    ../../src/Location/qtm/LocationRecorderImpl.h \
-    ../../src/Location/LocationRecorder.H \
     ../../src/Technique/TechniqueAll.h \
     ../../src/Utility/UtilityAll.h \
     ../../src/Utility/qt/MutexLockerImpl.h \
     ../../gui/UIAll.h \
     ../../gui/qtm/WelcomeUI.h \
-    ../../gui/qtm/WelcomeUI.h \
     ../../gui/qtm/RecorderUI.h \
-    ../../gui/qtm/WelcomeUI.h \
-    ../../gui/qtm/RecorderUI.h \
-    ../../gui/qtm/MenuUI.h
+    ../../gui/qtm/MenuUI.h \
+    ../../src/Location/qtm/LocationRecorder.h \
+    ../../src/Location/LocationRecorderAbstract.h \
+    ../../src/Database/DatabaseAbstract.h \
+    ../../src/Database/sqlite/Database.h \
+    ../../src/Exception/LogOutAbstract.h \
+    ../../src/Exception/qt/LogOut.h \
+    ../../gui/qtm/PopupUI.h \
+    ../../libs/sqllite3/sqlite3.h
 
 FORMS += \
-    ../../gui/qtm/WelcomeUI.ui \
-    ../../gui/qtm/WelcomeUI.ui \
     ../../gui/qtm/RecorderUI.ui \
     ../../gui/qtm/WelcomeUI.ui \
-    ../../gui/qtm/RecorderUI.ui \
     ../../gui/qtm/MenuUI.ui
 
 
 OTHER_FILES += \
     ../../Project.txt \
-    ../../gui/qtm/WelcomeUI.ui.autosave \
-    ../../gui/qtm/RecorderUI.ui.autosave
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,19 +1,19 @@
-#ifdef USE_SQLITEDB
-#ifndef DATABASEIMPL_H
-#define DATABASEIMPL_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
 /*
   Sqlite Database Implementation
 */
 
+#include "../../Exception/ExceptionAll.h"
 #include "../../../libs/sqllite3/sqlite3.h"
 #include "../../Utility/String.h"
 #include "../DatabaseAll.h"
 
-class DatabaseImpl : virtual public Database
+class Database : virtual public DatabaseAbstract
 {
 public:
-	DatabaseImpl(const char *filePath) throw()
+    Database(const char *filePath) throw()
     {
         dbStatus = DBNotOpen;
         sqliteStatus = SQLITE_ERROR;
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    virtual ~DatabaseImpl()
+    virtual ~Database()
     {
         sqlite3_close(db);
     }
@@ -38,23 +38,23 @@ public:
         return dbStatus;
     }
 
-	bool openDB(const char *filePath) throw()
+    bool openDB(const char *filePath) throw()
     {
         sqliteStatus = sqlite3_open_v2(filePath, &db,  SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX, 0);
         if(sqliteStatus == SQLITE_ERROR)
         {
             sqlite3_close(db);
-            throw DatabaseOpenFailedException() << DebugInfo(TRACE, DebugInfo::Error);
+            throw DatabaseOpenFailedException() << DebugInfo(TRACE(), DebugInfo::Error);
             return false;
         }
         dbStatus = DBOk;
         return true;
     }
 
-	int coutTables() throw()
+    int coutTables() throw()
     {
         if(dbStatus != SQLITE_OK)
-            throw DatabaseNotOpenException() << DebugInfo(TRACE, DebugInfo::Error);
+            throw DatabaseNotOpenException() << DebugInfo(TRACE(), DebugInfo::Error);
 
         DatabaseResult res;
         int tableCount = -1;
@@ -79,27 +79,27 @@ public:
 
     DatabaseResult exec(const String sqlStmt)
     {
-		DatabaseColumn dbCol;
+        DatabaseColumn dbCol;
         DatabaseRow dbRow;
         DatabaseResult dbRes;
 
         if(sqliteStatus != SQLITE_OK)
-            throw DatabaseNotOpenException() << DebugInfo(TRACE, DebugInfo::Error);
+            throw DatabaseNotOpenException() << DebugInfo(TRACE(), DebugInfo::Error);
 
-		sqliteStatus = sqlite3_prepare_v2(db, sqlStmt.data(),
+        sqliteStatus = sqlite3_prepare_v2(db, sqlStmt.data(),
                                           -1, &dbStmt, NULL);
         if(sqliteStatus != SQLITE_OK)
-            throw DatabaseStatementInvalidException() << " in " << sqlStmt << " (" << sqlite3_errmsg(db) << ")" << DebugInfo(TRACE, DebugInfo::Error);
+            throw DatabaseStatementInvalidException() << DebugInfo(sqlStmt << " (" << sqlite3_errmsg(db) << ")" << TRACE(), DebugInfo::Error);
 
         int iCol = 0, colType = -1;
         int colCount = sqlite3_column_count(dbStmt);
         int stepRet = sqlite3_step(dbStmt);
-		bool isNoResult = true;
+        bool isNoResult = true;
 
         
 
-		if(stepRet == SQLITE_ROW)
-			isNoResult = false;
+        if(stepRet == SQLITE_ROW)
+            isNoResult = false;
 
         while(stepRet == SQLITE_ROW)
         {
@@ -109,7 +109,7 @@ public:
                 if(colType == SQLITE_INTEGER)
                 {
                     dbCol = DatabaseColumn(sqlite3_column_int(dbStmt, iCol));
-					dbCol.setInt64Data(sqlite3_column_int64(dbStmt, iCol));
+                    dbCol.setInt64Data(sqlite3_column_int64(dbStmt, iCol));
                 }
                 else if(colType == SQLITE_FLOAT)
                 {
@@ -127,28 +127,28 @@ public:
                 {
                     dbCol = DatabaseColumn(true);
                 }
-				dbRow.addColumn(dbCol);
+                dbRow.addColumn(dbCol);
             }
             dbRes.addRowData(dbRow);
-			dbRow = DatabaseRow();
+            dbRow = DatabaseRow();
             stepRet = sqlite3_step(dbStmt);
         }
 
         sqlite3_finalize(dbStmt);
 
         if(stepRet != SQLITE_DONE)
-            throw DatabaseResultNotDoneException() << " " << sqlite3_errmsg(db) << DebugInfo(TRACE, DebugInfo::Error);
-		
-		if(isNoResult == true)
-			dbRes.setRowChanged(sqlite3_changes(db));		
+            throw DatabaseResultNotDoneException() << DebugInfo(sqlite3_errmsg(db) << TRACE(), DebugInfo::Error);
+
+        if(isNoResult == true)
+            dbRes.setRowChanged(sqlite3_changes(db));
 
         return dbRes;
     }
 
-	inline DatabaseResult operator << (const String sqlStmt)
-	{
-		return exec(sqlStmt);
-	}
+    inline DatabaseResult operator << (const String sqlStmt)
+    {
+        return exec(sqlStmt);
+    }
 
     enum { DBOk, DBNotOpen, DBNotReady };
 
@@ -161,5 +161,4 @@ private:
 
 };
 
-#endif // DATABASEIMPL_H
-#endif // USE_SQLITEDB
+#endif // DATABASE_H

@@ -1,14 +1,14 @@
 #ifndef LOCATIONALL_H
 #define LOCATIONALL_H
 
-#include "LocationRecorder.h"
+#include "LocationRecorderAbstract.h"
 
-#ifdef QT_MOBILITY
-#include "qtm/LocationRecorderImpl.h"
-#endif
+#ifdef TARGET_QTM
+#include "qtm/LocationRecorder.h"
+#endif // QT_MOBILITY
 
-#ifdef WIN32
-#include "win/LocationRecorderImpl.h"
-#endif
+#ifdef TARGET_WIN32
+#include "win/LocationRecorder.h"
+#endif // WIN32
 
 #endif // LOCATIONALL_H

@@ -15,7 +15,7 @@ public:
 		DebugInfo::infoSignature = -1;
 	}
 
-	DebugInfo(char const *strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
+        DebugInfo(const char *strInfo, int infoPriority = DebugInfo::Log, int infoSignature = -1)
 	{
 		DebugInfo::strInfo = String(strInfo);
 		DebugInfo::infoPriority = infoPriority;

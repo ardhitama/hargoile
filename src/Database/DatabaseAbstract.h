@@ -1,14 +1,14 @@
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef DATABASEABSTRACT_H
+#define DATABASEABSTRACT_H
 
 #include "../Utility/String.h"
 #include "DatabaseResult.h"
 
-class Database
+class DatabaseAbstract
 {
 public:
-	/*
-	Database();
+    /*
+ Database();
     Database(char const *filePath);
 
     // true: db open success
@@ -18,13 +18,13 @@ public:
 
     // true: db is empty
     bool isEmpty();
-	*/
+ */
 
-	virtual DatabaseResult exec(const String sqlStmt) = 0;
-	virtual DatabaseResult operator << (const String sqlStmt) = 0;
+    virtual DatabaseResult exec(const String sqlStmt) = 0;
+    virtual DatabaseResult operator << (const String sqlStmt) = 0;
 
 protected:
     int dbStatus;
 };
 
-#endif // DATABASE_H
+#endif // DATABASEABSTRACT_H

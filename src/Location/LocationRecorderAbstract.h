@@ -1,9 +1,7 @@
-#ifndef LOCATIONRECORDER_H
-#define LOCATIONRECORDER_H
+#ifndef LOCATIONRECORDERABSTRACT_H
+#define LOCATIONRECORDERABSTRACT_H
 
-#include "../Exception/Exception.h"
-
-class LocationRecorder
+class LocationRecorderAbstract
 {
 public:
     virtual void start() = 0;
@@ -15,4 +13,4 @@ public:
     virtual void onUpdate() = 0;
 };
 
-#endif // LOCATIONRECORDER_H
+#endif // LOCATIONRECORDERABSTRACT_H

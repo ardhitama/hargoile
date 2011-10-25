@@ -7,7 +7,7 @@
 #include "DebugInfo.h"
 #include "../Utility/String.h"
 
-class Exception : virtual public std::exception
+class Exception// : virtual public std::exception
 {
 public:
 
@@ -54,32 +54,28 @@ public:
 		return dbgInfo;
 	}
 
-	friend Exception& operator << (Exception &ex, const String &strInfo);
-	friend Exception& operator << (Exception &ex, const char *strInfo);
-	friend Exception& operator << (Exception &ex, const DebugInfo &dbgInfo);
+	inline Exception& operator << (const String &strInfo)
+	{
+		Exception::strInfo.append(strInfo);
+		return *this;
+	}
+
+	inline Exception& operator << (const char *strInfo)
+	{
+		Exception::strInfo.append(strInfo);
+		return *this;
+	}
+
+	inline Exception& operator << (const DebugInfo &dbgInfo)
+	{
+		Exception::dbgInfo = dbgInfo;
+		DebugLog::getInstance().add(dbgInfo);
+		return *this;
+	}
 
 private:
 	String strInfo; // user friendly message
 	DebugInfo dbgInfo; // info for debugging purpose
 };
-
-inline Exception& operator << (Exception &ex, const String &strInfo)
-{
-	ex.strInfo.append(strInfo);
-	return ex;
-}
-
-inline Exception& operator << (Exception &ex, const char *strInfo)
-{
-	ex.strInfo.append(String(strInfo));
-	return ex;
-}
-
-inline Exception& operator << (Exception &ex, const DebugInfo &dbgInfo)
-{
-	ex.dbgInfo = dbgInfo;
-	DebugLog::getInstance().add(dbgInfo);
-	return ex;
-}
 
 #endif // EXCEPTION_H

@@ -1,12 +1,12 @@
-#ifndef LOCATIONRECORDERIMPL_H
-#define LOCATIONRECORDERIMPL_H
+#ifndef LOCATIONRECORDER_H
+#define LOCATIONRECORDER_H
 
-#include "../LocationRecorder.h"
+#include "../LocationRecorderAbstract.h"
 
-class LocationRecorderImpl
+class LocationRecorder
 {
 public:
-	LocationRecorderImpl(){}
+        LocationRecorder(){}
     void start() throw(Exception);
     void stop() throw(Exception);
     void pause() throw(Exception);
@@ -18,4 +18,4 @@ private:
     int updateInterval;
 };
 
-#endif // LOCATIONRECORDERIMPL_H
+#endif // LOCATIONRECORDER_H

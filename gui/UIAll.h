@@ -1,8 +1,11 @@
 #ifndef UIALL_H
 #define UIALL_H
 
-#ifdef QT_APP
+#ifdef TARGET_QTM
 #include "qtm/WelcomeUI.h"
-#endif // QT_APP
+#include "qtm/RecorderUI.h"
+#include "qtm/MenuUI.h"
+#include "qtm/PopupUI.h"
+#endif // TARGET_QTM
 
 #endif // UIALL_H

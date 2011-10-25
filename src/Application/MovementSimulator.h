@@ -31,11 +31,11 @@ Route simulateMovement(String routeName, int updateInterval, int distance, doubl
 	{
 		if(tick % updateInterval == 0)
 		{
-			//radAngle = Number::degToRad(Number::mt_rand(0, 90));
-			noise = (Number::mt_rand(0,50)/10) /157423.0f; // noise is - to 5 meters
+			//radAngle = Number::degToRad(Number::rangedRand(0, 90));
+			noise = (Number::rangedRand(0,50)/10) /157423.0f; // noise is - to 5 meters
 			gp.setLatitude(gp.getLatitude() + ((speed/157423.0f) * updateInterval) + noise );
 			gp.setLongitude(gp.getLongitude() + ((speed/157423.0f) * updateInterval) - noise );
-			gp.setAltitude(gp.getAltitude());// + Number::mt_rand(-, 3));
+			gp.setAltitude(gp.getAltitude());// + Number::rangedRand(-, 3));
 			gp.setSpeed(speed);
 			gp.id = ++gpCount;
 			genRoute.addPoint(gp);
@@ -80,10 +80,10 @@ double radAngle = 0;
 //start moving
 for (int i = 1; i < nMaxIteration-1; ++i)
 {
-geoPoint->setLatitude(geoPoint->getLatitude() + Number::mt_rand(-10, 10) / 500000.0f);
-geoPoint->setLongitude(geoPoint->getLongitude() + Number::mt_rand(-10, 10) / 500000.0f);
-geoPoint->setAltitude(geoPoint->getAltitude() + Number::mt_rand(-3, 3));
-geoPoint->setSpeed(geoPoint->getSpeed() + Number::mt_rand(-10, 10));
+geoPoint->setLatitude(geoPoint->getLatitude() + Number::rangedRand(-10, 10) / 500000.0f);
+geoPoint->setLongitude(geoPoint->getLongitude() + Number::rangedRand(-10, 10) / 500000.0f);
+geoPoint->setAltitude(geoPoint->getAltitude() + Number::rangedRand(-3, 3));
+geoPoint->setSpeed(geoPoint->getSpeed() + Number::rangedRand(-10, 10));
 geoPoint->id = i+1;
 
 time(&timeNow);
@@ -93,10 +93,10 @@ genRoute.coord.push_back(*geoPoint);
 }
 
 time(&timeNow);
-radAngle = Number::degToRad(Number::mt_rand(-90, 360));
-geoPoint->setLatitude(geoPoint->getLatitude() + Number::mt_rand(-10, 10) / 500000.0f);
-geoPoint->setLongitude(geoPoint->getLongitude() + Number::mt_rand(-10, 10) / 500000.0f);
-geoPoint->setAltitude(geoPoint->getAltitude() + Number::mt_rand(-3, 3));
+radAngle = Number::degToRad(Number::rangedRand(-90, 360));
+geoPoint->setLatitude(geoPoint->getLatitude() + Number::rangedRand(-10, 10) / 500000.0f);
+geoPoint->setLongitude(geoPoint->getLongitude() + Number::rangedRand(-10, 10) / 500000.0f);
+geoPoint->setAltitude(geoPoint->getAltitude() + Number::rangedRand(-3, 3));
 geoPoint->setSpeed(0);
 geoPoint->setTime(timeNow);
 geoPoint->id=nMaxIteration;

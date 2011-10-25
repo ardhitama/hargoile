@@ -1,8 +1,17 @@
 #include "Hargoile.h"
 
+/*
+  Event driven application
+*/
+
 Hargoile::Hargoile()
 {
-    initialize();
+    locRecorder = new LocationRecorder();
+    //initialize();
+}
+
+Hargoile::~Hargoile()
+{
 }
 
 void Hargoile::initialize()
@@ -18,8 +27,30 @@ void Hargoile::initialize()
     // start recording
     try
     {
-        posRecorder = boost::shared_ptr<PositionRecorderImpl>(new PositionRecorderImpl());
-        posRecorder->start();
+        //posRecorder = boost::shared_ptr<PositionRecorderImpl>(new PositionRecorderImpl());
+        //posRecorder->start();
+    } catch(Exception &ex)
+    {
+        //
+    }
+}
+
+void Hargoile::openWelcomeUI()
+{
+    WelcomeUI welcomeUI;
+    welcomeUI.showMaximized();
+    welcomeUI.exec();
+}
+
+void Hargoile::errorNotification()
+{
+}
+
+void Hargoile::run()
+{
+    try
+    {
+        openWelcomeUI();
     } catch(Exception &ex)
     {
         //
@@ -28,38 +59,47 @@ void Hargoile::initialize()
 
 int Hargoile::startRouteRecording()
 {
+    return 0;
 }
 
 int Hargoile::pauseRouteRecording()
 {
+    return 0;
 }
 
 int Hargoile::stopRouteRecording()
 {
+    return 0;
 }
 
 int Hargoile::loadRoute(int routeId)
 {
+    return 0;
 }
 
 int Hargoile::saveRoute()
 {
+    return 0;
 }
 
 int Hargoile::downloadRoute()
 {
+    return 0;
 }
 
 int Hargoile::uploadRoute(int routeId)
 {
+    return 0;
 }
 
 int Hargoile::linkAccount()
 {
+    return 0;
 }
 
 int Hargoile::unlinkAccount()
 {
+    return 0;
 }
 
 void Hargoile::showAccountDialog()

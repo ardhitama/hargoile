@@ -36,6 +36,7 @@ namespace Number
 	}
 
 	// http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html
+	// d = ((x0-x1) x (x0-x2)) / (x2-x1)
 	inline double pointToLineDistance(double lnX0, double lnY0, double lnZ0, double lnX1, double lnY1, double lnZ1, double ptX, double ptY, double ptZ)
 	{
 		return std::abs(crossProduct(ptX-lnX0, ptY-lnY0, ptZ-lnZ0, ptX-lnX1, ptY-lnY1, ptZ-lnZ1)) / std::abs((lnX1-lnX0) + (lnY1-lnY0) + (lnZ1-lnZ0));

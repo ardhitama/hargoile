@@ -92,7 +92,8 @@ HEADERS += \
     ../../src/Exception/LogOutAbstract.h \
     ../../src/Exception/qt/LogOut.h \
     ../../gui/qtm/PopupUI.h \
-    ../../libs/sqllite3/sqlite3.h
+    ../../libs/sqllite3/sqlite3.h \
+    ../../gui/UIAbstract.h
 
 FORMS += \
     ../../gui/qtm/RecorderUI.ui \
@@ -106,6 +107,9 @@ OTHER_FILES += \
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()
+
+
+
 
 
 

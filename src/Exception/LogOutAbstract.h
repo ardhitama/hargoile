@@ -3,7 +3,7 @@
 
 class LogOutAbstract
 {
-public:
+protected:
     virtual void log(String msg);
     virtual void warning(String msg);
     virtual void error(String msg);

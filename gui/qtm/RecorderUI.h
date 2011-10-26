@@ -15,6 +15,13 @@ public:
     explicit RecorderUI(QWidget *parent = 0);
     ~RecorderUI();
 
+    void show();
+    void hide();
+    void close();
+    void destroy();
+    void setMinimized();
+    void setMaximized();
+
 private:
     Ui::RecorderUI *ui;
 };

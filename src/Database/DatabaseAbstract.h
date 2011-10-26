@@ -6,7 +6,7 @@
 
 class DatabaseAbstract
 {
-public:
+protected:
     /*
  Database();
     Database(char const *filePath);

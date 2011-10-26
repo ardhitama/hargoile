@@ -14,3 +14,18 @@ RecorderUI::~RecorderUI()
 {
     delete ui;
 }
+
+void RecorderUI::show()
+{
+    this->exec();
+}
+
+void RecorderUI::hide() {}
+void RecorderUI::close() {}
+void RecorderUI::destroy() {}
+void RecorderUI::setMinimized() {}
+
+void RecorderUI::setMaximized()
+{
+    this->showMaximized();
+}

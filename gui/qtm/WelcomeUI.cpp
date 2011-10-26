@@ -25,3 +25,18 @@ WelcomeUI::~WelcomeUI()
 {
     delete ui;
 }
+
+void WelcomeUI::show()
+{
+    this->exec();
+}
+
+void WelcomeUI::hide() {}
+void WelcomeUI::close() {}
+void WelcomeUI::destroy() {}
+void WelcomeUI::setMinimized() {}
+
+void WelcomeUI::setMaximized()
+{
+    this->showMaximized();
+}

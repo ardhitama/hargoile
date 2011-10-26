@@ -13,46 +13,46 @@
 class Route
 {
 public:
-	Route();
-	Route(String routeName);
+    Route();
+    Route(String routeName);
 
-	void simplify(double tolerance);
+    void simplify(double tolerance);
 
-	String toString();
+    String toString();
 
-        inline std::vector<GeoPoint>& getData()
-	{
-		return route;
-	}
+    inline std::vector<GeoPoint>& getData()
+    {
+        return route;
+    }
 
-        inline void setUUID(String strUuid)
-	{
-		uuid = strUuid;
-	}
+    inline void setUUID(String strUuid)
+    {
+        uuid = strUuid;
+    }
 
-        inline void addPoint(const GeoPoint& newPoint)
-	{
-		route.push_back(newPoint);
-	}
+    inline void addPoint(const GeoPoint& newPoint)
+    {
+        route.push_back(newPoint);
+    }
 
-        inline String& getUUID()
-	{
-		return uuid;
-	}
+    inline String& getUUID()
+    {
+        return uuid;
+    }
 
-        inline void setName(String name)
-	{
-		Route::name = name;
-	}
+    inline void setName(String name)
+    {
+        Route::name = name;
+    }
 
-        inline String& getName()
-	{
-		return name;
-	}
+    inline String& getName()
+    {
+        return name;
+    }
 
 private:
-	std::vector<GeoPoint> route;
-	String name, uuid;
+    std::vector<GeoPoint> route;
+    String name, uuid;
 };
 
 #endif // ROUTE_H

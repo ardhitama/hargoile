@@ -86,6 +86,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\gui\UIAbstract.h" />
+    <ClInclude Include="..\..\gui\UIAll.h" />
+    <ClInclude Include="..\..\gui\win\MenuUI.h" />
+    <ClInclude Include="..\..\gui\win\PopupUI.h" />
+    <ClInclude Include="..\..\gui\win\RecorderUI.h" />
+    <ClInclude Include="..\..\gui\win\WelcomeUI.h" />
     <ClInclude Include="..\..\libs\sqllite3\sqlite3.h" />
     <ClInclude Include="..\..\src\Algorithm\LineSimplification\DouglasPeucker.h" />
     <ClInclude Include="..\..\src\Application\config.h" />
@@ -119,6 +125,10 @@
     <ClInclude Include="..\..\src\Utility\UtilityAll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\gui\win\MenuUI.cpp" />
+    <ClCompile Include="..\..\gui\win\PopupUI.cpp" />
+    <ClCompile Include="..\..\gui\win\RecorderUI.cpp" />
+    <ClCompile Include="..\..\gui\win\WelcomeUI.cpp" />
     <ClCompile Include="..\..\libs\sqllite3\sqlite3.c" />
     <ClCompile Include="..\..\src\Application\Hargoile.cpp" />
     <ClCompile Include="..\..\src\Application\Route.cpp" />

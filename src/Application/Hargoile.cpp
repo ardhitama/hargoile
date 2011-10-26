@@ -37,9 +37,16 @@ void Hargoile::initialize()
 
 void Hargoile::openWelcomeUI()
 {
-    //WelcomeUI welcomeUI;
-    //welcomeUI.showMaximized();
-    //welcomeUI.exec();
+    WelcomeUI welcomeUI;
+    welcomeUI.setMaximized();
+    welcomeUI.show();
+}
+
+void Hargoile::openRecorderUI()
+{
+    RecorderUI recorderUI;
+    recorderUI.setMaximized();
+    recorderUI.show();
 }
 
 void Hargoile::errorNotification()
@@ -50,7 +57,9 @@ void Hargoile::run()
 {
     try
     {
-        openWelcomeUI();
+        //openWelcomeUI();
+        openRecorderUI();
+
     } catch(Exception &ex)
     {
         //

@@ -17,6 +17,7 @@ public:
 
     // UIs
     void openWelcomeUI();
+    void openRecorderUI();
 
     void errorNotification();
 

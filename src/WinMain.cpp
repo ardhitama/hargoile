@@ -50,11 +50,12 @@ void print(DatabaseResult rs)
 int main(int argc, char** argv)
 {
 	Route genRoute;
-	genRoute = simulateMovement("auto gen", 1, 200, 2.78);
+	genRoute = simulateMovement("auto gen", 2, 100, 2.78);
 	cout<< "uuid: " << genRoute.getUUID() << endl;
 
 	GeoPoint g0 = genRoute.getData()[0];
 
+	cout << "--- Simulated movement: " << endl;
 	cout<< "Route name: " << genRoute.getName() << endl;
 	for_each(genRoute.getData().begin(), genRoute.getData().end(),
 		[&](GeoPoint g) -> void {
@@ -62,11 +63,11 @@ int main(int argc, char** argv)
 			g0 = g;
 	} );
 	cout << "size = " << genRoute.getData().size() << endl;
-	cout << "-------" << endl;
 
+	cout << "\n--- Eliminated line:" << endl;
+	genRoute.simplify(1);
 
-	genRoute.simplify(2);
-
+	cout << "\n--- Simplified Line: " << endl;
 	vector<GeoPoint> lineOut = genRoute.getData();
 	g0 = genRoute.getData()[0];
 
@@ -76,11 +77,10 @@ int main(int argc, char** argv)
 			g0 = g;
 	} );
 	cout << "size = " << lineOut.size() << endl;
-	cout << "-------" << endl;
 
 	Storage::getInstance().addRoute(genRoute);
 
-	cout << "Stored Route: " << endl;
+	cout << "\n--- Stored Route: " << endl;
 	map<String, String> rtMap = Storage::getInstance().listAllRoutes();
 	for_each(rtMap.begin(), rtMap.end(), [](pair<String, String> rtPair) {
 		cout << rtPair.first << " - " << rtPair.second << endl;

@@ -40,7 +40,7 @@ public:
 	{
 		if (latitude > 90 || latitude < -90)
 		{
-			DebugInfo("Latitude of point 1 out of bounds (-90 <= latitude <=90)", DebugInfo::Warning);
+			DebugInfo("Latitude out of bounds (-90 <= latitude <= 90)", DebugInfo::Warning);
 		}
 		GeoPoint::latitude = latitude;
 		GeoPoint::x = latitudeToX();
@@ -60,8 +60,7 @@ public:
 	{
 		if(altitude < -6340000) // approximate earth's core depth
 		{
-			DebugInfo("Altitude of point 1 out of bounds (altitude >= -6340000)", DebugInfo::Warning);
-			altitude = -6340000;
+			DebugInfo("Altitude out of bounds (altitude >= -6340000)", DebugInfo::Warning);
 		}
 		GeoPoint::altitude = altitude;
 		GeoPoint::z = altitudeToZ();
@@ -72,7 +71,6 @@ public:
 		if(speed < 0)
 		{
 			DebugInfo("Speed is negative (speed >= 0)", DebugInfo::Warning);
-			speed = 0;
 		}
 		GeoPoint::speed = speed;
 	}

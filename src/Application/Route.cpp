@@ -13,7 +13,7 @@ Route::Route(String routeName)
     boost::uuids::random_generator randGen;
     boost::uuids::uuid uuid =  randGen();
 
-    Route::name = name;
+    Route::name = routeName;
     Route::uuid = boost::uuids::to_string(uuid);
 }
 

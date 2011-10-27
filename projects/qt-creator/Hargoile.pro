@@ -16,6 +16,8 @@ symbian: {
     MOBILITY += location
 
     DEFINES += DEBUG
+
+    #QMAKE_CXXFLAGS.GCCE -= -fvisibility-inlines-hidden
 }
 simulator: {
     # QT += core

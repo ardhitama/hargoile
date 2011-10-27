@@ -4,6 +4,7 @@ Storage::Storage() : db(Database("hgl.stor"))
 {
     try
     {
+        db.exec("begin;");
         db.exec("CREATE TABLE IF NOT EXISTS config ( "
                 "access_token char(128) not null unique "
                 ");");
@@ -24,6 +25,7 @@ Storage::Storage() : db(Database("hgl.stor"))
                 "accuracy double default 0, "
                 "FOREIGN KEY (route_uuid) REFERENCES routes(route_uuid)"
                 ");");
+        db.exec("commit;");
 
     } catch (Exception &e)
     {

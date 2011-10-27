@@ -83,6 +83,8 @@ void dpReduceRecursive(std::vector<T> &vLineIn, std::vector<T> &vLineOut, const 
 template <typename T>
 std::vector<T> dpSimplify(std::vector<T> &vLineIn, double tolerance)
 {
+	if(tolerance > 5000)
+		DebugInfo("Tolerance >5 km will give lost of accuracy", DebugInfo::Warning);
     std::vector<T> vLineOut;
 
     dpReduceRecursive<T>(vLineIn, vLineOut, 0, vLineIn.size()-1, tolerance);

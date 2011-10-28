@@ -1,15 +1,16 @@
 #ifndef HARGOILE_H
 #define HARGOILE_H
 
+#include "../../libs/boost/shared_ptr.hpp"
 #include "../Exception/ExceptionAll.h"
 #include "../Location/LocationAll.h"
 #include "../../gui/UIAll.h"
+#include "../Technique/Singleton.h"
 
-class Hargoile
+class Hargoile : public Singleton<Hargoile>
 {
 public:
     Hargoile();
-
     virtual ~Hargoile();
 
     void initialize();
@@ -25,6 +26,7 @@ public:
     int startRouteRecording();
     int pauseRouteRecording();
     int stopRouteRecording();
+    void addNewPosition(const String &msg);
 
     // Route Storage
     int loadRoute(int routeId);
@@ -50,6 +52,7 @@ public:
 
 private:
     LocationRecorder *locRecorder;
+    RecorderUI *recorderUI;
 };
 
 #endif // HARGOILE_H

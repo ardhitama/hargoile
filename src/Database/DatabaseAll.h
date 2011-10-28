@@ -9,4 +9,8 @@
 #include "sqlite/Database.h"
 #endif
 
+#ifdef USE_QSQLITEDB
+#include "qsqlite/Database.h"
+#endif
+
 #endif // DATABASEALL_H

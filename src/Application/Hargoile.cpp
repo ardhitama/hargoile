@@ -6,8 +6,9 @@
 
 Hargoile::Hargoile()
 {
-    locRecorder = new LocationRecorder();
-    //initialize();
+    initialize();
+
+    //
 }
 
 Hargoile::~Hargoile()
@@ -16,6 +17,7 @@ Hargoile::~Hargoile()
 
 void Hargoile::initialize()
 {
+
     /*StateManager::getInstance().switchState(StateManager::Init);
 
     if(Config::getInstance().getToken() == "") // account token is empty
@@ -44,9 +46,8 @@ void Hargoile::openWelcomeUI()
 
 void Hargoile::openRecorderUI()
 {
-    RecorderUI recorderUI;
-    recorderUI.setMaximized();
-    recorderUI.show();
+    recorderUI->setMaximized();
+    recorderUI->show();
 }
 
 void Hargoile::errorNotification()
@@ -58,6 +59,8 @@ void Hargoile::run()
     try
     {
         //openWelcomeUI();
+        locRecorder = new LocationRecorder();
+        recorderUI = new RecorderUI();
         openRecorderUI();
 
     } catch(Exception &ex)
@@ -68,6 +71,7 @@ void Hargoile::run()
 
 int Hargoile::startRouteRecording()
 {
+    locRecorder->start();
     return 0;
 }
 
@@ -79,6 +83,11 @@ int Hargoile::pauseRouteRecording()
 int Hargoile::stopRouteRecording()
 {
     return 0;
+}
+
+void Hargoile::addNewPosition(const String &msg)
+{
+    recorderUI->appendPositionListView(msg);
 }
 
 int Hargoile::loadRoute(int routeId)

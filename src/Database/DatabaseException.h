@@ -3,34 +3,47 @@
 
 #include "../Exception/Exception.h"
 
-class DatabaseOpenFailedException : public Exception
+class DatabaseException : public Exception
 {
 public:
-	DatabaseOpenFailedException() : Exception("Can't open database file") {}
+    DatabaseException() : Exception("Database exception has occured") {}
+    DatabaseException(const String &msg) : Exception(msg) {}
 };
 
-class DatabaseNotOpenException : public Exception
+class DatabaseOpenFailedException : public DatabaseException
 {
 public:
-	DatabaseNotOpenException() : Exception("Database not Open") {}
+    DatabaseOpenFailedException() : DatabaseException("Can't open database file") {}
 };
 
-class DatabaseNoSchemaSelectedException : public Exception
+class DatabaseNotOpenException : public DatabaseException
 {
 public:
-	DatabaseNoSchemaSelectedException() : Exception("Database doesn't have active schema") {}
+    DatabaseNotOpenException() : DatabaseException("Database not open") {}
 };
 
-class DatabaseStatementInvalidException : public Exception
+class DatabaseFailException : public DatabaseException
 {
 public:
-	DatabaseStatementInvalidException() : Exception("Database query statement is invalid") {}
+    DatabaseFailException() : DatabaseException("Database is fail") {}
 };
 
-class DatabaseResultNotDoneException : public Exception
+class DatabaseNoSchemaSelectedException : public DatabaseException
 {
 public:
-	DatabaseResultNotDoneException() : Exception("Database is returned an error while processing the query results") {}
+    DatabaseNoSchemaSelectedException() : DatabaseException("Database doesn't have active schema") {}
+};
+
+class DatabaseStatementInvalidException : public DatabaseException
+{
+public:
+    DatabaseStatementInvalidException() : DatabaseException("Database query statement is invalid") {}
+};
+
+class DatabaseResultNotDoneException : public DatabaseException
+{
+public:
+    DatabaseResultNotDoneException() : DatabaseException("Database is returned an error while processing the query results") {}
 };
 
 #endif // DATABASEEXCEPTION_H

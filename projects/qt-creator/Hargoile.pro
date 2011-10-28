@@ -8,10 +8,17 @@ symbian: {
     #TARGET.EPOCHEAPSIZE = 0x20000 0x1000000 // Min 128kb, Max 16Mb
     #TARGET.EPOCALLOWDLLDATA = 1
     TARGET.UID3 = 0xE5A83714
-    TARGET.CAPABILITY += LocalServices NetworkServices ReadUserData UserEnvironment WriteUserData
+    TARGET.CAPABILITY += \
+        LocalServices \
+        NetworkServices \
+        ReadUserData \
+        UserEnvironment \
+        WriteUserData \
+        Location
+
     TARGET = Hargoile_symb_001
 
-    #TEMPLATE = app
+    TEMPLATE = app
     CONFIG += mobility
     MOBILITY += location
 
@@ -33,7 +40,7 @@ simulator: {
     DEFINES += DEBUG
 }
 
-QT += gui network multimedia
+QT += gui network multimedia sql
 
 #QMAKE_CXXFLAGS += -std=gnu++0x
 #QMAKE_CXXFLAGS += -std=c++0x
@@ -41,7 +48,7 @@ QT += gui network multimedia
 PRECOMPILED_HEADER = ../../src/stdafx.h
 INCLUDEPATH += ../../libs/
 
-DEFINES += USE_SQLITEDB TARGET_QTM
+DEFINES += TARGET_QTM USE_QSQLITEDB
 # Fix for QT conflict
 # DEFINES += QT_NO_DEBUG_STREAM QT_NO_DATASTREAM
 
@@ -54,7 +61,7 @@ SOURCES += \
     ../../gui/qtm/MenuUI.cpp \
     ../../src/Application/Storage.cpp \
     ../../gui/qtm/PopupUI.cpp \
-    ../../libs/sqllite3/sqlite3.c
+    ../../src/Location/qtm/LocationRecorder.cpp
 
 HEADERS += \
     ../../src/Algorithm/LineSimplification/DouglasPeucker.h \
@@ -90,12 +97,11 @@ HEADERS += \
     ../../src/Location/qtm/LocationRecorder.h \
     ../../src/Location/LocationRecorderAbstract.h \
     ../../src/Database/DatabaseAbstract.h \
-    ../../src/Database/sqlite/Database.h \
     ../../src/Exception/LogOutAbstract.h \
     ../../src/Exception/qt/LogOut.h \
     ../../gui/qtm/PopupUI.h \
-    ../../libs/sqllite3/sqlite3.h \
-    ../../gui/UIAbstract.h
+    ../../gui/UIAbstract.h \
+    ../../src/Database/qsqlite/Database.h
 
 FORMS += \
     ../../gui/qtm/RecorderUI.ui \
@@ -109,6 +115,11 @@ OTHER_FILES += \
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()
+
+
+
+
+
 
 
 

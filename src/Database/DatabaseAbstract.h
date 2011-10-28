@@ -25,6 +25,7 @@ protected:
 
 protected:
     int dbStatus;
+    enum { DB_OK, DB_NOT_OPEN, DB_NOT_READY };
 };
 
 #endif // DATABASEABSTRACT_H

@@ -2,13 +2,17 @@
 #define STRING_H
 
 #include <string>
-#include <cstdlib>
 #include "../../libs/boost/lexical_cast.hpp"
 
 class String : virtual public std::string
 {
 public:
     String() : std::string()
+    {
+        //
+    }
+
+    String(const std::string &str) : std::string(str)
     {
         //
     }

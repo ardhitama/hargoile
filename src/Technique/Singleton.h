@@ -12,7 +12,7 @@
 template<typename T> class Singleton
 {
 public:
-    inline static T& getInstance()
+    static T& getInstance()
     {
         return instance;
     }
@@ -21,7 +21,7 @@ private:
     static T instance;
 };
 
-template<class T>
+template<typename T>
 T Singleton<T>::instance;
 
 

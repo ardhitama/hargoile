@@ -1,6 +1,7 @@
 #ifndef DOUGLASPUECKER_H
 #define DOUGLASPUECKER_H
 
+#include <set>
 #include <vector>
 #include <algorithm>
 
@@ -24,7 +25,7 @@ inline bool isExist(std::vector<int> map, int id)
     }
     return false;
 }
-static std::vector<int> elPair;
+static std::set<int> idList;
 // analytics
 
 // might not give accurate result if tolerance > 5km
@@ -67,12 +68,14 @@ void dpReduceRecursive(std::vector<T> &vLineIn, std::vector<T> &vLineOut, const 
                 tmp_dist = Number::pointToLineDistance(vLineIn[i].getX(), vLineIn[i].getY(), vLineIn[i].getZ(),
                                                        vLineIn[j].getX(), vLineIn[j].getY(), vLineIn[j].getZ(),
                                                        vLineIn[l].getX(), vLineIn[l].getY(), vLineIn[l].getZ());
-                int id= vLineIn[l].id;
-                if(!isExist(elPair, id))
+                //int id= vLineIn[l].id;
+                if(idList.insert(vLineIn[l].id).second == true)
+                    std::cout << "id= " << vLineIn[l].id << " " << vLineIn[l].getLatitude() << ", " << vLineIn[l].getLongitude() << " d from line: " << tmp_dist << " m \n";
+                /*if(!isExist(elPair, id))
                 {
                     elPair.push_back(vLineIn[l].id);
                     std::cout << "id= " << vLineIn[l].id << " " << vLineIn[l].getLatitude() << ", " << vLineIn[l].getLongitude() << " d from line: " << tmp_dist << " m \n";
-                }
+                }*/
             }
         }
 		// analytics
@@ -90,7 +93,7 @@ std::vector<T> dpSimplify(std::vector<T> &vLineIn, double tolerance)
     dpReduceRecursive<T>(vLineIn, vLineOut, 0, vLineIn.size()-1, tolerance);
     vLineOut.push_back(vLineIn.back()); // must, dp doens't evaluate to the last node
 
-    std::cout << "size = " << elPair.size() << std::endl; //analytics
+    std::cout << "size = " << idList.size() << std::endl; //analytics
 
     return vLineOut;
 }

@@ -1,2 +1,4 @@
 boost_1_47_0
 sqlite-amalgamation-3.7.8
+uriparser 0.7.5
+libjson 7.4.1

@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include "../Exception/DebugInfo.h"
 
-namespace Number 
+namespace hgl 
 {
 	// const double M_PI = 3.14159265358979323846f;
 

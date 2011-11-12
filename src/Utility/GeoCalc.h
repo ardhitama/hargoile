@@ -83,10 +83,10 @@ private:
 	// basic theorem: http://mathworld.wolfram.com/SphericalCoordinates.html
 	double vectorDistance(double lat1, double lon1, double alt1, double lat2, double lon2, double alt2)
 	{
-		lat1 = Number::degToRad(lat1);
-		lon1 = Number::degToRad(lon1);
-		lat2 = Number::degToRad(lat2);
-		lon2 = Number::degToRad(lon2);
+		lat1 = hgl::degToRad(lat1);
+		lon1 = hgl::degToRad(lon1);
+		lat2 = hgl::degToRad(lat2);
+		lon2 = hgl::degToRad(lon2);
 
 		// ellipsoid defining parameters according WGS84
 		double a = 6378137.0f; // earth equatorial radius in meters (± 2m) -> semimajor axis
@@ -165,10 +165,10 @@ private:
 		the cosines of any distances smaller than about one minute of arc.
 		*/
 
-		lat1 = Number::degToRad(lat1);
-		lon1 = Number::degToRad(lon1);
-		lat2 = Number::degToRad(lat2);
-		lon2 = Number::degToRad(lon2);
+		lat1 = hgl::degToRad(lat1);
+		lon1 = hgl::degToRad(lon1);
+		lat2 = hgl::degToRad(lat2);
+		lon2 = hgl::degToRad(lon2);
 
 		double a = pow(sin((lat2-lat1))/2.0f, 2) + cos(lat1) * cos(lat2) * pow(sin((lon2-lon1)/2.0f), 2);
 		return 6378137.0f * 2 * asin(std::min<double>(1.0f, sqrt(a)));

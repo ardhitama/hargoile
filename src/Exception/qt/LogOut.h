@@ -19,7 +19,7 @@ public:
 
     static void error(const String &msg)
     {
-        //
+        PopupUI popUp(msg);
     }
 };
 

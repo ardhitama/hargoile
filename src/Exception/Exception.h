@@ -7,7 +7,7 @@
 #include "DebugInfo.h"
 #include "../Utility/String.h"
 
-class Exception// : virtual public std::exception
+class Exception : virtual public std::exception
 {
 public:
 

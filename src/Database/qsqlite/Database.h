@@ -17,7 +17,7 @@
 class Database : virtual public DatabaseAbstract
 {
 public:
-    Database(const char *filePath) throw()
+    Database(const String& filePath) throw()
     {
         dbStatus = DB_NOT_OPEN;
         sqliteStatus = -1;
@@ -42,7 +42,7 @@ public:
         return dbStatus;
     }
 
-    bool openDB(const char *filePath) throw()
+    bool openDB(const String& filePath) throw()
     {
         db = QSqlDatabase::addDatabase("QSQLITE");
 
@@ -54,7 +54,7 @@ public:
         db.setDatabaseName(path);
         #else
         // NOTE: File exists in the application private folder, in Symbian Qt implementation
-        db.setDatabaseName(filePath);
+        db.setDatabaseName(filePath.data());
         #endif
 
         sqliteStatus = db.open();
@@ -109,7 +109,7 @@ public:
         sqliteStatus = query.exec(sqlStmt.data());
         sqlError = db.lastError();
         if(sqliteStatus == false)
-            throw DatabaseStatementInvalidException() << DebugInfo(sqlStmt << "\n\"" << sqlError.text().toStdString() << "\"\n" << TRACE(), DebugInfo::Error);
+            throw DatabaseStatementInvalidException() << DebugInfo(String(sqlStmt) << "\n\"" << sqlError.text().toStdString() << "\"\n" << TRACE(), DebugInfo::Error);
 
         int colType = -1;
         QSqlRecord sqlRecord = query.record();
@@ -155,8 +155,9 @@ public:
         // query.clear(); don't need this, query is local variable
 
         sqlError = db.lastError();
-        if(query.isActive())
-            throw DatabaseResultNotDoneException() << DebugInfo(sqlError.text().toStdString() << TRACE(), DebugInfo::Error);
+        //@todo: bug, caused exception to be thrown when debuglog instance is not ready
+        //if(query.isActive())
+            //throw DatabaseResultNotDoneException() << DebugInfo(String(sqlError.text().toStdString()) << TRACE(), DebugInfo::Error);
 
         if(isNoResult == true)
             dbRes.setRowChanged(query.numRowsAffected());

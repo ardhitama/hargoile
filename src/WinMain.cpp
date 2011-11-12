@@ -5,7 +5,7 @@
 #endif
 #include <iostream>
 #include <ctime>
-
+#include <limits>
 #include <map>
 
 #include "Utility\String.h"
@@ -14,9 +14,9 @@
 #include "Algorithm\LineSimplification\DouglasPeucker.h"
 
 #include "Application\Route.h"
-#include "Application\MovementSimulator.h"
 #include "Application\Storage.h"
-//#include "Application\Hargoile.h"
+#include "Application\Hargoile.h"
+#include "Application\MovementSimulator.h"
 
 using namespace std;
 
@@ -49,35 +49,53 @@ void print(DatabaseResult rs)
 
 int main(int argc, char** argv)
 {
+	Hargoile::getInstance().run();
+	Hargoile::getInstance().startRouteRecording();
+	Hargoile::getInstance().stopRouteRecording();
+	Hargoile::getInstance().uploadCurrentRoute();
+	system("pause");
+	return 0;
+}
+
+
+int main3(int argc, char** argv)
+{
+	Hargoile::getInstance().run();
+
 	Route genRoute;
-	genRoute = simulateMovement("auto gen", 2, 100, 2.78);
+	genRoute = simulateMovement("auto gen", 1, 200, 2.78);
 	cout<< "uuid: " << genRoute.getUUID() << endl;
 
-	GeoPoint g0 = genRoute.getData()[0];
+	GeoPoint g0 = genRoute.getGeoPointData()[0];
+
+	cout.precision(std::numeric_limits<double>::digits10);
 
 	cout << "--- Simulated movement: " << endl;
 	cout<< "Route name: " << genRoute.getName() << endl;
-	for_each(genRoute.getData().begin(), genRoute.getData().end(),
+	for_each(genRoute.getGeoPointData().begin(), genRoute.getGeoPointData().end(),
 		[&](GeoPoint g) -> void {
-			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			//cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			cout << "[" << g.getLatitude() << ", " << g.getLongitude() << "], \n";
 			g0 = g;
 	} );
-	cout << "size = " << genRoute.getData().size() << endl;
+	cout << "size = " << genRoute.getGeoPointData().size() << endl;
 
 	cout << "\n--- Eliminated line:" << endl;
 	genRoute.simplify(1);
 
 	cout << "\n--- Simplified Line: " << endl;
-	vector<GeoPoint> lineOut = genRoute.getData();
-	g0 = genRoute.getData()[0];
+	vector<GeoPoint> lineOut = genRoute.getGeoPointData();
+	g0 = genRoute.getGeoPointData()[0];
 
 	for_each(lineOut.begin(), lineOut.end(),
 		[&](GeoPoint g) -> void {
-			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			//cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
+			cout << "[" << g.getLatitude() << ", " << g.getLongitude() << "], \n";
 			g0 = g;
 	} );
 	cout << "size = " << lineOut.size() << endl;
 
+	/*
 	Storage::getInstance().addRoute(genRoute);
 
 	cout << "\n--- Stored Route: " << endl;
@@ -85,19 +103,19 @@ int main(int argc, char** argv)
 	for_each(rtMap.begin(), rtMap.end(), [](pair<String, String> rtPair) {
 		cout << rtPair.first << " - " << rtPair.second << endl;
 	});
-
+	*/
 	/*
 	Route retRoute;
 	retRoute = Storage::getInstance().getRoute(genRoute.getUUID());
 
 	cout<< "Route name: " << retRoute.getName() << endl;
-	for_each(retRoute.getData().begin(), retRoute.getData().end(),
+	for_each(retRoute.getGeoPointData().begin(), retRoute.getGeoPointData().end(),
 		[&](GeoPoint g) -> void {
 		cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
 			g0 = g;
 	} );
 
-	cout << "size = " << retRoute.getData().size() << endl;
+	cout << "size = " << retRoute.getGeoPointData().size() << endl;
 	cout << "-------" << endl;
 	*/
 
@@ -159,23 +177,23 @@ int main2(int argc, char** argv)
 	genRoute = simulateMovement("auto gen", 1, 200000, 2.78);
 	cout<< "uuid: " << genRoute.getUUID() << endl;
 
-	GeoPoint g0 = genRoute.getData()[0];
+	GeoPoint g0 = genRoute.getGeoPointData()[0];
 
 	cout<< "Route name: " << genRoute.getName() << endl;
 	/*
-	for_each(genRoute.getData().begin(), genRoute.getData().end(),
+	for_each(genRoute.getGeoPointData().begin(), genRoute.getGeoPointData().end(),
 		[&](GeoPoint g) -> void {
 			cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
 			g0 = g;
 	} );
 	*/
-	cout << "size = " << genRoute.getData().size() << endl;
+	cout << "size = " << genRoute.getGeoPointData().size() << endl;
 	cout << "-------" << endl;
 
-	//vector<GeoPoint> lineOut = dpSimplify<GeoPoint>(genRoute.getData(), 1);
+	//vector<GeoPoint> lineOut = dpSimplify<GeoPoint>(genRoute.getGeoPointData(), 1);
 
 	genRoute.simplify(2);
-	vector<GeoPoint> lineOut = genRoute.getData();
+	vector<GeoPoint> lineOut = genRoute.getGeoPointData();
 	/*
 	for_each(lineOut.begin(), lineOut.end(),
 		[&](GeoPoint g) -> void {
@@ -198,12 +216,12 @@ int main2(int argc, char** argv)
 	retRoute = Storage::getInstance().getRoute(genRoute.getUUID());
 
 	cout<< "Route name: " << retRoute.getName() << endl;
-	for_each(retRoute.getData().begin(), retRoute.getData().end(),
+	for_each(retRoute.getGeoPointData().begin(), retRoute.getGeoPointData().end(),
 		[&](GeoPoint g) -> void {
 			///cout << "id= " << g.id << " " << g.getLatitude() << ", " << g.getLongitude() << " d from last: " << geodeticDistance(g0, g) << " m \n";
 			//g0 = g;
 	} );
-	cout << "size = " << retRoute.getData().size() << endl;
+	cout << "size = " << retRoute.getGeoPointData().size() << endl;
 	cout << "-------" << endl;
 
 

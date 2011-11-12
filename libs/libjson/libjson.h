@@ -191,13 +191,21 @@
 
     namespace libjson {	   
 	   #ifdef JSON_EXPOSE_BASE64
-		  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow json_cold {
-			 return JSONBase64::json_encode64(binary, bytes);
-		  }
+//		  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow json_cold {
+//			 return JSONBase64::json_encode64(binary, bytes);
+//		  }
 
-		  inline static std::string decode64(const json_string & encoded) json_nothrow json_cold {
-			 return JSONBase64::json_decode64(encoded);
-		  }
+//		  inline static std::string decode64(const json_string & encoded) json_nothrow json_cold {
+//			 return JSONBase64::json_decode64(encoded);
+//		  }
+                  // removed function attribute
+                  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow {
+                         return JSONBase64::json_encode64(binary, bytes);
+                  }
+
+                  inline static std::string decode64(const json_string & encoded) json_nothrow {
+                         return JSONBase64::json_decode64(encoded);
+                  }
 	   #endif
 	   
 	   //useful if you have json that you don't want to parse, just want to strip to cut down on space

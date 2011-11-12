@@ -2,19 +2,21 @@
 
 Route::Route()
 {
-    boost::uuids::random_generator randGen;
-    boost::uuids::uuid uuid =  randGen();
-
-    Route::uuid = boost::uuids::to_string(uuid);
+    generateUUID();
 }
 
 Route::Route(String routeName)
 {
-    boost::uuids::random_generator randGen;
-    boost::uuids::uuid uuid =  randGen();
-
+    generateUUID();
     Route::name = routeName;
-    Route::uuid = boost::uuids::to_string(uuid);
+}
+
+void Route::generateUUID()
+{
+    boost::uuids::random_generator randGen;
+    boost::uuids::uuid uuidOb =  randGen();
+
+    Route::uuid = boost::uuids::to_string(uuidOb);
 }
 
 void Route::simplify(double tolerance)

@@ -1,13 +1,18 @@
 #include "Storage.h"
 #include "../Technique/Singleton.h"
 
-Storage::Storage() : db(Database("hgl.stor"))
+Storage::Storage() : db(Database("storage.hgl"))
 {
     try
     {
         db.exec("BEGIN;");
         db.exec("CREATE TABLE IF NOT EXISTS config ( "
-                "access_token char(128) not null unique "
+                "__lockkey int not null unique, "
+                "email varchar(256) not null unique, "
+                "password varchar(256) not null, "
+                "exchange_url varchar(256) not null, "
+                "link_url varchar(256) not null, "
+                "dp_tolerance double not null "
                 ");");
 
         db.exec("CREATE TABLE IF NOT EXISTS routes ( "
@@ -16,21 +21,123 @@ Storage::Storage() : db(Database("hgl.stor"))
                 ");");
 
         db.exec("CREATE TABLE IF NOT EXISTS route_points ( "
-                "route_uuid char(36), "
+                "route_uuid char(38), "
                 "point_order int not null, "
                 "latitude double default 0, "
                 "longitude double default 0, "
                 "altitude double default 0, "
-                "speed double default 0, "
                 "time datetime default 0, "
-                "accuracy double default 0, "
-                "FOREIGN KEY (route_uuid) REFERENCES routes(route_uuid)"
+                "hspeed double default 0, "
+                "vspeed double default 0, "
+                "haccuracy double default 0, "
+                "vaccuracy double default 0, "
+                "FOREIGN KEY (route_uuid) REFERENCES routes(uuid)"
                 ");");
+
+        db.exec("INSERT OR IGNORE INTO config VALUES (1, '', '', 'http://hargoile.ardhitama.com/manager/sync_exchange.hgl', 'http://hargoile.ardhitama.com/manager/account_link.hgl', 0);");
+
         db.exec("COMMIT;");
 
     } catch (Exception &e)
     {
         LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+    }
+}
+
+void Storage::saveAuth(const String& email,const String& password)
+{
+    try
+    {
+        db.exec("UPDATE config SET email = '" << email << "', password = '" << password << "';");
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+    }
+
+}
+
+String Storage::getEmail()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT email FROM config;");
+        if(res.getRowCount() == 0)
+            return "";
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getStrData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return "";
+    }
+}
+
+String Storage::getPassword()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT password FROM config;");
+        if(res.getRowCount() == 0)
+            return "";
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getStrData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return "";
+    }
+}
+
+String Storage::getExchangeUrl()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT exchange_url FROM config;");
+        if(res.getRowCount() == 0)
+            return "";
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getStrData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return "";
+    }
+}
+
+String Storage::getLinkUrl()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT link_url FROM config;");
+        if(res.getRowCount() == 0)
+            return "";
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getStrData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return "";
+    }
+}
+
+double Storage::getDPTolerance()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT dp_tolerance FROM config;");
+        if(res.getRowCount() == 0)
+            return 0.0f;
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getDoubleData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return 0.0f;
     }
 }
 
@@ -78,9 +185,9 @@ void Storage::addRoute(Route& route)
         });
         */
 
-        for(unsigned int i=0; i<route.getData().size(); ++i)
+        for(unsigned int i=0; i<route.getGeoPointData().size(); ++i)
         {
-            GeoPoint &gp = route.getData()[i];
+            GeoPoint &gp = route.getGeoPointData()[i];
             db.exec("INSERT INTO route_points VALUES ('" << route.getUUID() << "', " << point_order << ", " << gp.getLatitude() << ", " << gp.getLongitude() << ", " << gp.getAltitude() << ", " << gp.getSpeed() << ", " << gp.getTime() << ", " << gp.getAccuracy() << "); ");
             ++point_order;
         }

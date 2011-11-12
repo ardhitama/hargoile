@@ -13,8 +13,17 @@ class Storage : public Singleton<Storage>
 {
 public:
     Storage();
+
+    String getEmail();
+    String getPassword();
+    String getExchangeUrl();
+    String getLinkUrl();
+    double getDPTolerance();
+
     void setAccessToken(String& strToken);
     String getAccessToken();
+
+    void saveAuth(const String& username, const String& password);
     void addRoute(Route& route);
     Route getRoute(String& routeUUID);
     void deleteRoute(String& routeUUID);

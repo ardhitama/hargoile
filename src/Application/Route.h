@@ -20,7 +20,20 @@ public:
 
     String toString();
 
-    inline std::vector<GeoPoint>& getData()
+    inline void reset()
+    {
+        route.clear();
+        name = "";
+
+        boost::uuids::random_generator randGen;
+        boost::uuids::uuid uuid =  randGen();
+
+        Route::uuid = boost::uuids::to_string(uuid);
+    }
+
+    void generateUUID();
+
+    inline std::vector<GeoPoint>& getGeoPointData()
     {
         return route;
     }

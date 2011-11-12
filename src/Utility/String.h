@@ -27,6 +27,11 @@ public:
         //
     }
 
+    String(int num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
     inline String& operator = (const char *rStr)
     {
         String::assign(rStr);
@@ -42,6 +47,36 @@ public:
     inline String& operator << (const char* rStr)
     {
         String::append(rStr);
+        return *this;
+    }
+
+    inline String& operator << (const String &rStr)
+    {
+        String::append(rStr);
+        return *this;
+    }
+
+    inline String& operator << (const double rNum)
+    {
+        String::append(boost::lexical_cast<std::string>(rNum));
+        return *this;
+    }
+
+    inline String& operator << (const int rNum)
+    {
+        String::append(boost::lexical_cast<std::string>(rNum));
+        return *this;
+    }
+
+    inline String& operator << (const long long rNum)
+    {
+        String::append(boost::lexical_cast<std::string>(rNum));
+        return *this;
+    }
+
+	inline String& operator << (const unsigned long long rNum)
+    {
+        String::append(boost::lexical_cast<std::string>(rNum));
         return *this;
     }
 };
@@ -60,42 +95,11 @@ inline bool operator != (const String &lStr, const char *rStr)
     return false;
 }
 
-inline String& operator << (String &lStr, const String &rStr)
-{
-    lStr.append(rStr);
-    return lStr;
-}
-
-inline String operator << (const String &lStr, const String &rStr)
-{
-    String ret = lStr;
-    ret.append(rStr);
-    return ret;
-}
-
 inline String operator << (const char *lStr, const String &rStr)
 {
     String ret = lStr;
     ret.append(rStr);
     return ret;
-}
-
-inline String& operator << (String &lStr, const double rNum)
-{
-    lStr.append(boost::lexical_cast<std::string>(rNum));
-    return lStr;
-}
-
-inline String& operator << (String &lStr, const int rNum)
-{
-    lStr.append(boost::lexical_cast<std::string>(rNum));
-    return lStr;
-}
-
-inline String& operator << (String &lStr, const long long rNum)
-{
-    lStr.append(boost::lexical_cast<std::string>(rNum));
-    return lStr;
 }
 
 #endif // STRING_H

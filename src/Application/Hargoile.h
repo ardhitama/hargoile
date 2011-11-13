@@ -1,6 +1,7 @@
 #ifndef HARGOILE_H
 #define HARGOILE_H
 
+#include <queue>
 #include "../../libs/boost/shared_ptr.hpp"
 #include "../../libs/boost/make_shared.hpp"
 
@@ -20,18 +21,22 @@ public:
     Hargoile();
     virtual ~Hargoile();
 
+    void init();
     void run();
-    void initialize();
     void destroy();
 
+    std::queue<int>& getUIQueue();
+
     // UIs
-    void openWelcomeUI();
-    void openRecorderUI();
-    void openMenuUI();
+    void createWelcomeUI();
+    void createRecorderUI();
+    void openMenuUI(UIAbstract *parentUI);
+    void createRouteConfigUI();
 
     void errorNotification();
 
     // Location recording
+    void createNewRoute();
     void startRouteRecording();
     void pauseRouteRecording();
     void stopRouteRecording();
@@ -46,6 +51,7 @@ public:
     int downloadRoute();
     Route& getCurrentRoute();
     double getCurrentDPTolerance();
+    void setCurrentDPTolerance(double tolerance);
 
     // Account linking
     void saveAuthentication(String email, String password);
@@ -66,17 +72,21 @@ public:
     void pauseAllThread();
     void stopAllThread();
 
+    enum {UI_WELCOME, UI_RECORDER, UI_MENU, UI_ROUTECONFIG};
 private:
     boost::shared_ptr<LocationRecorder> locRecorder;
+    boost::shared_ptr<Http> http;
+
     boost::shared_ptr<WelcomeUI> welcomeUI;
     boost::shared_ptr<RecorderUI> recorderUI;
     boost::shared_ptr<MenuUI> menuUI;
-    boost::shared_ptr<Http> http;
+    boost::shared_ptr<RouteConfigUI> routeConfigUI;
 
     bool isRecording;
+    bool isRunning;
     Route currentRoute;
 
-
+    std::queue<int> uiQueue;
 };
 
 #endif // HARGOILE_H

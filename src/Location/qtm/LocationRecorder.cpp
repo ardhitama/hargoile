@@ -5,8 +5,7 @@
 
 LocationRecorder::LocationRecorder()
 {
-    qGeoSource.reset(QGeoPositionInfoSource::createDefaultSource(0));
-    qGeoSource->setUpdateInterval(1000);
+    qGeoSource.reset(QGeoPositionInfoSource::createDefaultSource(this));
     connect(qGeoSource.get(), SIGNAL(positionUpdated(QGeoPositionInfo)), SLOT(onUpdate(QGeoPositionInfo)));
 }
 
@@ -21,11 +20,22 @@ void LocationRecorder::stop() throw(Exception)
 }
 
 void LocationRecorder::pause() throw(Exception){}
-void LocationRecorder::setUpdateInterval(int interval) throw(Exception){}
-void LocationRecorder::forceUpdate() throw(Exception){}
+
+void LocationRecorder::setUpdateInterval(int interval) throw(Exception)
+{
+    qGeoSource->setUpdateInterval(interval);
+}
+
+void LocationRecorder::forceUpdate() throw(Exception)
+{
+    qGeoSource->requestUpdate();
+}
 
 void LocationRecorder::onUpdate(QGeoPositionInfo qgeoinfo)
 {
+    if(qgeoinfo.attribute(QGeoPositionInfo::HorizontalAccuracy) > 20)
+        return;
+
     GeoPoint gp;
     gp.setLongitude(qgeoinfo.coordinate().longitude());
     gp.setLatitude(qgeoinfo.coordinate().latitude());

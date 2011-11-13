@@ -12,7 +12,8 @@ Storage::Storage() : db(Database("storage.hgl"))
                 "password varchar(256) not null, "
                 "exchange_url varchar(256) not null, "
                 "link_url varchar(256) not null, "
-                "dp_tolerance double not null "
+                "dp_tolerance double not null, "
+                "minimum_vaccuracy double not null "
                 ");");
 
         db.exec("CREATE TABLE IF NOT EXISTS routes ( "
@@ -34,7 +35,7 @@ Storage::Storage() : db(Database("storage.hgl"))
                 "FOREIGN KEY (route_uuid) REFERENCES routes(uuid)"
                 ");");
 
-        db.exec("INSERT OR IGNORE INTO config VALUES (1, '', '', 'http://hargoile.ardhitama.com/manager/sync_exchange.hgl', 'http://hargoile.ardhitama.com/manager/account_link.hgl', 0);");
+        db.exec("INSERT OR IGNORE INTO config VALUES (1, '', '', 'http://hargoile.ardhitama.com/manager/sync_exchange.hgl', 'http://hargoile.ardhitama.com/manager/account_link.hgl', 0, 20);");
 
         db.exec("COMMIT;");
 
@@ -139,6 +140,18 @@ double Storage::getDPTolerance()
         LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
         return 0.0f;
     }
+}
+
+void Storage::setDPTolerance(const double tolerance)
+{
+    try
+    {
+        db.exec(String("UPDATE config SET dp_tolerance = ") << tolerance << ";");
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+    }
+
 }
 
 void Storage::setAccessToken(String& strToken)

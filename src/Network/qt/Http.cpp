@@ -50,11 +50,10 @@ bool Http::post(HttpRequest& httpRequest, VariantMap& varMap) throw(Exception)
         //connect(netReply.get(), SIGNAL(finished()), this, SLOT(onReplyFinished()));
 
         int httpStatus = netReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-
-        QByteArray replyData = netReply->readAll();
-
-        String httpResponse = String(replyData.data());
+        String httpResponse = netReply->readAll().data();
         String httpError = netReply->errorString().toStdString();
+
+        LogOut::error(httpResponse);
 
         varMap.add("http_status", httpStatus);
         varMap.add("http_response", httpResponse);

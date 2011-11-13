@@ -6,79 +6,98 @@
 
 Hargoile::Hargoile()
 {
-    initialize();
-
-    //
+    isRecording = false;
+    isRunning = true;
 }
 
 Hargoile::~Hargoile()
 {
 }
 
-void Hargoile::initialize()
+void Hargoile::createWelcomeUI()
 {
-
-    /*StateManager::getInstance().switchState(StateManager::Init);
-
-    if(Config::getInstance().getToken() == "") // account token is empty
-    {
-        StateManager::getInstance().switchState(StateManager::LingkingAccount);
-        showAccountDialog();
-    }*/
-
-    // start recording
-    try
-    {
-        http = boost::make_shared<Http>();
-
-        std::srand(hgl::rangedRand(777, 9999));
-
-        isRecording = false;
-        //posRecorder = boost::shared_ptr<PositionRecorderImpl>(new PositionRecorderImpl());
-        //posRecorder->start();
-    } catch(Exception &ex)
-    {
-        //
-    }
-}
-
-void Hargoile::openWelcomeUI()
-{
+    //welcomeUI->setParentUI(0);
     welcomeUI->setMaximized();
     welcomeUI->show();
 }
 
-void Hargoile::openRecorderUI()
+void Hargoile::createRecorderUI()
 {
+    //recorderUI->setparentUI(parentUI);
     recorderUI->setMaximized();
     recorderUI->show();
 }
 
-void Hargoile::openMenuUI()
+void Hargoile::openMenuUI(UIAbstract *parentUI)
 {
+    menuUI->setParentUI(parentUI);
     menuUI->setMaximized();
+    menuUI->toFront();
     menuUI->show();
+}
+
+void Hargoile::createRouteConfigUI()
+{
+    //routeConfigUI->setparentUI(parentUI);
+    routeConfigUI->setMaximized();
+    routeConfigUI->show();
 }
 
 void Hargoile::errorNotification()
 {
 }
 
-void Hargoile::run()
+void Hargoile::init()
 {
     try
     {
+        std::srand(hgl::rangedRand(777, 9999));
+
+        http = boost::make_shared<Http>();
         locRecorder = boost::make_shared<LocationRecorder>();
+
         welcomeUI = boost::make_shared<WelcomeUI>();
         recorderUI = boost::make_shared<RecorderUI>();
         menuUI = boost::make_shared<MenuUI>();
+        routeConfigUI = boost::make_shared<RouteConfigUI>();
 
-        openWelcomeUI();
+        uiQueue.push(UI_WELCOME);
 
     } catch(Exception &ex)
     {
         //
     }
+}
+
+void Hargoile::run()
+{
+    int currentUI = -1;
+
+    locRecorder->start();
+    locRecorder->setUpdateInterval(15000);
+
+    while(!uiQueue.empty())
+    {
+        currentUI = uiQueue.front();
+        uiQueue.pop();
+
+        switch(currentUI)
+        {
+        case UI_WELCOME:
+            createWelcomeUI(); // createWelcomeUI is a blockin operation
+            break;
+        case UI_RECORDER:
+            createRecorderUI();
+            stopRouteRecording();
+            createNewRoute();
+            break;
+        case UI_ROUTECONFIG:
+            createNewRoute();
+            createRouteConfigUI();
+            break;
+        }
+    }
+    locRecorder->stop();
 }
 
 void Hargoile::destroy()
@@ -86,46 +105,53 @@ void Hargoile::destroy()
     exit(0);
 }
 
+std::queue<int>& Hargoile::getUIQueue()
+{
+    return uiQueue;
+}
+
+void Hargoile::createNewRoute()
+{
+    currentRoute = Route();
+}
+
 void Hargoile::startRouteRecording()
 {
     isRecording = true;
-    locRecorder->start();
-    currentRoute = Route();
+    //locRecorder->start();
+    locRecorder->setUpdateInterval(1000);
+    locRecorder->forceUpdate();
     recorderUI->toRecordingState();
 }
 
 void Hargoile::pauseRouteRecording()
 {
-    locRecorder->stop();
+    locRecorder->setUpdateInterval(30000);
     recorderUI->toPausedState();
 }
 
 void Hargoile::stopRouteRecording()
 {
-    isRecording = false;
-    locRecorder->stop();
-    recorderUI->toStoppedState();
-
-    //    currentRoute = simulateMovement("rute", 1, 500, 5);
-    //    uploadCurrentRoute();
-    //    currentRoute.simplify(1);
-
-    //    boost::uuids::random_generator randGen;
-    //    boost::uuids::uuid uuid = randGen();
-    //    currentRoute.setUUID(boost::uuids::to_string(uuid));
-
-    //    currentRoute.setName("rute-reduced");
-    //    uploadCurrentRoute();
+    if(isRecording)
+    {
+        isRecording = false;
+        //locRecorder->stop();
+        locRecorder->setUpdateInterval(30000);
+        recorderUI->toStoppedState();
+    }
 }
 
 void Hargoile::addNewPosition(GeoPoint& gp)
 {
     String strLoc;
-    strLoc << gp.getLongitude() << ", " << gp.getLatitude();
+    if(isRecording)
+    {
+        strLoc << gp.getLatitude() << ", " << gp.getLongitude();
 
-    currentRoute.addPoint(gp);
+        currentRoute.addPoint(gp);
 
-    recorderUI->appendPositionListView(strLoc);
+        recorderUI->appendPositionListView(strLoc);
+    }
 }
 
 int Hargoile::loadRoute(int routeId)
@@ -151,6 +177,11 @@ Route& Hargoile::getCurrentRoute()
 double Hargoile::getCurrentDPTolerance()
 {
     return Storage::getInstance().getDPTolerance();
+}
+
+void Hargoile::setCurrentDPTolerance(double tolerance)
+{
+    Storage::getInstance().setDPTolerance(tolerance);
 }
 
 Route Hargoile::getReducedCurrentRoute()
@@ -190,14 +221,14 @@ bool Hargoile::uploadRoute(Route& route)
         {
             GeoPoint gp = route.getGeoPointData().at(i);
             JSONNode jsGp(JSON_ARRAY);
-            jsGp.push_back(JSONNode("", gp.getLatitude()));
-            jsGp.push_back(JSONNode("", gp.getLongitude()));
-            jsGp.push_back(JSONNode("", gp.getAltitude()));
-            jsGp.push_back(JSONNode("", gp.getTime()));
-            jsGp.push_back(JSONNode("", gp.getHSpeed()));
-            jsGp.push_back(JSONNode("", gp.getVSpeed()));
-            jsGp.push_back(JSONNode("", gp.getHAccuracy()));
-            jsGp.push_back(JSONNode("", gp.getVAccuracy()));
+            jsGp.push_back(JSONNode("", String(gp.getLatitude())));
+            jsGp.push_back(JSONNode("", String(gp.getLongitude())));
+            jsGp.push_back(JSONNode("", String(gp.getAltitude())));
+            jsGp.push_back(JSONNode("", String(gp.getTime())));
+            jsGp.push_back(JSONNode("", String(gp.getHSpeed())));
+            jsGp.push_back(JSONNode("", String(gp.getVSpeed())));
+            jsGp.push_back(JSONNode("", String(gp.getHAccuracy())));
+            jsGp.push_back(JSONNode("", String(gp.getVAccuracy())));
 
             jsPoints.push_back(jsGp);
         }
@@ -229,6 +260,7 @@ bool Hargoile::isAccountLinked()
         return false;
     if(Storage::getInstance().getPassword().length() == 0)
         return false;
+
     return true;
 }
 
@@ -268,12 +300,6 @@ bool Hargoile::linkAccount(String email, String password)
 void Hargoile::unlinkAccount()
 {
     Storage::getInstance().saveAuth("", "");
-    welcomeUI->toNotLinkedState();
-    if(isRecording == true)
-    {
-        stopRouteRecording();
-        recorderUI->close();
-    }
 }
 
 void Hargoile::onLinkAccount(VariantMap& varMap)

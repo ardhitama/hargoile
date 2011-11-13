@@ -26,6 +26,7 @@ public:
 int main(int argc, char *argv[])
 {
     App app(argc, argv);
+    Hargoile::getInstance().init();
     Hargoile::getInstance().run();
     return app.exec();
 }

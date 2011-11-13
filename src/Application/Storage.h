@@ -19,6 +19,7 @@ public:
     String getExchangeUrl();
     String getLinkUrl();
     double getDPTolerance();
+    void setDPTolerance(const double tolerance);
 
     void setAccessToken(String& strToken);
     String getAccessToken();

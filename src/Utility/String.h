@@ -32,6 +32,31 @@ public:
         String::assign(boost::lexical_cast<std::string>(num));
     }
 
+    String(long long num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
+    String(unsigned int num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
+    String(unsigned long long num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
+    String(float num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
+    String(double num)
+    {
+        String::assign(boost::lexical_cast<std::string>(num));
+    }
+
     inline String& operator = (const char *rStr)
     {
         String::assign(rStr);

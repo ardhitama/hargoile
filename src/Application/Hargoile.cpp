@@ -247,7 +247,6 @@ bool Hargoile::linkAccount(String email, String password)
         req.addFormField("input-password", password);
 
         VariantMap message;
-        message.add(String("message"), Application::ACCOUNT_LINK);
         message.add("email", email);
         message.add("password", password);
 
@@ -279,16 +278,27 @@ void Hargoile::unlinkAccount()
 
 void Hargoile::onLinkAccount(VariantMap& varMap)
 {
-    Json json;
-    json.parse(varMap.get("http_response").toString());
-
-    if(json.toBool("response") == true)
+    try
     {
-        welcomeUI->toLinkedState();
-        Storage::getInstance().saveAuth(varMap.get("email").toString(), varMap.get("password").toString());
+        Json json;
+        json.parse(varMap.get("http_response").toString());
+
+        if(json.toBool("response") == true)
+        {
+            welcomeUI->toLinkedState();
+            Storage::getInstance().saveAuth(varMap.get("email").toString(), varMap.get("password").toString());
+        }
+        else
+            LogOut::error("Email and/or Password is wrong.");
     }
-    else
-        LogOut::error("Email or Password is wrong");
+    catch(std::invalid_argument)
+    {
+        LogOut::error("Account linking is failed because remote server gives unexpected respond.");
+    }
+    catch(Exception& ex)
+    {
+        LogOut::error("Unexcepted error occured while linking your account.");
+    }
 }
 
 

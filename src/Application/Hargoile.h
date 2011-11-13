@@ -10,12 +10,11 @@
 #include "../Network/NetworkAll.h"
 #include "../Technique/Singleton.h"
 #include "../Utility/UtilityAll.h"
-#include "../Application.h"
 
 #include "Storage.h"
 #include "Route.h"
 
-class Hargoile : public Application, public Singleton<Hargoile>
+class Hargoile : public Singleton<Hargoile>
 {
 public:
     Hargoile();

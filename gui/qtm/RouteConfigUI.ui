@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RecorderUI</class>
- <widget class="QDialog" name="RecorderUI">
+ <class>RouteConfigUI</class>
+ <widget class="QDialog" name="RouteConfigUI">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -9,19 +9,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>774</width>
-    <height>490</height>
+    <width>621</width>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Route Recorder</string>
+   <string>Recording Options</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListView" name="positionListView">
-     <property name="autoScroll">
-      <bool>false</bool>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Route Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="nameLineEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>DP Tolerance</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="toleranceDoubleSpinBox"/>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -41,7 +66,7 @@
   <connection>
    <sender>menuButtonBox</sender>
    <signal>accepted()</signal>
-   <receiver>RecorderUI</receiver>
+   <receiver>RouteConfigUI</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -57,7 +82,7 @@
   <connection>
    <sender>menuButtonBox</sender>
    <signal>rejected()</signal>
-   <receiver>RecorderUI</receiver>
+   <receiver>RouteConfigUI</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

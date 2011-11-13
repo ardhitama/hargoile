@@ -1,5 +1,7 @@
 #include "RecorderUI.h"
 
+//void appendPositionListView(const String &str){}
+
 void RecorderUI::show()
 {
 	return;

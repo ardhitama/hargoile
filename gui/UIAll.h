@@ -6,6 +6,7 @@
 #include "qtm/RecorderUI.h"
 #include "qtm/MenuUI.h"
 #include "qtm/PopupUI.h"
+#include "qtm/RouteConfigUI.h"
 #endif // TARGET_QTM
 
 #ifdef TARGET_WIN

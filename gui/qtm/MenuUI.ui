@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MenuUI</class>
  <widget class="QDialog" name="MenuUI">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,13 +14,20 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Menu</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="routeUploadBtn">
      <property name="text">
-      <string>PushButton</string>
+      <string>Upload Route</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="reducedRouteUploadBtn">
+     <property name="text">
+      <string>Upload Reduced Route</string>
      </property>
     </widget>
    </item>
@@ -35,9 +45,30 @@
     </spacer>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QPushButton" name="newRouteBtn">
+     <property name="text">
+      <string>Record New Route</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="unlinkBtn">
+     <property name="text">
+      <string>Unlink Account</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="quitBtn">
+     <property name="text">
+      <string>Quit Hargoile</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="menuButtonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Close</set>
+      <set>QDialogButtonBox::NoButton</set>
      </property>
     </widget>
    </item>

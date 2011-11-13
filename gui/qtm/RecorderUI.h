@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QListView>
+#include <QPushButton>
 
 #include <QStringList>
 #include <QStringListModel>
@@ -23,6 +24,9 @@ public:
     ~RecorderUI();
 
     void appendPositionListView(const String &str);
+    void toStoppedState();
+    void toRecordingState();
+    void toPausedState();
 
     void accept();
     void reject();
@@ -30,16 +34,21 @@ public:
     void show();
     void hide();
     void close();
-    void destroy();
     void setMinimized();
     void setMaximized();
+    void toFront();
 
 private:
     Ui::RecorderUI *ui;
     QStringListModel positionListModel;
 
+    QPushButton *startBtn, *stopBtn, *menuBtn, *pauseBtn;
+
 private slots:
     void startBtnClicked();
+    void stopBtnClicked();
+    void pauseBtnClicked();
+    void menuBtnClicked();
 };
 
 #endif // RECORDERUI_H

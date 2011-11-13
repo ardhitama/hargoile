@@ -1,8 +1,17 @@
 #include "Json.h"
 
-void Json::parse(const String& jsonText)
+bool Json::parse(const String& jsonText)
 {
-    jsNode = libjson::parse(jsonText);
+    try
+    {
+        jsNode = libjson::parse(jsonText);
+        return true;
+    }
+    catch(...)
+    {
+        throw;
+    }
+    return false;
 }
 
 bool Json::toBool(const String &name)

@@ -7,7 +7,7 @@
 class Json
 {
 public:
-    void parse(const String& jsonText);
+    bool parse(const String& jsonText);
 
     bool toBool(const String &name);
     int toInt(const String &name);

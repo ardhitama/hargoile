@@ -71,7 +71,7 @@ public:
         headerMap.add("Connection", "keep-alive");
         headerMap.add("User-Agent", "Hargoile Mobile");
         headerMap.add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-        headerMap.add("Accept-Encoding", "gzip,deflate,sdch");
+        //headerMap.add("Accept-Encoding", "gzip,deflate,sdch");
         headerMap.add("Accept-Language", "id-ID,id;q=0.8,en-US;q=0.6,en;q=0.4");
         headerMap.add("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3");
         headerMap.add("Content-Type", "multipart/form-data, boundary=" << headerBoundary);

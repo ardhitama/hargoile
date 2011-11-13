@@ -6,17 +6,22 @@ Http::Http()
 {
 }
 
-void Http::onReplyFinished() throw(Exception)
+void Http::onReplyFinished()
+{
+    QNetworkReply *netReply = qobject_cast<QNetworkReply *>(sender());
+    int httpStatus = netReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    String httpResponse = String(netReply->readAll().data());
+    String httpError = netReply->errorString().toStdString();
+
+    LogOut::error(httpResponse);
+}
+
+void Http::onLoadProgress()
 {
     //
 }
 
-void Http::onLoadProgress() throw(Exception)
-{
-    //
-}
-
-bool Http::post(HttpRequest& httpRequest, VariantMap& varMap)
+bool Http::post(HttpRequest& httpRequest, VariantMap& varMap) throw(Exception)
 {
     try
     {
@@ -35,22 +40,25 @@ bool Http::post(HttpRequest& httpRequest, VariantMap& varMap)
         //LogOut::error(content);
 
         boost::shared_ptr<QNetworkAccessManager> netManager = boost::make_shared<QNetworkAccessManager>(this);
+        //netManager = boost::make_shared<QNetworkAccessManager>(this);
         boost::shared_ptr<QNetworkReply> netReply;
-
         boost::shared_ptr<QEventLoop> postEvent = boost::make_shared<QEventLoop>(this);
 
         netReply.reset(netManager->post(netRequest, QByteArray(httpRequest.getPostContentRequest().data(), httpRequest.getPostContentRequest().size())));
-        connect(netReply.get(), SIGNAL(finished()), postEvent.get(), SLOT(quit()));
+        connect(netManager.get(), SIGNAL(finished(QNetworkReply*)), postEvent.get(), SLOT(quit()));
         postEvent->exec();
+        //connect(netReply.get(), SIGNAL(finished()), this, SLOT(onReplyFinished()));
 
         int httpStatus = netReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        String httpResponse = String(netReply->readAll().data());
+
+        QByteArray replyData = netReply->readAll();
+
+        String httpResponse = String(replyData.data());
         String httpError = netReply->errorString().toStdString();
 
         varMap.add("http_status", httpStatus);
         varMap.add("http_response", httpResponse);
         varMap.add("http_error", httpError);
-
 
         if(httpStatus == 200) // OK
         {

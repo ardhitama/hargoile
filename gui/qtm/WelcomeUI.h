@@ -27,12 +27,12 @@ public:
 
 private:
     Ui::WelcomeUI *ui;
-    QPushButton *menuBtn, *startBtn, *linkBtn;
+    QPushButton *quitBtn, *startBtn, *linkBtn;
 
 private slots:
     void recordBtnClicked();
     void linkBtnClicked();
-    void menuBtnClicked();
+    void quitBtnClicked();
 };
 
 #endif // WELCOMEUI_H

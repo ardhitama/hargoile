@@ -34,6 +34,7 @@ private slots:
     void on_quitBtn_clicked();
     void on_unlinkBtn_clicked();
     void on_newRouteBtn_clicked();
+    void on_testRouteUploadBtn_clicked();
 };
 
 #endif // MENUUI_H

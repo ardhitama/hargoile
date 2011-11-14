@@ -13,6 +13,9 @@
     <height>446</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Recording Options</string>
   </property>
@@ -39,12 +42,22 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>DP Tolerance</string>
+         <string>DP Tolerance (meters)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
        <widget class="QDoubleSpinBox" name="toleranceDoubleSpinBox"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Minimum Accuracy</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="accuracySpinBox"/>
       </item>
      </layout>
     </widget>

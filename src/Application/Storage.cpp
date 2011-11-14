@@ -154,6 +154,35 @@ void Storage::setDPTolerance(const double tolerance)
 
 }
 
+int Storage::getAccuracyTolerance()
+{
+    try
+    {
+        DatabaseResult res = db.exec("SELECT minimum_vaccuracy FROM config;");
+        if(res.getRowCount() == 0)
+            return 0.0f;
+        DatabaseRow row = res.getRowData().at(0);
+        DatabaseColumn col = row.getColumnData().at(0);
+        return col.getDoubleData();
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        return 0.0f;
+    }
+}
+
+void Storage::setAccuracyTolerance(const int tolerance)
+{
+    try
+    {
+        db.exec(String("UPDATE config SET minimum_vaccuracy = ") << tolerance << ";");
+    } catch (Exception &e)
+    {
+        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+    }
+
+}
+
 void Storage::setAccessToken(String& strToken)
 {
     try

@@ -20,6 +20,8 @@ public:
     String getLinkUrl();
     double getDPTolerance();
     void setDPTolerance(const double tolerance);
+    int getAccuracyTolerance();
+    void setAccuracyTolerance(const int tolerance);
 
     void setAccessToken(String& strToken);
     String getAccessToken();

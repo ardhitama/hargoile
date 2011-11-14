@@ -26,8 +26,8 @@ void WelcomeUI::toLinkedState()
     startBtn = ui->menuButtonBox->addButton("Record", QDialogButtonBox::YesRole);
     connect(startBtn, SIGNAL(clicked()), SLOT(recordBtnClicked()));
 
-    menuBtn = ui->menuButtonBox->addButton("Menu", QDialogButtonBox::NoRole);
-    connect(menuBtn, SIGNAL(clicked()), SLOT(menuBtnClicked()));
+    quitBtn = ui->menuButtonBox->addButton("Quit", QDialogButtonBox::NoRole);
+    connect(quitBtn, SIGNAL(clicked()), SLOT(quitBtnClicked()));
 }
 
 void WelcomeUI::toNotLinkedState()
@@ -39,8 +39,8 @@ void WelcomeUI::toNotLinkedState()
     linkBtn = ui->menuButtonBox->addButton("Link", QDialogButtonBox::YesRole);
     connect(linkBtn, SIGNAL(clicked()), SLOT(linkBtnClicked()));
 
-    menuBtn = ui->menuButtonBox->addButton("Menu", QDialogButtonBox::NoRole);
-    connect(menuBtn, SIGNAL(clicked()), SLOT(menuBtnClicked()));
+    quitBtn = ui->menuButtonBox->addButton("Quit", QDialogButtonBox::NoRole);
+    connect(quitBtn, SIGNAL(clicked()), SLOT(quitBtnClicked()));
 }
 
 void WelcomeUI::recordBtnClicked()
@@ -54,9 +54,9 @@ void WelcomeUI::linkBtnClicked()
     Hargoile::getInstance().linkAccount(ui->usernameLineEdit->text().toStdString(), ui->passwordLineEdit->text().toStdString());
 }
 
-void WelcomeUI::menuBtnClicked()
+void WelcomeUI::quitBtnClicked()
 {
-    Hargoile::getInstance().openMenuUI(this);
+    Hargoile::getInstance().destroy();
 }
 
 WelcomeUI::~WelcomeUI()

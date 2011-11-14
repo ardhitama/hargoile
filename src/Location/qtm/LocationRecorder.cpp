@@ -33,7 +33,7 @@ void LocationRecorder::forceUpdate() throw(Exception)
 
 void LocationRecorder::onUpdate(QGeoPositionInfo qgeoinfo)
 {
-    if(qgeoinfo.attribute(QGeoPositionInfo::HorizontalAccuracy) > 20)
+    if(qgeoinfo.attribute(QGeoPositionInfo::HorizontalAccuracy) > Hargoile::getInstance().getCurrentAccuracyTolerance())
         return;
 
     GeoPoint gp;

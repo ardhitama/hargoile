@@ -26,12 +26,20 @@ void MenuUI::backBtnClicked()
 void MenuUI::on_routeUploadBtn_clicked()
 {
     Hargoile::getInstance().uploadRoute(Hargoile::getInstance().getCurrentRoute());
+    if(parentUI != 0)
+        parentUI->close();
+    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    close();
 }
 
 void MenuUI::on_reducedRouteUploadBtn_clicked()
 {
     Route route = Hargoile::getInstance().getReducedCurrentRoute();
     Hargoile::getInstance().uploadRoute(route);
+    if(parentUI != 0)
+        parentUI->close();
+    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    close();
 }
 
 void MenuUI::on_quitBtn_clicked()
@@ -51,13 +59,46 @@ void MenuUI::on_newRouteBtn_clicked()
 {
     if(parentUI != 0)
         parentUI->close();
-    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_WELCOME);
+    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    close();
+}
+
+void MenuUI::on_testRouteUploadBtn_clicked()
+{
+    Route route = Hargoile::getInstance().getCurrentRoute();
+    Route route1 = Hargoile::getInstance().getCurrentRoute();
+    Route route2 = Hargoile::getInstance().getCurrentRoute();
+    Route route3 = Hargoile::getInstance().getCurrentRoute();
+
+    route.generateUUID();
+    route1.generateUUID();
+    route2.generateUUID();
+    route3.generateUUID();
+
+    route.setName(route.getName() << " [raw][test]");
+    route1.setName(route1.getName() << " [1.0][test]");
+    route2.setName(route2.getName() << " [2.0][test]");
+    route3.setName(route3.getName() << " [3.0][test]");
+
+    route1.simplify(1.0f);
+    route2.simplify(2.0f);
+    route3.simplify(3.0f);
+
+    Hargoile::getInstance().uploadRoute(route);
+    Hargoile::getInstance().uploadRoute(route1);
+    Hargoile::getInstance().uploadRoute(route2);
+    Hargoile::getInstance().uploadRoute(route3);
+
+    if(parentUI != 0)
+        parentUI->close();
+    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
     close();
 }
 
 void MenuUI::show()
 {
-    this->exec();
+    //this->exec();
+    this->open();
 }
 
 void MenuUI::hide() {}

@@ -53,6 +53,9 @@ public:
     double getCurrentDPTolerance();
     void setCurrentDPTolerance(double tolerance);
 
+    int getCurrentAccuracyTolerance();
+    void setCurrentAccuracyTolerance(int tolerance);
+
     // Account linking
     void saveAuthentication(String email, String password);
     bool isAccountLinked();

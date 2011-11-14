@@ -4,3 +4,8 @@ Purpose : Mobile client position tracker
 Future  :
  - Implement NFC
  - Platform ports
+
+Bugs:
+- Storage exception on app startup will crash the app
+- Wrong json input will crash app -> void Hargoile::onLinkAccount(VariantMap& varMap)
+ 

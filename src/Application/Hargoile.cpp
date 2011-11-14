@@ -126,7 +126,7 @@ void Hargoile::startRouteRecording()
 
 void Hargoile::pauseRouteRecording()
 {
-    locRecorder->setUpdateInterval(30000);
+    locRecorder->setUpdateInterval(15000);
     recorderUI->toPausedState();
 }
 
@@ -136,7 +136,7 @@ void Hargoile::stopRouteRecording()
     {
         isRecording = false;
         //locRecorder->stop();
-        locRecorder->setUpdateInterval(30000);
+        locRecorder->setUpdateInterval(15000);
         recorderUI->toStoppedState();
     }
 }
@@ -184,11 +184,21 @@ void Hargoile::setCurrentDPTolerance(double tolerance)
     Storage::getInstance().setDPTolerance(tolerance);
 }
 
+int Hargoile::getCurrentAccuracyTolerance()
+{
+    return Storage::getInstance().getAccuracyTolerance();
+}
+
+void Hargoile::setCurrentAccuracyTolerance(int tolerance)
+{
+    Storage::getInstance().setAccuracyTolerance(tolerance);
+}
+
 Route Hargoile::getReducedCurrentRoute()
 {
     Route route = currentRoute;
     route.generateUUID();
-    route.setName(route.getName() << " - reduced");
+    route.setName(route.getName() << " [" << Storage::getInstance().getDPTolerance() << "]");
     route.simplify(Storage::getInstance().getDPTolerance());
     return route;
 }
@@ -205,6 +215,12 @@ bool Hargoile::uploadRoute(Route& route)
         if(isAccountLinked() == false)
         {
             LogOut::error("You must link your account first.");
+            return false;
+        }
+
+        if(route.getGeoPointData().size() == 0)
+        {
+            LogOut::error("Can't process upload, route is empty.");
             return false;
         }
 

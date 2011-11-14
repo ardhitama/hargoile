@@ -3,7 +3,7 @@
  <class>MenuUI</class>
  <widget class="QDialog" name="MenuUI">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -13,21 +13,34 @@
     <height>386</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
-   <string>Menu</string>
+   <string>Hargoile Menu</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QPushButton" name="routeUploadBtn">
      <property name="text">
-      <string>Upload Route</string>
+      <string>Upload Raw Route</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="reducedRouteUploadBtn">
      <property name="text">
-      <string>Upload Reduced Route</string>
+      <string>Upload Compressed Route</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="testRouteUploadBtn">
+     <property name="text">
+      <string>Upload Compressed Route [Test]</string>
      </property>
     </widget>
    </item>

@@ -13,6 +13,11 @@ RouteConfigUI::RouteConfigUI(QWidget *parent) :
     ui->toleranceDoubleSpinBox->setSingleStep(0.1f);
     ui->toleranceDoubleSpinBox->setValue(Hargoile::getInstance().getCurrentDPTolerance());
 
+    ui->accuracySpinBox->setMinimum(0);
+    ui->accuracySpinBox->setMaximum(90);
+    ui->accuracySpinBox->setSingleStep(1);
+    ui->accuracySpinBox->setValue(Hargoile::getInstance().getCurrentAccuracyTolerance());
+
     continueBtn = ui->menuButtonBox->addButton("Continue", QDialogButtonBox::YesRole);
     connect(continueBtn, SIGNAL(clicked()), SLOT(continueBtnClicked()));
 
@@ -24,6 +29,7 @@ void RouteConfigUI::continueBtnClicked()
 {
     Hargoile::getInstance().getCurrentRoute().setName(ui->nameLineEdit->text().toStdString());
     Hargoile::getInstance().setCurrentDPTolerance(ui->toleranceDoubleSpinBox->value());
+    Hargoile::getInstance().setCurrentAccuracyTolerance(ui->accuracySpinBox->value());
     Hargoile::getInstance().getUIQueue().push(Hargoile::UI_RECORDER);
     close();
 }

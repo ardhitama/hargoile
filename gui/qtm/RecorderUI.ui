@@ -13,6 +13,11 @@
     <height>490</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>TitilliumText22L Rg</family>
+   </font>
+  </property>
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>

@@ -7,10 +7,6 @@ RecorderUI::RecorderUI(QWidget *parent) :
     ui(new Ui::RecorderUI)
 {
     ui->setupUi(this);
-
-    ui->positionListView->setModel(&positionListModel);
-
-    toStoppedState();
 }
 
 RecorderUI::~RecorderUI()
@@ -28,13 +24,23 @@ void RecorderUI::appendPositionListView(const String &str)
 void RecorderUI::toStoppedState()
 {
     ui->menuButtonBox->clear();
-    ui->positionListView->model()->removeRows(0, ui->positionListView->model()->rowCount());
+
+    menuBtn = ui->menuButtonBox->addButton("Menu", QDialogButtonBox::NoRole);
+    connect(menuBtn, SIGNAL(clicked()), SLOT(menuBtnClicked()));
+}
+
+void RecorderUI::toInitState()
+{
+    ui->menuButtonBox->clear();
+
+    positionListModel.removeRows(0, positionListModel.rowCount());
+    ui->positionListView->setModel(&positionListModel);
 
     startBtn = ui->menuButtonBox->addButton("Start", QDialogButtonBox::YesRole);
     connect(startBtn, SIGNAL(clicked()), SLOT(startBtnClicked()));
 
-    menuBtn = ui->menuButtonBox->addButton("Menu", QDialogButtonBox::NoRole);
-    connect(menuBtn, SIGNAL(clicked()), SLOT(menuBtnClicked()));
+    backBtn = ui->menuButtonBox->addButton("Back", QDialogButtonBox::NoRole);
+    connect(backBtn, SIGNAL(clicked()), SLOT(backBtnClicked()));
 }
 
 void RecorderUI::toRecordingState()
@@ -53,7 +59,7 @@ void RecorderUI::toPausedState()
     ui->menuButtonBox->clear();
 
     startBtn = ui->menuButtonBox->addButton("Resume", QDialogButtonBox::YesRole);
-    connect(startBtn, SIGNAL(clicked()), SLOT(startBtnClicked()));
+    connect(startBtn, SIGNAL(clicked()), SLOT(resumeBtnClicked()));
 
     stopBtn = ui->menuButtonBox->addButton("Stop", QDialogButtonBox::NoRole);
     connect(stopBtn, SIGNAL(clicked()), SLOT(stopBtnClicked()));
@@ -64,6 +70,13 @@ void RecorderUI::reject(){}
 
 
 void RecorderUI::startBtnClicked()
+{
+    ui->positionListView->model()->removeRows(0, ui->positionListView->model()->rowCount());
+    Hargoile::getInstance().createNewRoute();
+    Hargoile::getInstance().startRouteRecording();
+}
+
+void RecorderUI::resumeBtnClicked()
 {
     Hargoile::getInstance().startRouteRecording();
 }
@@ -80,11 +93,18 @@ void RecorderUI::pauseBtnClicked()
 
 void RecorderUI::menuBtnClicked()
 {
-    Hargoile::getInstance().openMenuUI(this);
+    Hargoile::getInstance().openMenuUI(this, MenuUI::RECORDER_MENU);
+}
+
+void RecorderUI::backBtnClicked()
+{
+    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    close();
 }
 
 void RecorderUI::show()
 {
+    toInitState();
     this->exec();
 }
 

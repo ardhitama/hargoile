@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>bgr-diagonal-lines.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file>TitilliumText22L003-webfont.svg</file>
+        <file>TitilliumText22L003-webfont.ttf</file>
+    </qresource>
+</RCC>

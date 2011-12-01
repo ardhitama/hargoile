@@ -7,6 +7,7 @@
 #include "qtm/MenuUI.h"
 #include "qtm/PopupUI.h"
 #include "qtm/RouteConfigUI.h"
+#include "qtm/RetryUI.h"
 #endif // TARGET_QTM
 
 #ifdef TARGET_WIN

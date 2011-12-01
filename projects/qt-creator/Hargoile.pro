@@ -177,7 +177,9 @@ HEADERS += \
     ../../src/Utility/VariantMap.h \
     ../../src/Utility/Variant.h \
     ../../src/Utility/Json.h \
-    ../../gui/qtm/RouteConfigUI.h
+    ../../gui/qtm/RouteConfigUI.h \
+    ../../gui/qtm/defines.h \
+    ../../gui/qtm/RetryUI.h
 
 FORMS += \
     ../../gui/qtm/RecorderUI.ui \
@@ -192,6 +194,16 @@ OTHER_FILES += \
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
 qtcAddDeployment()
+
+RESOURCES += \
+    ../../gui/qtm/uiRes.qrc
+
+
+
+
+
+
+
 
 
 

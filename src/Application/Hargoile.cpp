@@ -16,21 +16,25 @@ Hargoile::~Hargoile()
 
 void Hargoile::createWelcomeUI()
 {
-    //welcomeUI->setParentUI(0);
+    if(isAccountLinked())
+        welcomeUI->toLinkedState();
+    else
+        welcomeUI->toNotLinkedState();
+
     welcomeUI->setMaximized();
     welcomeUI->show();
 }
 
 void Hargoile::createRecorderUI()
 {
-    //recorderUI->setparentUI(parentUI);
     recorderUI->setMaximized();
     recorderUI->show();
 }
 
-void Hargoile::openMenuUI(UIAbstract *parentUI)
+void Hargoile::openMenuUI(UIAbstract *parentUI, int menuType = 0)
 {
     menuUI->setParentUI(parentUI);
+    menuUI->setMenuType(menuType);
     menuUI->setMaximized();
     menuUI->toFront();
     menuUI->show();
@@ -38,7 +42,6 @@ void Hargoile::openMenuUI(UIAbstract *parentUI)
 
 void Hargoile::createRouteConfigUI()
 {
-    //routeConfigUI->setparentUI(parentUI);
     routeConfigUI->setMaximized();
     routeConfigUI->show();
 }
@@ -89,10 +92,8 @@ void Hargoile::run()
         case UI_RECORDER:
             createRecorderUI();
             stopRouteRecording();
-            createNewRoute();
             break;
         case UI_ROUTECONFIG:
-            createNewRoute();
             createRouteConfigUI();
             break;
         }
@@ -198,7 +199,7 @@ Route Hargoile::getReducedCurrentRoute()
 {
     Route route = currentRoute;
     route.generateUUID();
-    route.setName(route.getName() << " [" << Storage::getInstance().getDPTolerance() << "]");
+    route.setName(route.getName() << " [" << hgl::round(Storage::getInstance().getAccuracyTolerance(), 1) << "][" << hgl::round(Storage::getInstance().getDPTolerance(), 1) << "]");
     route.simplify(Storage::getInstance().getDPTolerance());
     return route;
 }
@@ -259,7 +260,10 @@ bool Hargoile::uploadRoute(Route& route)
     } catch(Exception &e)
     {
         LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
-        return false;
+        if(RetryUI::show("Route upload is failed, retry?"))
+            return uploadRoute(route);
+        else
+            return false;
     }
 
     return true;
@@ -307,7 +311,11 @@ bool Hargoile::linkAccount(String email, String password)
     } catch(Exception &e)
     {
         LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
-        return false;
+
+        if(RetryUI::show("Account linking is failed, retry?"))
+            return linkAccount(email, password);
+        else
+            return false;
     }
 
     return true;

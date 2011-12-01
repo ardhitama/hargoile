@@ -8,6 +8,12 @@ MenuUI::MenuUI(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->reducedRouteUploadBtn->hide();
+    ui->routeUploadBtn->hide();
+    ui->newRouteBtn->hide();
+    ui->testRouteUploadBtn->hide();
+    ui->unlinkBtn->hide();
+
     backBtn = ui->menuButtonBox->addButton("Back", QDialogButtonBox::NoRole);
     connect(backBtn, SIGNAL(clicked()), SLOT(backBtnClicked()));
 
@@ -18,6 +24,28 @@ MenuUI::~MenuUI()
     delete ui;
 }
 
+void MenuUI::setMenuType(int menuType)
+{
+    ui->reducedRouteUploadBtn->hide();
+    ui->routeUploadBtn->hide();
+    ui->newRouteBtn->hide();
+    ui->testRouteUploadBtn->hide();
+    ui->unlinkBtn->hide();
+
+    switch(menuType)
+    {
+    case WELCOME_MENU:
+        ui->unlinkBtn->show();
+        break;
+    case RECORDER_MENU:
+        ui->reducedRouteUploadBtn->show();
+        ui->routeUploadBtn->show();
+        ui->newRouteBtn->show();
+        ui->testRouteUploadBtn->show();
+        break;
+    }
+}
+
 void MenuUI::backBtnClicked()
 {
     this->close();
@@ -26,20 +54,20 @@ void MenuUI::backBtnClicked()
 void MenuUI::on_routeUploadBtn_clicked()
 {
     Hargoile::getInstance().uploadRoute(Hargoile::getInstance().getCurrentRoute());
-    if(parentUI != 0)
-        parentUI->close();
-    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
-    close();
+    //if(parentUI != 0)
+        //parentUI->close();
+    //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    //close();
 }
 
 void MenuUI::on_reducedRouteUploadBtn_clicked()
 {
     Route route = Hargoile::getInstance().getReducedCurrentRoute();
     Hargoile::getInstance().uploadRoute(route);
-    if(parentUI != 0)
-        parentUI->close();
-    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
-    close();
+    //if(parentUI != 0)
+        //parentUI->close();
+    //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    //close();
 }
 
 void MenuUI::on_quitBtn_clicked()
@@ -75,10 +103,10 @@ void MenuUI::on_testRouteUploadBtn_clicked()
     route2.generateUUID();
     route3.generateUUID();
 
-    route.setName(route.getName() << " [raw][test]");
-    route1.setName(route1.getName() << " [1.0][test]");
-    route2.setName(route2.getName() << " [2.0][test]");
-    route3.setName(route3.getName() << " [3.0][test]");
+    route.setName(route.getName() << " [" << Hargoile::getInstance().getCurrentAccuracyTolerance() << "][0.0]");
+    route1.setName(route1.getName() << " [" << Hargoile::getInstance().getCurrentAccuracyTolerance() << "][1.0]");
+    route2.setName(route2.getName() << " [" << Hargoile::getInstance().getCurrentAccuracyTolerance() << "][2.0]");
+    route3.setName(route3.getName() << " [" << Hargoile::getInstance().getCurrentAccuracyTolerance() << "][3.0]");
 
     route1.simplify(1.0f);
     route2.simplify(2.0f);
@@ -89,10 +117,10 @@ void MenuUI::on_testRouteUploadBtn_clicked()
     Hargoile::getInstance().uploadRoute(route2);
     Hargoile::getInstance().uploadRoute(route3);
 
-    if(parentUI != 0)
-        parentUI->close();
-    Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
-    close();
+    //if(parentUI != 0)
+        //parentUI->close();
+    //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
+    //close();
 }
 
 void MenuUI::show()

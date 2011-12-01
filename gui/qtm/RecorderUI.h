@@ -24,6 +24,7 @@ public:
     ~RecorderUI();
 
     void appendPositionListView(const String &str);
+    void toInitState();
     void toStoppedState();
     void toRecordingState();
     void toPausedState();
@@ -42,13 +43,15 @@ private:
     Ui::RecorderUI *ui;
     QStringListModel positionListModel;
 
-    QPushButton *startBtn, *stopBtn, *menuBtn, *pauseBtn;
+    QPushButton *startBtn, *stopBtn, *menuBtn, *pauseBtn, *backBtn;
 
 private slots:
     void startBtnClicked();
+    void resumeBtnClicked();
     void stopBtnClicked();
     void pauseBtnClicked();
     void menuBtnClicked();
+    void backBtnClicked();
 };
 
 #endif // RECORDERUI_H

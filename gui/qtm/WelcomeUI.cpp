@@ -21,20 +21,28 @@ void WelcomeUI::toLinkedState()
 {
     ui->menuButtonBox->clear();
 
-    ui->loginFrame->setEnabled(false);
+    ui->infoLabel->setText("Your Account Is Already Linked");
+
+    ui->infoLabel->setVisible(true);
+    ui->loginFrame->setVisible(false);
 
     startBtn = ui->menuButtonBox->addButton("Record", QDialogButtonBox::YesRole);
     connect(startBtn, SIGNAL(clicked()), SLOT(recordBtnClicked()));
 
-    quitBtn = ui->menuButtonBox->addButton("Quit", QDialogButtonBox::NoRole);
-    connect(quitBtn, SIGNAL(clicked()), SLOT(quitBtnClicked()));
+    menuBtn = ui->menuButtonBox->addButton("Menu", QDialogButtonBox::NoRole);
+    connect(menuBtn, SIGNAL(clicked()), SLOT(menuBtnClicked()));
 }
 
 void WelcomeUI::toNotLinkedState()
 {
     ui->menuButtonBox->clear();
+    ui->usernameLineEdit->clear();
+    ui->passwordLineEdit->clear();
 
-    ui->loginFrame->setEnabled(true);
+    ui->infoLabel->setText("Please Link Your Account");
+
+    ui->infoLabel->setVisible(false);
+    ui->loginFrame->setVisible(true);
 
     linkBtn = ui->menuButtonBox->addButton("Link", QDialogButtonBox::YesRole);
     connect(linkBtn, SIGNAL(clicked()), SLOT(linkBtnClicked()));
@@ -57,6 +65,11 @@ void WelcomeUI::linkBtnClicked()
 void WelcomeUI::quitBtnClicked()
 {
     Hargoile::getInstance().destroy();
+}
+
+void WelcomeUI::menuBtnClicked()
+{
+    Hargoile::getInstance().openMenuUI(this, MenuUI::WELCOME_MENU);
 }
 
 WelcomeUI::~WelcomeUI()

@@ -23,6 +23,10 @@ public:
     void setMaximized();
     void toFront();
 
+    void setMenuType(int menuType);
+
+    enum { WELCOME_MENU, RECORDER_MENU };
+
 private:
     Ui::MenuUI *ui;
     QPushButton *backBtn;

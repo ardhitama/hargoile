@@ -13,11 +13,19 @@
     <height>446</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>TitilliumText22L Rg</family>
+   </font>
+  </property>
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>Recording Options</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -42,7 +50,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>DP Tolerance (meters)</string>
+         <string>DP Tolerance</string>
         </property>
        </widget>
       </item>
@@ -52,12 +60,16 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Minimum Accuracy</string>
+         <string>Accuracy's Upper Bound</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="accuracySpinBox"/>
+       <widget class="QSpinBox" name="accuracySpinBox">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

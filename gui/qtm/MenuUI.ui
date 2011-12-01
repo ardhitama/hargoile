@@ -13,6 +13,11 @@
     <height>386</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>TitilliumText22L Rg</family>
+   </font>
+  </property>
   <property name="focusPolicy">
    <enum>Qt::StrongFocus</enum>
   </property>
@@ -40,7 +45,21 @@
    <item>
     <widget class="QPushButton" name="testRouteUploadBtn">
      <property name="text">
-      <string>Upload Compressed Route [Test]</string>
+      <string>Upload Compressed Route [1.0, 2.0, 3.0]</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="newRouteBtn">
+     <property name="text">
+      <string>Record New Route</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="unlinkBtn">
+     <property name="text">
+      <string>Unlink Account</string>
      </property>
     </widget>
    </item>
@@ -58,23 +77,15 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="newRouteBtn">
-     <property name="text">
-      <string>Record New Route</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="unlinkBtn">
-     <property name="text">
-      <string>Unlink Account</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QPushButton" name="quitBtn">
      <property name="text">
       <string>Quit Hargoile</string>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

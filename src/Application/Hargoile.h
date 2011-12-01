@@ -30,7 +30,7 @@ public:
     // UIs
     void createWelcomeUI();
     void createRecorderUI();
-    void openMenuUI(UIAbstract *parentUI);
+    void openMenuUI(UIAbstract *parentUI, int menuType);
     void createRouteConfigUI();
 
     void errorNotification();

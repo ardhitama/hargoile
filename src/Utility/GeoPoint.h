@@ -199,7 +199,7 @@ public:
         return GeoPoint::vaccuracy;
     }
 
-    // convert from geodetic coordinates to spherical coordinates in meters
+    // convert from LLA to ECEF
     inline double latitudeToX()
     {
         double lat = hgl::degToRad(GeoPoint::latitude);

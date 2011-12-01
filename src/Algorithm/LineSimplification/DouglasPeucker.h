@@ -97,7 +97,7 @@ std::vector<T> dpSimplify(std::vector<T> &vLineIn, double tolerance)
     dpReduceRecursive<T>(vLineIn, vLineOut, 0, vLineIn.size()-1, tolerance);
     vLineOut.push_back(vLineIn.back()); // must, dp doens't evaluate to the last node
 
-    std::cout << "size = " << idList.size() << std::endl; //analytics
+    //std::cout << "size = " << idList.size() << std::endl; //analytics
 
     return vLineOut;
 }

@@ -35,13 +35,14 @@ Storage::Storage() : db(Database("storage.hgl"))
                 "FOREIGN KEY (route_uuid) REFERENCES routes(uuid)"
                 ");");
 
-        db.exec("INSERT OR IGNORE INTO config VALUES (1, '', '', 'http://hargoile.ardhitama.com/manager/sync_exchange.hgl', 'http://hargoile.ardhitama.com/manager/account_link.hgl', 0, 20);");
+        db.exec("INSERT OR IGNORE INTO config VALUES (1, '', '', 'http://hargoile.ardhitama.com/async/addRoute.hgl', 'http://hargoile.ardhitama.com/async/linkAccount.hgl', 1, 20);");
 
         db.exec("COMMIT;");
 
     } catch (Exception &e)
     {
-        LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
+        throw;
+        //LogOut::error(e.getInfo() << " (" << e.getDebugInfo().getStrInfo() << ")");
     }
 }
 

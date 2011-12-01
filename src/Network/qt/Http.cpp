@@ -68,10 +68,15 @@ bool Http::post(HttpRequest& httpRequest, VariantMap& varMap) throw(Exception)
             throw Exception(String("HTTP Response Error (") << httpStatus << ")") << DebugInfo(httpError << httpResponse << TRACE(), DebugInfo::Error);
             return false;
         }
+        else
+        {
+            throw Exception(String("No HTTP Response (") << httpStatus << ")") << DebugInfo(httpError << httpResponse << TRACE(), DebugInfo::Error);
+            return false;
+        }
 
     } catch(Exception &ex)
     {
-        throw ex;
+        throw;
         return false;
     }
     return false;

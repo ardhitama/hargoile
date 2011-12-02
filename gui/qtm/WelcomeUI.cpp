@@ -92,10 +92,12 @@ void WelcomeUI::setMinimized() {}
 
 void WelcomeUI::setMaximized()
 {
+    this->setWindowState(windowState() | Qt::WindowMaximized);
     this->showMaximized();
 }
 
 void WelcomeUI::toFront()
 {
     this->activateWindow();
+    this->raise();
 }

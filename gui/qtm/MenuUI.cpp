@@ -55,7 +55,7 @@ void MenuUI::on_routeUploadBtn_clicked()
 {
     Hargoile::getInstance().uploadRoute(Hargoile::getInstance().getCurrentRoute());
     //if(parentUI != 0)
-        //parentUI->close();
+    //parentUI->close();
     //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
     //close();
 }
@@ -65,7 +65,7 @@ void MenuUI::on_reducedRouteUploadBtn_clicked()
     Route route = Hargoile::getInstance().getReducedCurrentRoute();
     Hargoile::getInstance().uploadRoute(route);
     //if(parentUI != 0)
-        //parentUI->close();
+    //parentUI->close();
     //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
     //close();
 }
@@ -118,34 +118,35 @@ void MenuUI::on_testRouteUploadBtn_clicked()
     Hargoile::getInstance().uploadRoute(route3);
 
     //if(parentUI != 0)
-        //parentUI->close();
+    //parentUI->close();
     //Hargoile::getInstance().getUIQueue().push(Hargoile::UI_ROUTECONFIG);
     //close();
 }
 
 void MenuUI::show()
 {
-    //this->exec();
-    this->open();
+    QDialog::open();
+    QDialog::update();
+    //this->setVisible(true);
 }
 
 void MenuUI::hide() {}
 
 void MenuUI::close()
 {
-    if(parentUI != 0)
-        parentUI->toFront();
-    this->done(0);
+    QDialog::close();
 }
 
 void MenuUI::setMinimized() {}
 
 void MenuUI::setMaximized()
 {
-    this->showMaximized();
+    QDialog::setWindowState( QDialog::windowState() | Qt::WindowMaximized);
+    QDialog::showMaximized();
 }
 
 void MenuUI::toFront()
 {
-    this->activateWindow();
+    QDialog::activateWindow();
+    QDialog::raise();
 }

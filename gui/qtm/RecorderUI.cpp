@@ -119,10 +119,12 @@ void RecorderUI::setMinimized() {}
 
 void RecorderUI::setMaximized()
 {
+    this->setWindowState(windowState() | Qt::WindowMaximized);
     this->showMaximized();
 }
 
 void RecorderUI::toFront()
 {
     this->activateWindow();
+    this->raise();
 }

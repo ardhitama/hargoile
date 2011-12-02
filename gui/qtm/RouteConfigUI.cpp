@@ -56,6 +56,7 @@ void RouteConfigUI::setMinimized() {}
 
 void RouteConfigUI::setMaximized()
 {
+    this->setWindowState(windowState() | Qt::WindowMaximized);
     this->showMaximized();
 }
 
@@ -67,4 +68,5 @@ RouteConfigUI::~RouteConfigUI()
 void RouteConfigUI::toFront()
 {
     this->activateWindow();
+    this->raise();
 }

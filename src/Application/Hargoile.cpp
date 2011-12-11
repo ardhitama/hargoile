@@ -94,6 +94,7 @@ void Hargoile::run()
             stopRouteRecording();
             break;
         case UI_ROUTECONFIG:
+            createNewRoute();
             createRouteConfigUI();
             break;
         }

@@ -72,7 +72,6 @@ void RecorderUI::reject(){}
 void RecorderUI::startBtnClicked()
 {
     ui->positionListView->model()->removeRows(0, ui->positionListView->model()->rowCount());
-    Hargoile::getInstance().createNewRoute();
     Hargoile::getInstance().startRouteRecording();
 }
 

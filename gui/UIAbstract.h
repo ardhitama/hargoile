@@ -4,13 +4,13 @@
 class UIAbstract
 {
 public:
-    virtual void show() = 0;
-    virtual void hide() = 0;
-    virtual void close() = 0;
-    virtual void setMinimized() = 0;
-    virtual void setMaximized() = 0;
+	virtual void show() {};
+	virtual void hide() {};
+	virtual void close() {};
+	virtual void setMinimized() {};
+	virtual void setMaximized() {};
 
-    virtual void toFront() = 0;
+	virtual void toFront() {};
 
     virtual void setParentUI(UIAbstract *parentUI)
     {

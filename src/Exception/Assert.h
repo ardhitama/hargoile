@@ -15,7 +15,7 @@
 #else
 #define ASSERT(cond) ""
 #define FUNCNM ""
-#define TRACE ""
+#define TRACE() ""
 #endif // DEBUG
 
 #endif // ASSERT_H

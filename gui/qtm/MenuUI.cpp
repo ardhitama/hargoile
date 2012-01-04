@@ -48,6 +48,8 @@ void MenuUI::setMenuType(int menuType)
 
 void MenuUI::backBtnClicked()
 {
+    if(parentUI != 0)
+        parentUI->toFront();
     this->close();
 }
 

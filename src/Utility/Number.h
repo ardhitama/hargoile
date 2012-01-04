@@ -35,16 +35,17 @@ inline int rangedRand(unsigned int min, unsigned int max)
 // http://www.ltcconline.net/greenl/courses/107/vectors/dotcros.htm
 //  u = ai + bj + ck  and v = di + ej + fk
 //  u x v =  (bf - ce) i + (cd - af) j + (ae - bd) k
-inline double crossProduct(double x0, double y0, double z0, double x1, double y1, double z1)
+
+inline double normalOfVectorCrossProduct(double x0, double y0, double z0, double x1, double y1, double z1)
 {
-    return (y0*z1 - z0*y1) + (z0*x1 - x0*z1) + (x0*y1 - y1*x0);
+    return std::sqrt(std::pow((y0*z1 - z0*y1),2) + std::pow((z0*x1 - x0*z1),2) + std::pow((x0*y1 - y0*x1),2));
 }
 
 // http://mathworld.wolfram.com/Point-LineDistance3-Dimensional.html
-// d = ((x0-x1) x (x0-x2)) / (x2-x1)
+// d = |(x0-x1) x (x0-x2)| / |x2-x1|
 inline double pointToLineDistance(double lnX0, double lnY0, double lnZ0, double lnX1, double lnY1, double lnZ1, double ptX, double ptY, double ptZ)
 {
-    return std::abs(crossProduct(ptX-lnX0, ptY-lnY0, ptZ-lnZ0, ptX-lnX1, ptY-lnY1, ptZ-lnZ1)) / std::abs((lnX1-lnX0) + (lnY1-lnY0) + (lnZ1-lnZ0));
+    return normalOfVectorCrossProduct(ptX-lnX0, ptY-lnY0, ptZ-lnZ0, ptX-lnX1, ptY-lnY1, ptZ-lnZ1) / std::sqrt(std::pow((lnX1-lnX0),2) + std::pow((lnY1-lnY0),2) + std::pow((lnZ1-lnZ0),2));
 }
 
 // vectorDistance

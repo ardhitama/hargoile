@@ -1,9 +1,9 @@
-# Qt-mobility 1.2.0 include path fix
-INCLUDEPATH += C:\Qt\QtSDK\Symbian\SDKs\Symbian3Qt473\src\location
-
 DEPLOYMENTFOLDERS = # file1 dir1
 
 symbian: {
+    # Qt-mobility 1.2.0 include path fix
+    INCLUDEPATH += C:\Qt\QtSDK\Symbian\SDKs\Symbian3Qt473\src\location
+
     #TARGET.EPOCSTACKSIZE = 0x5000 // 20kb
     #TARGET.EPOCHEAPSIZE = 0x20000 0x1000000 // Min 128kb, Max 16Mb
     #TARGET.EPOCALLOWDLLDATA = 1
@@ -16,12 +16,13 @@ symbian: {
         WriteUserData \
         Location
 
-    TARGET = Hargoile_symb_001
+    TARGET = Hargoile_100_S3
 
     TEMPLATE = app
     CONFIG += mobility
     MOBILITY += location
 
+    #DEFINES += RELEASE
     DEFINES += DEBUG
 
     #QMAKE_CXXFLAGS.GCCE -= -fvisibility-inlines-hidden

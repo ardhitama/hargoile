@@ -95,7 +95,9 @@ SOURCES += \
     ../../libs/libjson/Source/internalJSONNode.cpp \
     ../../src/Application/MovementSimulator.cpp \
     ../../src/Utility/Json.cpp \
-    ../../gui/qtm/RouteConfigUI.cpp
+    ../../gui/qtm/RouteConfigUI.cpp \
+    ../../src/Utility/Number.cpp \
+    ../../src/Utility/GeoCalc.cpp
 
 HEADERS += \
     ../../src/Algorithm/LineSimplification/DouglasPeucker.h \
@@ -179,7 +181,6 @@ HEADERS += \
     ../../src/Utility/Variant.h \
     ../../src/Utility/Json.h \
     ../../gui/qtm/RouteConfigUI.h \
-    ../../gui/qtm/defines.h \
     ../../gui/qtm/RetryUI.h
 
 FORMS += \

@@ -15,6 +15,8 @@
 #include "win/RecorderUI.h"
 #include "win/MenuUI.h"
 #include "win/PopupUI.h"
+#include "win/RouteConfigUI.h"
+#include "win/RetryUI.h"
 #endif // TARGET_WIN
 
 #endif // UIALL_H

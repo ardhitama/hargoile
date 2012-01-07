@@ -1,12 +1,12 @@
 #include "WelcomeUI.h"
+#include "../../src/Application/Hargoile.h"
 
-void WelcomeUI::show()
+void WelcomeUI::toLinkedState()
 {
-	return;
+    //
 }
 
-void WelcomeUI::hide() {}
-void WelcomeUI::close() {}
-void WelcomeUI::destroy() {}
-void WelcomeUI::setMinimized() {}
-void WelcomeUI::setMaximized() {}
+void WelcomeUI::toNotLinkedState()
+{
+    //
+}

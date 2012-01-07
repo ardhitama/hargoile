@@ -1,14 +1,27 @@
 #include "RecorderUI.h"
+#include "../../src/Application/Hargoile.h"
 
-//void appendPositionListView(const String &str){}
-
-void RecorderUI::show()
+void RecorderUI::appendPositionListView(const String &str)
 {
-	return;
+    //
 }
 
-void RecorderUI::hide() {}
-void RecorderUI::close() {}
-void RecorderUI::destroy() {}
-void RecorderUI::setMinimized() {}
-void RecorderUI::setMaximized() {}
+void RecorderUI::toStoppedState()
+{
+    //
+}
+
+void RecorderUI::toInitState()
+{
+    //
+}
+
+void RecorderUI::toRecordingState()
+{
+    //
+}
+
+void RecorderUI::toPausedState()
+{
+    //
+}

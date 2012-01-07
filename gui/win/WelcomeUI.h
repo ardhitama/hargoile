@@ -3,15 +3,12 @@
 
 #include "../UIAbstract.h"
 
-class WelcomeUI : protected UIAbstract
+class WelcomeUI : virtual public UIAbstract
 {
 public:
-	void show();
-	void hide();
-	void close();
-	void destroy();
-	void setMinimized();
-	void setMaximized();
+    void toLinkedState();
+    void toNotLinkedState();
+
 };
 
 #endif // WELCOMEUI_H

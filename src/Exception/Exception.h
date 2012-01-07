@@ -44,12 +44,12 @@ public:
 		//
 	}
 
-	String getInfo()
+	inline String getInfo()
 	{
 		return strInfo;
 	}
 
-	DebugInfo getDebugInfo()
+	inline DebugInfo getDebugInfo()
 	{
 		return dbgInfo;
 	}

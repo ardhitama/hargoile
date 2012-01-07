@@ -64,12 +64,12 @@ public:
 
 
 
-    String getUri()
+    inline String getUri()
     {
         return uri;
     }
 
-    String getHost()
+    inline String getHost()
     {
         return host;
     }

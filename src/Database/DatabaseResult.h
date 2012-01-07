@@ -12,37 +12,37 @@ class DatabaseColumn
 {
     friend class Database;
 public:
-    bool getNullData()
+    inline bool getNullData()
     {
         return isNullData;
     }
 
-    int getIntData()
+    inline int getIntData()
     {
         return intData;
     }
 
-    long long getInt64Data()
+    inline long long getInt64Data()
     {
         return int64Data;
     }
 
-    String& getStrData()
+    inline String& getStrData()
     {
         return strData;
     }
 
-    double getDoubleData()
+    inline double getDoubleData()
     {
         return doubleData;
     }
 
-    std::vector<unsigned char>& getBinData()
+    inline std::vector<unsigned char>& getBinData()
     {
         return binData;
     }
 
-    int getColType()
+    inline int getColType()
     {
         return colType;
     }
@@ -133,25 +133,25 @@ private:
  }
  */
 
-    void setIntData(const int intData)
+    inline void setIntData(const int intData)
     {
         DatabaseColumn::intData = intData;
         DatabaseColumn::colType = TYPE_INTEGER;
     }
 
-    void setInt64Data(const long long int64Data)
+    inline void setInt64Data(const long long int64Data)
     {
         DatabaseColumn::int64Data = int64Data;
         DatabaseColumn::colType = TYPE_BIGINTEGER;
     }
 
-    void setDoubleData(const double doubleData)
+    inline void setDoubleData(const double doubleData)
     {
         DatabaseColumn::doubleData = doubleData;
         DatabaseColumn::colType = TYPE_FLOAT;
     }
 
-    void setStrData(const String &strData)
+    inline void setStrData(const String &strData)
     {
         DatabaseColumn::strData = strData;
         DatabaseColumn::colType = TYPE_TEXT;
@@ -177,7 +177,7 @@ private:
  }
  */
 
-    void setNullData()
+    inline void setNullData()
     {
         DatabaseColumn::isNullData = true;
         DatabaseColumn::colType = TYPE_NULL;
@@ -189,14 +189,14 @@ class DatabaseRow
     friend class Database;
     friend class DatabaseImpl;
 public:
-    std::vector<DatabaseColumn>& getColumnData()
+    inline std::vector<DatabaseColumn>& getColumnData()
     {
         return colData;
     }
 private:
     std::vector<DatabaseColumn> colData;
 
-    void addColumn(const DatabaseColumn &column)
+    inline void addColumn(const DatabaseColumn &column)
     {
         DatabaseRow::colData.push_back(column);
     }
@@ -207,27 +207,27 @@ class DatabaseResult
     friend class Database;
     friend class DatabaseImpl;
 public:
-    std::vector<DatabaseRow>& getRowData()
+    inline std::vector<DatabaseRow>& getRowData()
     {
         return rowData;
     }
 
-    int getRowCount()
+    inline int getRowCount()
     {
         return rowData.size();
     }
 
-    int getColCount()
+    inline int getColCount()
     {
         return rowData[0].getColumnData().size();
     }
 
-    int getRowChanged()
+    inline int getRowChanged()
     {
         return rowChanged;
     }
 
-    DatabaseResult()
+    inline DatabaseResult()
     {
         rowChanged = 0;
     }
@@ -236,12 +236,12 @@ private:
     std::vector<DatabaseRow> rowData;
     int rowChanged;
 
-    void addRowData(DatabaseRow row)
+    inline void addRowData(DatabaseRow row)
     {
         DatabaseResult::rowData.push_back(row);
     }
 
-    void setRowChanged(int nChg)
+    inline void setRowChanged(int nChg)
     {
         rowChanged = nChg;
     }

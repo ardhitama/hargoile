@@ -3,14 +3,14 @@
 
 class LocationRecorderAbstract
 {
-protected:
-    virtual void start() = 0;
-    virtual void stop() = 0;
-    virtual void pause() = 0;
+public:
+	virtual void start() {};
+	virtual void stop() {};
+	virtual void pause() {};
     // interval is in msec
-    virtual void setUpdateInterval(int interval) = 0;
-    virtual void forceUpdate() = 0;
-    virtual void onUpdate() = 0;
+	virtual void setUpdateInterval(int interval) {};
+	virtual void forceUpdate() {};
+	virtual void onUpdate() {};
 };
 
 #endif // LOCATIONRECORDERABSTRACT_H

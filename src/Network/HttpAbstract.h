@@ -10,11 +10,12 @@
 class HttpAbstract
 {
 public:
-    virtual void post(const HttpRequest& httpRequest, VariantMap varMap = VariantMap()) = 0;
-    virtual void get(const String& url, VariantMap varMap = VariantMap()) = 0;
-    virtual void get(const String& url, const HttpRequest& httpRequest, VariantMap varMap = VariantMap()) = 0;
+	virtual bool post(HttpRequest& httpRequest, VariantMap& varMap) throw(Exception) { return false; }
+	virtual bool get(const String& url, VariantMap& varMap) { return false; }
+	virtual bool get(const String& url, HttpRequest& httpRequest, VariantMap& varMap) { return false; }
 
-    virtual void onReplyFinished() = 0;
+	virtual void onReplyFinished() {}
+	virtual void onLoadProgress() {}
 };
 
 #endif // HTTPABSTRACT_H

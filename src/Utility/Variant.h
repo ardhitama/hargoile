@@ -8,17 +8,17 @@ class Variant : public boost::any
 {
 public:
     Variant(boost::any val) : boost::any(val) {}
-    String toString()
+    inline String toString()
     {
         return boost::any_cast<String>(*this);
     }
 
-    int toInt()
+    inline int toInt()
     {
         return boost::any_cast<int>(*this);
     }
 
-    double toDouble()
+    inline double toDouble()
     {
         return boost::any_cast<double>(*this);
     }

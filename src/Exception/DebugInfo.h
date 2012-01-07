@@ -29,7 +29,7 @@ public:
 		DebugInfo::infoSignature = infoSignature;
 	}
 
-	String getStrInfo()
+	inline String getStrInfo()
 	{
 		return strInfo;
 	}

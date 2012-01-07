@@ -20,8 +20,8 @@ protected:
     bool isEmpty();
  */
 
-    virtual DatabaseResult exec(const String sqlStmt) = 0;
-    virtual DatabaseResult operator << (const String sqlStmt) = 0;
+	virtual DatabaseResult exec(const String sqlStmt) = 0;
+	virtual DatabaseResult operator << (const String sqlStmt) = 0;
 
 protected:
     int dbStatus;

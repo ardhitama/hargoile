@@ -21,22 +21,22 @@ public:
         setBinData(binData);
     }
 
-    const String& getFilename()
+    inline const String& getFilename()
     {
         return filename;
     }
 
-    const String getBinData()
+    inline const String getBinData()
     {
         return std::string(data.begin(), data.end());
     }
 
-    void setFilename(const String& filename)
+    inline void setFilename(const String& filename)
     {
         HttpBinData::filename = filename;
     }
 
-    void setBinData(const std::vector<unsigned char>& binData)
+    inline void setBinData(const std::vector<unsigned char>& binData)
     {
         HttpBinData::data = binData;
     }
@@ -49,7 +49,7 @@ private:
 class HttpBinDataMap : public std::map<String, HttpBinData>
 {
 public:
-    void add(const String& name, const HttpBinData& binData)
+    inline void add(const String& name, const HttpBinData& binData)
     {
         std::pair<String, HttpBinData> inPair = std::pair<String, HttpBinData>(name, binData);
         insert(inPair);
@@ -140,7 +140,7 @@ public:
         return postContent;
     }
 
-    String getUri()
+    inline String getUri()
     {
         return uri.getUri();
     }

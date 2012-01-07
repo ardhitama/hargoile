@@ -2,10 +2,6 @@
 #include "../../Application/Hargoile.h"
 #include "../../Application/MovementSimulator.h"
 
-LocationRecorder::LocationRecorder()
-{
-}
-
 void LocationRecorder::start() throw(Exception)
 {
 	Route genRoute;
@@ -15,13 +11,3 @@ void LocationRecorder::start() throw(Exception)
 			Hargoile::getInstance().addNewPosition(g);
 	} );
 }
-
-void LocationRecorder::stop() throw(Exception)
-{
-}
-
-void LocationRecorder::pause() throw(Exception){}
-void LocationRecorder::setUpdateInterval(int interval) throw(Exception){}
-void LocationRecorder::forceUpdate() throw(Exception){}
-
-void LocationRecorder::onUpdate() { }

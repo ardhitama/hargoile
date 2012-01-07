@@ -30,7 +30,7 @@ public:
         }
     }
 
-    Variant& get(const String& name)
+    inline Variant& get(const String& name)
     {
         return find(name)->second;
     }

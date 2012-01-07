@@ -17,7 +17,7 @@ public:
         }
     }
 
-    String& get(const String& name)
+    inline String& get(const String& name)
     {
         return find(name)->second;
     }

@@ -1,5 +1,3 @@
-#include "stdafx.h"
-
 #ifdef DEBUG
 #include <vld.h>
 #endif
@@ -49,10 +47,11 @@ void print(DatabaseResult rs)
 
 int main(int argc, char** argv)
 {
+	Hargoile::getInstance().init();
 	Hargoile::getInstance().run();
 	Hargoile::getInstance().startRouteRecording();
 	Hargoile::getInstance().stopRouteRecording();
-	Hargoile::getInstance().uploadCurrentRoute();
+	//Hargoile::getInstance().uploadRoute(Hargoile::getInstance().getCurrentRoute());
 	system("pause");
 	return 0;
 }

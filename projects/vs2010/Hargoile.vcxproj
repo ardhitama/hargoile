@@ -91,6 +91,8 @@
     <ClInclude Include="..\..\gui\win\MenuUI.h" />
     <ClInclude Include="..\..\gui\win\PopupUI.h" />
     <ClInclude Include="..\..\gui\win\RecorderUI.h" />
+    <ClInclude Include="..\..\gui\win\RetryUI.h" />
+    <ClInclude Include="..\..\gui\win\RouteConfigUI.h" />
     <ClInclude Include="..\..\gui\win\WelcomeUI.h" />
     <ClInclude Include="..\..\libs\libjson\JSONOptions.h" />
     <ClInclude Include="..\..\libs\libjson\libjson.h" />
@@ -152,20 +154,26 @@
     <ClInclude Include="..\..\src\Network\NetworkAll.h" />
     <ClInclude Include="..\..\src\Network\URI.h" />
     <ClInclude Include="..\..\src\Network\win\Http.h" />
-    <ClInclude Include="..\..\src\stdafx.h" />
     <ClInclude Include="..\..\src\Technique\Singleton.h" />
     <ClInclude Include="..\..\src\Technique\TechniqueAll.h" />
+    <ClInclude Include="..\..\src\Utility\ByteArray.h" />
+    <ClInclude Include="..\..\src\Utility\GeoCalc.h" />
     <ClInclude Include="..\..\src\Utility\GeoPoint.h" />
+    <ClInclude Include="..\..\src\Utility\Json.h" />
     <ClInclude Include="..\..\src\Utility\MutexLocker.h" />
     <ClInclude Include="..\..\src\Utility\Number.h" />
     <ClInclude Include="..\..\src\Utility\Point.h" />
     <ClInclude Include="..\..\src\Utility\String.h" />
+    <ClInclude Include="..\..\src\Utility\StringMap.h" />
     <ClInclude Include="..\..\src\Utility\UtilityAll.h" />
+    <ClInclude Include="..\..\src\Utility\Variant.h" />
+    <ClInclude Include="..\..\src\Utility\VariantMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\gui\win\MenuUI.cpp" />
     <ClCompile Include="..\..\gui\win\PopupUI.cpp" />
     <ClCompile Include="..\..\gui\win\RecorderUI.cpp" />
+    <ClCompile Include="..\..\gui\win\RouteConfigUI.cpp" />
     <ClCompile Include="..\..\gui\win\WelcomeUI.cpp" />
     <ClCompile Include="..\..\libs\libjson\Source\internalJSONNode.cpp" />
     <ClCompile Include="..\..\libs\libjson\Source\JSONAllocator.cpp" />
@@ -201,8 +209,12 @@
     <ClCompile Include="..\..\src\Application\MovementSimulator.cpp" />
     <ClCompile Include="..\..\src\Application\Route.cpp" />
     <ClCompile Include="..\..\src\Application\Storage.cpp" />
+    <ClCompile Include="..\..\src\Database\sqlite\Database.cpp" />
     <ClCompile Include="..\..\src\Location\win\LocationRecorder.cpp" />
     <ClCompile Include="..\..\src\Network\win\Http.cpp" />
+    <ClCompile Include="..\..\src\Utility\GeoCalc.cpp" />
+    <ClCompile Include="..\..\src\Utility\Json.cpp" />
+    <ClCompile Include="..\..\src\Utility\Number.cpp" />
     <ClCompile Include="..\..\src\WinMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

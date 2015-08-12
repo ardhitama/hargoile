@@ -9,7 +9,7 @@
 #include <map>
 #include <algorithm>
 
-class Storage : public Singleton<Storage>
+class Storage : public virtual Singleton<Storage>
 {
 public:
     Storage();

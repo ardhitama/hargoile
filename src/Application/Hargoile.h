@@ -15,7 +15,7 @@
 #include "Storage.h"
 #include "Route.h"
 
-class Hargoile : public Singleton<Hargoile>
+class Hargoile : public virtual Singleton<Hargoile>
 {
 public:
     Hargoile();

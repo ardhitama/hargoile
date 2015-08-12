@@ -5,7 +5,7 @@
 #include "../Technique/Singleton.h"
 #include "DebugInfo.h"
 
-class DebugLog : public Singleton<DebugLog>
+class DebugLog : public virtual Singleton<DebugLog>
 {
 public:
     inline void operator += (const DebugInfo &dbgInfo)

@@ -12,15 +12,9 @@ template<class T> class Singleton
 public:
     static T& getInstance()
     {
+        static T instance;
         return instance;
     }
-
-private:
-    static T instance;
 };
-
-template<typename T>
-T Singleton<T>::instance;
-
 
 #endif // SINGLETON_H

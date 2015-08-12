@@ -8,7 +8,6 @@
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
 
-QTM_USE_NAMESPACE
 
 class LocationRecorder : public QObject
 {
@@ -25,7 +24,7 @@ public slots:
     void onUpdate(QGeoPositionInfo qgeoinfo);
 
 private:
-    boost::shared_ptr<QtMobility::QGeoPositionInfoSource> qGeoSource;
+    boost::shared_ptr<QGeoPositionInfoSource> qGeoSource;
     int updateInterval;
 };
 

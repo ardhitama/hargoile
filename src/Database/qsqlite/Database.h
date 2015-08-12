@@ -11,13 +11,14 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
 #include <QVariant>
+#include <QDir>
 #include "../../Utility/String.h"
 #include "../DatabaseAll.h"
 
 class Database : virtual public DatabaseAbstract
 {
 public:
-    Database(const String& filePath) throw()
+    Database(const QString& filePath) throw()
     {
         dbStatus = DB_NOT_OPEN;
         sqliteStatus = -1;
@@ -42,7 +43,7 @@ public:
         return dbStatus;
     }
 
-    bool openDB(const String& filePath) throw()
+    bool openDB(const QString& filePath) throw()
     {
         db = QSqlDatabase::addDatabase("QSQLITE");
 

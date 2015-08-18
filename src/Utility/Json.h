@@ -16,9 +16,9 @@ public:
     String toString(const String &name);
 
 private:
-    JSONNode jsNode;
+    JSONNODE *jsNode;
 
-    void parseJsonNode(const JSONNode &jsNode);
+    void parseJsonNode(const JSONNODE *jsNode);
 };
 
 #endif // JSON_H

@@ -4,7 +4,7 @@ bool Json::parse(const String& jsonText)
 {
     try
     {
-        jsNode = libjson::parse(jsonText);
+        jsNode = json_parse(jsonText.c_str());
         return true;
     }
     catch(...)
@@ -16,12 +16,12 @@ bool Json::parse(const String& jsonText)
 
 bool Json::toBool(const String &name)
 {
-    JSONNode::const_iterator it = jsNode.begin();
-    while (it != jsNode.end())
+    JSONNODE_ITERATOR it = json_begin(jsNode);
+    while (it != json_end(jsNode))
     {
-        if (it->name() == name)
+        if (json_name(it) == name)
         {
-            return it->as_bool();
+            return json_as_bool(it);
         }
         ++it;
     }
@@ -30,12 +30,12 @@ bool Json::toBool(const String &name)
 
 int Json::toInt(const String &name)
 {
-    JSONNode::const_iterator it = jsNode.begin();
-    while (it != jsNode.end())
+    JSONNODE_ITERATOR it = json_begin(jsNode);
+    while (it != json_end(jsNode))
     {
-        if (it->name() == name)
+        if (json_name(it) == name)
         {
-            return it->as_int();
+            return json_as_int(it);
         }
         ++it;
     }
@@ -44,12 +44,12 @@ int Json::toInt(const String &name)
 
 double Json::toDouble(const String &name)
 {
-    JSONNode::const_iterator it = jsNode.begin();
-    while (it != jsNode.end())
+    JSONNODE_ITERATOR it = json_begin(jsNode);
+    while (it != json_end(jsNode))
     {
-        if (it->name() == name)
+        if (json_name(it) == name)
         {
-            return it->as_float();
+            return json_as_float(it);
         }
         ++it;
     }
@@ -58,12 +58,12 @@ double Json::toDouble(const String &name)
 
 String Json::toString(const String &name)
 {
-    JSONNode::const_iterator it = jsNode.begin();
-    while (it != jsNode.end())
+    JSONNODE_ITERATOR it = json_begin(jsNode);
+    while (it != json_end(jsNode))
     {
-        if (it->name() == name)
+        if (json_name(it) == name)
         {
-            return it->as_float();
+            return json_as_float(it);
         }
         ++it;
     }
@@ -71,12 +71,12 @@ String Json::toString(const String &name)
 }
 
 
-void Json::parseJsonNode(const JSONNode &jsNode)
+void Json::parseJsonNode(const JSONNODE *jsNode)
 {
     /*
     JSONNode::const_iterator it = jsNode.begin();
 
-    while (it != jsNode.end()){
+    while (it != json_end(jsNode)){
         // recursively call ourselves to dig deeper into the tree
         if (it->type() == JSON_ARRAY || it->type() == JSON_NODE){
             parseJsonNode(*it);

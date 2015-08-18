@@ -4,7 +4,7 @@
 #include <string>
 #include "../../libs/boost/lexical_cast.hpp"
 
-class String : virtual public std::string
+class String : public std::string
 {
 public:
     String() : std::string()

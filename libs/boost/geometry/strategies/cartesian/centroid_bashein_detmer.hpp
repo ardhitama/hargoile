@@ -1,8 +1,13 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2011 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2011 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -15,10 +20,14 @@
 #define BOOST_GEOMETRY_STRATEGIES_CARTESIAN_CENTROID_BASHEIN_DETMER_HPP
 
 
+#include <cstddef>
+
+#include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/type_traits.hpp>
 
+#include <boost/geometry/arithmetic/determinant.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/strategies/centroid.hpp>
@@ -37,17 +46,26 @@ namespace strategy { namespace centroid
 
 
 /*!
-\brief Centroid calculation using algorith Bashein / Detmer
+\brief Centroid calculation using algorithm Bashein / Detmer
 \ingroup strategies
 \details Calculates centroid using triangulation method published by
     Bashein / Detmer
 \tparam Point point type of centroid to calculate
 \tparam PointOfSegment point type of segments, defaults to Point
-\par Concepts for Point and PointOfSegment:
-- specialized point_traits class
+\tparam CalculationType \tparam_calculation
+
 \author Adapted from  "Centroid of a Polygon" by
     Gerard Bashein and Paul R. Detmer<em>,
 in "Graphics Gems IV", Academic Press, 1994</em>
+
+
+\qbk{
+[heading See also]
+[link geometry.reference.algorithms.centroid.centroid_3_with_strategy centroid (with strategy)]
+}
+*/
+
+/*
 \par Research notes
 The algorithm gives the same results as Oracle and PostGIS but
     differs from MySQL
@@ -99,12 +117,6 @@ Statements:
         , mdsys.sdo_dim_array(mdsys.sdo_dim_element('x',0,10,.00000005)
         ,mdsys.sdo_dim_element('y',0,10,.00000005)))
         from dual
-
-\qbk{
-[heading See also]
-[link geometry.reference.algorithms.centroid.centroid_3_with_strategy centroid (with strategy)]
-}
-
  */
 template
 <
@@ -139,7 +151,7 @@ private :
     class sums
     {
         friend class bashein_detmer;
-        int count;
+        std::size_t count;
         calculation_type sum_a2;
         calculation_type sum_x;
         calculation_type sum_y;
@@ -150,9 +162,7 @@ private :
             , sum_a2(calculation_type())
             , sum_x(calculation_type())
             , sum_y(calculation_type())
-        {
-            typedef calculation_type ct;
-        }
+        {}
     };
 
 public :
@@ -177,7 +187,7 @@ public :
         calculation_type const y1 = boost::numeric_cast<calculation_type>(get<1>(p1));
         calculation_type const x2 = boost::numeric_cast<calculation_type>(get<0>(p2));
         calculation_type const y2 = boost::numeric_cast<calculation_type>(get<1>(p2));
-        calculation_type const ai = x1 * y2 - x2 * y1;
+        calculation_type const ai = geometry::detail::determinant<calculation_type>(p1, p2);
         state.count++;
         state.sum_a2 += ai;
         state.sum_x += ai * (x1 + x2);
@@ -187,7 +197,7 @@ public :
     static inline bool result(sums const& state, Point& centroid)
     {
         calculation_type const zero = calculation_type();
-        if (state.count > 0 && state.sum_a2 != zero)
+        if (state.count > 0 && ! math::equals(state.sum_a2, zero))
         {
             calculation_type const v3 = 3;
             calculation_type const a3 = v3 * state.sum_a2;
@@ -197,11 +207,18 @@ public :
                     Point
                 >::type coordinate_type;
 
-            set<0>(centroid,
-                boost::numeric_cast<coordinate_type>(state.sum_x / a3));
-            set<1>(centroid,
-                boost::numeric_cast<coordinate_type>(state.sum_y / a3));
-            return true;
+            // Prevent NaN centroid coordinates
+            if (boost::math::isfinite(a3))
+            {
+                // NOTE: above calculation_type is checked, not the centroid coordinate_type
+                // which means that the centroid can still be filled with INF
+                // if e.g. calculation_type is double and centroid contains floats
+                set<0>(centroid,
+                    boost::numeric_cast<coordinate_type>(state.sum_x / a3));
+                set<1>(centroid,
+                    boost::numeric_cast<coordinate_type>(state.sum_y / a3));
+                return true;
+            }
         }
 
         return false;

@@ -17,7 +17,7 @@
 #    include <boost/preprocessor/iteration/detail/bounds/lower5.hpp>
 #    define BOOST_PP_VALUE BOOST_PP_TUPLE_ELEM(2, 1, BOOST_PP_ITERATION_LIMITS)
 #    include <boost/preprocessor/iteration/detail/bounds/upper5.hpp>
-#    define BOOST_PP_ITERATION_FLAGS_5 0
+#    define BOOST_PP_ITERATION_FLAGS_5() 0
 #    undef BOOST_PP_ITERATION_LIMITS
 # elif defined(BOOST_PP_ITERATION_PARAMS_5)
 #    define BOOST_PP_VALUE BOOST_PP_ARRAY_ELEM(0, BOOST_PP_ITERATION_PARAMS_5)
@@ -26,16 +26,16 @@
 #    include <boost/preprocessor/iteration/detail/bounds/upper5.hpp>
 #    define BOOST_PP_FILENAME_5 BOOST_PP_ARRAY_ELEM(2, BOOST_PP_ITERATION_PARAMS_5)
 #    if BOOST_PP_ARRAY_SIZE(BOOST_PP_ITERATION_PARAMS_5) >= 4
-#        define BOOST_PP_ITERATION_FLAGS_5 BOOST_PP_ARRAY_ELEM(3, BOOST_PP_ITERATION_PARAMS_5)
+#        define BOOST_PP_ITERATION_FLAGS_5() BOOST_PP_ARRAY_ELEM(3, BOOST_PP_ITERATION_PARAMS_5)
 #    else
-#        define BOOST_PP_ITERATION_FLAGS_5 0
+#        define BOOST_PP_ITERATION_FLAGS_5() 0
 #    endif
 # else
 #    error BOOST_PP_ERROR:  depth #5 iteration boundaries or filename not defined
 # endif
 #
 # undef BOOST_PP_ITERATION_DEPTH
-# define BOOST_PP_ITERATION_DEPTH 5
+# define BOOST_PP_ITERATION_DEPTH() 5
 #
 # if (BOOST_PP_ITERATION_START_5) > (BOOST_PP_ITERATION_FINISH_5)
 #    include <boost/preprocessor/iteration/detail/iter/reverse5.hpp>
@@ -1328,7 +1328,7 @@
 # endif
 #
 # undef BOOST_PP_ITERATION_DEPTH
-# define BOOST_PP_ITERATION_DEPTH 4
+# define BOOST_PP_ITERATION_DEPTH() 4
 #
 # undef BOOST_PP_ITERATION_START_5
 # undef BOOST_PP_ITERATION_FINISH_5

@@ -1,6 +1,7 @@
 #ifndef LIBJSON_H
 #define LIBJSON_H
-#include "Source/JSONDefs.h"  //for typedefs of functions, strings, and nodes
+
+#include "_internal/Source/JSONDefs.h"  //for typedefs of functions, strings, and nodes
 
 /*
     This is the C interface to libjson.
@@ -173,13 +174,13 @@
     #ifndef __cplusplus
 	   #error Turning off JSON_LIBRARY requires C++
     #endif
-    #include "Source/JSONNode.h"  //not used in this file, but libjson.h should be the only file required to use it embedded
-    #include "Source/JSONWorker.h"
-    #include "Source/JSONValidator.h"
-    #include "Source/JSONStream.h"
-    #include "Source/JSONPreparse.h"
+    #include "_internal/Source/JSONNode.h"  //not used in this file, but libjson.h should be the only file required to use it embedded
+    #include "_internal/Source/JSONWorker.h"
+    #include "_internal/Source/JSONValidator.h"
+    #include "_internal/Source/JSONStream.h"
+    #include "_internal/Source/JSONPreparse.h"
     #ifdef JSON_EXPOSE_BASE64
-	   #include "Source/JSON_Base64.h"
+	   #include "_internal/Source/JSON_Base64.h"
     #endif
     #ifndef JSON_NO_EXCEPTIONS
 	   #include <stdexcept>  //some methods throw exceptions
@@ -190,21 +191,13 @@
 
     namespace libjson {	   
 	   #ifdef JSON_EXPOSE_BASE64
-//		  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow json_cold {
-//			 return JSONBase64::json_encode64(binary, bytes);
-//		  }
+		  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow {
+			 return JSONBase64::json_encode64(binary, bytes);
+		  }
 
-//		  inline static std::string decode64(const json_string & encoded) json_nothrow json_cold {
-//			 return JSONBase64::json_decode64(encoded);
-//		  }
-                  // removed function attribute
-                  inline static json_string encode64(const unsigned char * binary, size_t bytes) json_nothrow {
-                         return JSONBase64::json_encode64(binary, bytes);
-                  }
-
-                  inline static std::string decode64(const json_string & encoded) json_nothrow {
-                         return JSONBase64::json_decode64(encoded);
-                  }
+		  inline static std::string decode64(const json_string & encoded) json_nothrow {
+			 return JSONBase64::json_decode64(encoded);
+		  }
 	   #endif
 	   
 	   //useful if you have json that you don't want to parse, just want to strip to cut down on space
@@ -227,6 +220,7 @@
 					return str;
 				#endif
 			}
+			
 			inline static json_string to_json_string(const std::string & str){
 				#if defined(JSON_UNICODE) ||defined(JSON_MEMORY_CALLBACKS) || defined(JSON_MEMORY_POOL)
 					return json_string(str.begin(), str.end());		
@@ -247,12 +241,8 @@
 		  //if json is invalid, it throws a std::invalid_argument exception
 		  inline static JSONNode parse(const json_string & json) json_throws(std::invalid_argument) {
 			 #ifdef JSON_PREPARSE
-				#if defined JSON_DEBUG || defined JSON_SAFE
-					json_char temp;
-					json_auto<json_char> buffer(JSONWorker::RemoveWhiteSpace(json, temp, false));
-				#else
-					json_auto<json_char> buffer(JSONWorker::RemoveWhiteSpace(json, false));
-				#endif
+				size_t len;
+				json_auto<json_char> buffer(JSONWorker::RemoveWhiteSpace(json, len, false));
 				return JSONPreparse::isValidRoot(buffer.ptr);
 			 #else
 				return JSONWorker::parse(json);
@@ -275,7 +265,9 @@
 					   return false;
 				    }
 				#endif
-				return JSONValidator::isValidRoot(JSONWorker::RemoveWhiteSpaceAndComments(json, false).c_str());
+				json_auto<json_char> s;
+				s.set(JSONWorker::RemoveWhiteSpaceAndCommentsC(json, false));
+				return JSONValidator::isValidRoot(s.ptr);
 			 }
 
 			 inline static bool is_valid_unformatted(const json_string & json) json_nothrow {

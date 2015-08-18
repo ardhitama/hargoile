@@ -89,7 +89,7 @@ BOOST_PP_EXPAND(#) include BOOST_FT_AL_PREPROCESSED
 
 #     if !BOOST_PP_IS_ITERATING
 #       define BOOST_PP_FILENAME_1 BOOST_FT_AL_INCLUDE_FILE
-#     elif BOOST_PP_ITERATION_DEPTH == 1
+#     elif BOOST_PP_ITERATION_DEPTH() == 1
 #       define BOOST_PP_FILENAME_2 BOOST_FT_AL_INCLUDE_FILE
 #     else
 #       error "loops nested too deeply"

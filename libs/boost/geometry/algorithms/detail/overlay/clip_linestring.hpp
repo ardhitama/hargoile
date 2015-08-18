@@ -1,6 +1,11 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -11,9 +16,10 @@
 
 #include <boost/range.hpp>
 
-#include <boost/geometry/algorithms/append.hpp>
 #include <boost/geometry/algorithms/clear.hpp>
 #include <boost/geometry/algorithms/convert.hpp>
+
+#include <boost/geometry/algorithms/detail/overlay/append_no_duplicates.hpp>
 
 #include <boost/geometry/util/select_coordinate_type.hpp>
 #include <boost/geometry/geometries/segment.hpp>
@@ -159,10 +165,12 @@ template
     typename OutputLinestring,
     typename OutputIterator,
     typename Range,
+    typename RobustPolicy,
     typename Box,
     typename Strategy
 >
 OutputIterator clip_range_with_box(Box const& b, Range const& range,
+            RobustPolicy const&,
             OutputIterator out, Strategy const& strategy)
 {
     if (boost::begin(range) == boost::end(range))
@@ -215,9 +223,9 @@ OutputIterator clip_range_with_box(Box const& b, Range const& range,
             // b. Add p1 only if it is the first point, then add p2
             if (boost::empty(line_out))
             {
-                geometry::append(line_out, p1);
+                detail::overlay::append_no_duplicates(line_out, p1, true);
             }
-            geometry::append(line_out, p2);
+            detail::overlay::append_no_duplicates(line_out, p2);
 
             // c. If c2 is clipped, finish the line
             if (c2)

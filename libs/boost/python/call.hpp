@@ -41,7 +41,7 @@ namespace boost { namespace python {
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH == 1
+#if BOOST_PP_ITERATION_DEPTH() == 1
 # if !(BOOST_WORKAROUND(__MWERKS__, > 0x3100)                      \
         && BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3201)))
 #  line BOOST_PP_LINE(__LINE__, call.hpp)
@@ -79,5 +79,5 @@ call(PyObject* callable
 
 # undef N
 
-#endif // BOOST_PP_ITERATION_DEPTH
+#endif // BOOST_PP_ITERATION_DEPTH()
 #endif

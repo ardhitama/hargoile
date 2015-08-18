@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -29,12 +29,13 @@ struct ring_properties
     typedef Point point_type;
     typedef typename default_area_result<Point>::type area_type;
 
+    bool valid;
+
     // Filled by "select_rings"
     Point point;
     area_type area;
 
-    // Filled by "update_selection_map"
-    int within_code;
+    // Filled by "update_ring_selection"
     bool reversed;
 
     // Filled/used by "assign_rings"
@@ -44,8 +45,8 @@ struct ring_properties
     std::vector<ring_identifier> children;
 
     inline ring_properties()
-        : area(area_type())
-        , within_code(-1)
+        : valid(false)
+        , area(area_type())
         , reversed(false)
         , discarded(false)
         , parent_area(-1)
@@ -53,16 +54,18 @@ struct ring_properties
 
     template <typename RingOrBox>
     inline ring_properties(RingOrBox const& ring_or_box)
-        : within_code(-1)
-        , reversed(false)
+        : reversed(false)
         , discarded(false)
         , parent_area(-1)
     {
         this->area = geometry::area(ring_or_box);
-        geometry::point_on_border(this->point, ring_or_box, true);
+        // We should take a point somewhere in the middle of the ring,
+        // to avoid taking a point on a (self)tangency,
+        // in cases where multiple points come together
+        valid = geometry::point_on_border(this->point, ring_or_box, true);
     }
 
-    area_type get_area() const
+    inline area_type get_area() const
     {
         return reversed ? -area : area;
     }

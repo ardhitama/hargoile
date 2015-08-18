@@ -12,7 +12,7 @@
 
 #  include <boost/python/object/instance.hpp>
 #  include <boost/python/converter/registry.hpp>
-#if !defined( BOOST_PYTHON_NO_PY_SIGNATURES) && defined( BOOST_PYTHON_PY_SYGNATURES_PROPER_INIT_SELF_TYPE)
+#if !defined( BOOST_PYTHON_NO_PY_SIGNATURES) && defined( BOOST_PYTHON_PY_SIGNATURES_PROPER_INIT_SELF_TYPE)
 #  include <boost/python/detail/python_type.hpp>
 #endif
 
@@ -50,7 +50,7 @@ template <int nargs> struct make_holder;
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH == 1
+#if BOOST_PP_ITERATION_DEPTH() == 1
 # if !(BOOST_WORKAROUND(__MWERKS__, > 0x3100)                      \
         && BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3201)))
 #  line BOOST_PP_LINE(__LINE__, make_holder.hpp)
@@ -81,7 +81,7 @@ struct make_holder<N>
 # endif 
         
         static void execute(
-#if !defined( BOOST_PYTHON_NO_PY_SIGNATURES) && defined( BOOST_PYTHON_PY_SYGNATURES_PROPER_INIT_SELF_TYPE)
+#if !defined( BOOST_PYTHON_NO_PY_SIGNATURES) && defined( BOOST_PYTHON_PY_SIGNATURES_PROPER_INIT_SELF_TYPE)
             boost::python::detail::python_class<BOOST_DEDUCED_TYPENAME Holder::value_type> *p
 #else
             PyObject *p
@@ -105,5 +105,5 @@ struct make_holder<N>
 
 # undef N
 
-#endif // BOOST_PP_ITERATION_DEPTH
+#endif // BOOST_PP_ITERATION_DEPTH()
 #endif

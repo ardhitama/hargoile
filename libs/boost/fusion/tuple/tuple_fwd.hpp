@@ -1,24 +1,19 @@
 /*=============================================================================
-    Copyright (c) 2005 Joel de Guzman
+    Copyright (c) 2014 Kohei Takahashi
 
-    Distributed under the Boost Software License, Version 1.0. (See accompanying 
+    Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
-#if !defined(FUSION_TUPLE_FORWARD_10032005_0956)
-#define FUSION_TUPLE_FORWARD_10032005_0956
+#ifndef FUSION_TUPLE_FORWARD_14122014_0051
+#define FUSION_TUPLE_FORWARD_14122014_0051
 
-#include <boost/fusion/container/vector/limits.hpp>
-#include <boost/preprocessor/repetition/enum_params_with_a_default.hpp>
+#include <boost/config.hpp>
+#include <boost/fusion/support/config.hpp>
 
-namespace boost { namespace fusion
-{
-    struct void_;
-
-    template <
-        BOOST_PP_ENUM_PARAMS_WITH_A_DEFAULT(
-            FUSION_MAX_VECTOR_SIZE, typename T, void_)
-    >
-    struct tuple;
-}}
+///////////////////////////////////////////////////////////////////////////////
+// With no variadics, we will use the C++03 version
+///////////////////////////////////////////////////////////////////////////////
+# include <boost/fusion/tuple/detail/tuple_fwd.hpp>
 
 #endif
+

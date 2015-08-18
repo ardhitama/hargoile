@@ -14,9 +14,9 @@
 //
 // See http://www.boost.org/libs/mpl for documentation.
 
-// $Id: advance_backward.hpp 49267 2008-10-11 06:19:02Z agurtovoy $
-// $Date: 2008-10-11 02:19:02 -0400 (Sat, 11 Oct 2008) $
-// $Revision: 49267 $
+// $Id$
+// $Date$
+// $Revision$
 
 #if !defined(BOOST_MPL_PREPROCESSING_MODE)
 #   include <boost/mpl/prior.hpp>
@@ -82,7 +82,7 @@ struct advance_backward
 // For gcc 4.4 compatability, we must include the
 // BOOST_PP_ITERATION_DEPTH test inside an #else clause.
 #else // BOOST_PP_IS_ITERATING
-#if BOOST_PP_ITERATION_DEPTH == 1
+#if BOOST_PP_ITERATION_DEPTH() == 1
 #define i_ BOOST_PP_FRAME_ITERATION(1)
 
 template<>
@@ -114,7 +114,7 @@ struct advance_backward< BOOST_PP_FRAME_ITERATION(1) >
 
 ///// iteration, depth == 2
 
-#elif BOOST_PP_ITERATION_DEPTH == 2
+#elif BOOST_PP_ITERATION_DEPTH() == 2
 
 #   define AUX778076_ITER_0 BOOST_PP_CAT(iter,BOOST_PP_DEC(BOOST_PP_FRAME_ITERATION(2)))
 #   define AUX778076_ITER_1 BOOST_PP_CAT(iter,BOOST_PP_FRAME_ITERATION(2))
@@ -124,5 +124,5 @@ struct advance_backward< BOOST_PP_FRAME_ITERATION(1) >
 #   undef AUX778076_ITER_1
 #   undef AUX778076_ITER_0
 
-#endif // BOOST_PP_ITERATION_DEPTH
+#endif // BOOST_PP_ITERATION_DEPTH()
 #endif // BOOST_PP_IS_ITERATING

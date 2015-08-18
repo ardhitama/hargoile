@@ -1,8 +1,8 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2011 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2011 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -16,6 +16,7 @@
 
 #include <cstddef>
 
+#include <boost/config.hpp>
 #include <boost/mpl/int.hpp>
 
 #include <boost/geometry/core/cs.hpp>
@@ -32,20 +33,28 @@ namespace model { namespace d2
 \tparam CoordinateType numeric type, for example, double, float, int
 \tparam CoordinateSystem coordinate system, defaults to cs::cartesian
 
+\qbk{[include reference/geometries/point_xy.qbk]}
 \qbk{before.synopsis,
 [heading Model of]
 [link geometry.reference.concepts.concept_point Point Concept]
 }
+
+\qbk{[include reference/geometries/point_assign_warning.qbk]}
+
 */
 template<typename CoordinateType, typename CoordinateSystem = cs::cartesian>
 class point_xy : public model::point<CoordinateType, 2, CoordinateSystem>
 {
 public:
 
-    /// Default constructor, does not initialize anything
+#ifndef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
+    /// \constructor_default_no_init
+    point_xy() = default;
+#else
+    /// \constructor_default_no_init
     inline point_xy()
-        : model::point<CoordinateType, 2, CoordinateSystem>()
     {}
+#endif
 
     /// Constructor with x/y values
     inline point_xy(CoordinateType const& x, CoordinateType const& y)

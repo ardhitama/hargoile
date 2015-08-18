@@ -2,6 +2,7 @@
 #define NUMBER_H
 
 #include <cmath>
+#include <algorithm>
 #include <cstdlib>
 #include "../Exception/DebugInfo.h"
 

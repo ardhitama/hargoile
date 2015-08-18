@@ -126,10 +126,6 @@ public:
 
     void setTime(unsigned long long time)
     {
-        if(time < 0)
-        {
-            DebugInfo("Time is negative (time >= 0)", DebugInfo::Warning);
-        }
         GeoPoint::time = time;
     }
 
